@@ -694,6 +694,8 @@ const ISSUE_LABELS = {
   "6": "Enhance cyber security posture and compliance"
 };
 
+const WEBHOOK_URL = "https://flow.epoch.deloitte.com/webhook/c9219443-54e9-4642-9645-35d60d2ef999";
+
 function getActiveBranch(r) {
   const issues = (r["1.2"] || []).filter(i => i !== "7");
   if (issues.length === 1) return issues[0];
@@ -1509,9 +1511,36 @@ function handleBack() {
 }
 
 // ── END SCREEN ───────────────────────────────────────────────────
+function submitToWebhook() {
+  const branch = getActiveBranch(responses);
+  const payload = {
+    submitted_at:           new Date().toISOString(),
+    client_program:         responses["0.1"]  || "",
+    jupiter_id:             responses["0.2a"] || "",
+    experience_type:        responses["0.3"]  || "",
+    realness_level:         responses["0.5"]  || "",
+    target_date:            responses["0.6"]  || "",
+    challenge_summary:      responses["1.1"]  || "",
+    problem_maturity:       responses["1.1a"] || "",
+    signature_issues:       (responses["1.2"] || []).map(v => v === "7" ? "None" : (ISSUE_LABELS[v] || v)).join("; "),
+    primary_issue:          branch ? (ISSUE_LABELS[branch] || branch) : "",
+    use_case_identified:    responses["1.4"]  || "",
+    audience_technical_level: responses["4.5"] || "",
+    procurement_active:     responses["5.2"]  || "",
+    funding:                responses["9.2"]  || "",
+    full_responses:         generateText()
+  };
+  fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
 function showEnd() {
   document.getElementById("survey-screen").classList.remove("active");
   document.getElementById("end-screen").classList.add("active");
+  submitToWebhook();
   buildSummary();
 }
 
