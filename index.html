@@ -1415,6 +1415,7 @@ function buildOptionCard(opt, inputType, checked) {
   inp.name    = "q-option";
   inp.value   = opt.value;
   inp.checked = checked;
+  inp.addEventListener("click", e => e.stopPropagation());
 
   const dot = document.createElement("div");
   dot.className = `opt-indicator ${inputType}`;
