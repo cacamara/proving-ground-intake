@@ -6,248 +6,287 @@
   <title>Proving Ground Intake</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-    /* ── Tokens ─────────────────────────────────────────────── */
+    /* ── Design tokens ──────────────────────────────────────────
+       Signature: IBM Plex family + dark header band (technical
+       briefing document aesthetic for Deloitte GPS consultants)
+    ─────────────────────────────────────────────────────────── */
     :root {
-      --bg:              #ECEEF3;
-      --card:            #FFFFFF;
-      --fg:              #111827;
-      --fg-2:            #374151;
-      --fg-muted:        #6B7280;
-      --accent:          #4D9100;
-      --accent-hover:    #3E7500;
-      --accent-subtle:   #EBF5DC;
-      --accent-border:   #86BC25;
-      --navy:            #012169;
-      --navy-light:      #E8EDF7;
-      --border:          #DDE1E9;
-      --border-hover:    #C4CAD6;
-      --option-hover:    #F5F7FA;
-      --input-bg:        #FAFBFC;
-      --warn-bg:         #FFFBEB;
-      --warn-border:     #F59E0B;
-      --warn-text:       #92400E;
-      --info-bg:         #EFF6FF;
-      --info-border:     #3B82F6;
-      --info-text:       #1E40AF;
-      --progress-track:  #DDE1E9;
-      --shadow:          0 1px 3px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.07);
-      --radius:          12px;
+      --bg:           #E7EAF1;
+      --card:         #FFFFFF;
+      --hdr:          #0C1526;
+      --hdr-2:        #111D35;
+      --fg:           #0F1623;
+      --fg-2:         #394259;
+      --fg-muted:     #61708A;
+      --accent:       #1A7A3C;
+      --accent-h:     #146030;
+      --accent-sub:   #E4F2EB;
+      --signal:       #86BC25;
+      --border:       #DCE0EA;
+      --border-h:     #B8BFCE;
+      --opt-hover:    #F4F6FA;
+      --input-bg:     #F8F9FC;
+      --warn-bg:      #FFF8EC;
+      --warn-bd:      #E5960E;
+      --warn-tx:      #6E3B00;
+      --info-bg:      #EEF4FF;
+      --info-bd:      #3B72D9;
+      --info-tx:      #1A3A8F;
+      --shadow:       0 2px 4px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.09);
+      --r:            14px;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg:              #0D1017;
-        --card:            #161D2B;
-        --fg:              #EDF0F5;
-        --fg-2:            #C9D0DC;
-        --fg-muted:        #8A95A8;
-        --accent:          #86BC25;
-        --accent-hover:    #9DD12D;
-        --accent-subtle:   #192610;
-        --accent-border:   #86BC25;
-        --navy:            #2251A8;
-        --navy-light:      #0F1C3A;
-        --border:          #252E42;
-        --border-hover:    #333F5A;
-        --option-hover:    #1C2535;
-        --input-bg:        #1C2535;
-        --warn-bg:         #271D06;
-        --warn-border:     #D97706;
-        --warn-text:       #FDE68A;
-        --info-bg:         #0C1A30;
-        --info-border:     #2563EB;
-        --info-text:       #93C5FD;
-        --progress-track:  #252E42;
-        --shadow:          0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+        --bg:           #070D1A;
+        --card:         #0F1827;
+        --hdr:          #070D1A;
+        --hdr-2:        #0B1220;
+        --fg:           #E4EAF5;
+        --fg-2:         #A5B0C8;
+        --fg-muted:     #62718C;
+        --accent:       #21A050;
+        --accent-h:     #1D8A44;
+        --accent-sub:   #082416;
+        --signal:       #86BC25;
+        --border:       #1C2A3E;
+        --border-h:     #2D3F58;
+        --opt-hover:    #141E30;
+        --input-bg:     #141E30;
+        --warn-bg:      #1C1000;
+        --warn-bd:      #C47D0A;
+        --warn-tx:      #F5CC72;
+        --info-bg:      #080F24;
+        --info-bd:      #2B5CC8;
+        --info-tx:      #87ADFF;
+        --shadow:       0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.6);
         color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --bg:              #0D1017;
-      --card:            #161D2B;
-      --fg:              #EDF0F5;
-      --fg-2:            #C9D0DC;
-      --fg-muted:        #8A95A8;
-      --accent:          #86BC25;
-      --accent-hover:    #9DD12D;
-      --accent-subtle:   #192610;
-      --accent-border:   #86BC25;
-      --navy:            #2251A8;
-      --navy-light:      #0F1C3A;
-      --border:          #252E42;
-      --border-hover:    #333F5A;
-      --option-hover:    #1C2535;
-      --input-bg:        #1C2535;
-      --warn-bg:         #271D06;
-      --warn-border:     #D97706;
-      --warn-text:       #FDE68A;
-      --info-bg:         #0C1A30;
-      --info-border:     #2563EB;
-      --info-text:       #93C5FD;
-      --progress-track:  #252E42;
-      --shadow:          0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+      --bg:           #070D1A;
+      --card:         #0F1827;
+      --hdr:          #070D1A;
+      --hdr-2:        #0B1220;
+      --fg:           #E4EAF5;
+      --fg-2:         #A5B0C8;
+      --fg-muted:     #62718C;
+      --accent:       #21A050;
+      --accent-h:     #1D8A44;
+      --accent-sub:   #082416;
+      --signal:       #86BC25;
+      --border:       #1C2A3E;
+      --border-h:     #2D3F58;
+      --opt-hover:    #141E30;
+      --input-bg:     #141E30;
+      --warn-bg:      #1C1000;
+      --warn-bd:      #C47D0A;
+      --warn-tx:      #F5CC72;
+      --info-bg:      #080F24;
+      --info-bd:      #2B5CC8;
+      --info-tx:      #87ADFF;
+      --shadow:       0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.6);
       color-scheme: dark;
     }
 
-    /* ── Reset & base ───────────────────────────────────────── */
+    /* ── Base ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; }
     body {
       background: var(--bg);
       color: var(--fg);
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
       line-height: 1.6;
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding-block: 2.5rem;
-      padding-left:  max(16px, env(safe-area-inset-left, 0px));
+      padding-block: 2.75rem;
+      padding-left:  max(16px, env(safe-area-inset-left,  0px));
       padding-right: max(16px, env(safe-area-inset-right, 0px));
     }
-    @media (max-width: 480px) {
-      body { padding-block: 1.25rem; }
-    }
+    @media (max-width: 480px) { body { padding-block: 1.25rem; } }
 
     /* ── Card shell ─────────────────────────────────────────── */
     .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
       width: 100%;
-      max-width: 680px;
+      max-width: 700px;
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    /* ── Start screen ───────────────────────────────────────── */
+    /* ── START SCREEN ───────────────────────────────────────── */
     #start-screen {
-      padding: 3rem 2.5rem;
-      text-align: left;
+      background: var(--hdr);
+    }
+    .start-inner {
+      padding: 3rem 2.75rem 2.75rem;
     }
     .start-eyebrow {
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .1em;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .75rem;
+      color: var(--signal);
+      margin-bottom: 1.5rem;
     }
     .start-title {
-      font-family: 'Lora', Georgia, serif;
-      font-size: clamp(1.75rem, 4vw, 2.25rem);
-      font-weight: 600;
-      color: var(--fg);
-      line-height: 1.25;
-      margin-bottom: .5rem;
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 1.15;
+      letter-spacing: -.01em;
     }
-    .start-subtitle {
-      font-size: 1rem;
-      color: var(--fg-muted);
+    .start-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .8125rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.45);
+      margin-top: .5rem;
+      letter-spacing: .04em;
+    }
+    .start-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,.1);
+      margin: 2rem 0;
+    }
+    .start-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .75rem;
+      color: rgba(255,255,255,.4);
+      letter-spacing: .05em;
       margin-bottom: 2rem;
     }
+    .start-meta span { color: rgba(255,255,255,.7); }
     .start-note {
-      background: var(--navy-light);
-      border-left: 3px solid var(--navy);
-      border-radius: 0 6px 6px 0;
-      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 9px;
+      padding: 1.125rem 1.25rem;
       font-size: .875rem;
-      color: var(--fg-2);
+      color: rgba(255,255,255,.6);
+      line-height: 1.65;
       margin-bottom: 2.25rem;
-      line-height: 1.6;
     }
-    .start-note strong { color: var(--fg); }
-    .btn-primary {
+    .start-note strong { color: rgba(255,255,255,.9); font-weight: 600; }
+    .btn-begin {
       display: inline-flex;
       align-items: center;
-      gap: .5rem;
-      background: var(--accent);
-      color: #fff;
+      gap: .625rem;
+      background: #FFFFFF;
+      color: var(--hdr);
       border: none;
       border-radius: 8px;
-      padding: .8125rem 1.75rem;
-      font-family: inherit;
+      padding: .875rem 1.875rem;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: .9375rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background .15s;
-      text-decoration: none;
+      transition: background .15s, transform .1s;
+      letter-spacing: .01em;
     }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-primary:focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 3px;
-    }
+    .btn-begin:hover { background: #F0F3FF; }
+    .btn-begin:active { transform: scale(.98); }
+    .btn-begin:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+    .arrow { font-size: 1rem; transition: transform .15s; }
+    .btn-begin:hover .arrow { transform: translateX(3px); }
 
-    /* ── Survey screen ──────────────────────────────────────── */
-    #survey-screen { display: none; flex-direction: column; }
-    #survey-screen.active { display: flex; }
+    /* ── SURVEY SCREEN ──────────────────────────────────────── */
+    #survey-screen { display: none; }
+    #survey-screen.active { display: block; }
 
-    .survey-header {
-      padding: 1.25rem 1.75rem .75rem;
+    /* Header band */
+    .s-header {
+      background: var(--hdr);
+      padding: 1.125rem 1.875rem .875rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      border-bottom: 1px solid var(--border);
     }
-    .module-badge {
-      display: inline-flex;
+    .s-header-left {
+      display: flex;
       align-items: center;
-      gap: .5rem;
-      background: var(--navy);
-      color: #fff;
-      font-size: .6875rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: .3rem .75rem;
-      border-radius: 100px;
+      gap: .875rem;
+      min-width: 0;
+      flex: 1;
     }
-    .module-name {
-      font-size: .8125rem;
-      color: var(--fg-muted);
-      font-weight: 500;
+    .mod-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.9);
+      padding: .3rem .7rem;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .mod-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .04em;
+      color: rgba(255,255,255,.4);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 300px;
     }
-    .q-counter {
-      font-size: .8125rem;
-      color: var(--fg-muted);
+    .q-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .75rem;
+      color: rgba(255,255,255,.4);
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
 
     /* Progress bar */
     .progress-track {
-      height: 3px;
-      background: var(--progress-track);
+      height: 2px;
+      background: rgba(255,255,255,.08);
     }
     .progress-fill {
       height: 100%;
-      background: var(--accent-border);
-      transition: width .3s ease;
+      background: var(--signal);
+      transition: width .35s cubic-bezier(.4,0,.2,1);
     }
 
-    /* Question area */
-    .question-body {
-      padding: 2rem 2.25rem 1.5rem;
-      transition: opacity .15s ease;
+    /* Question body */
+    .q-body {
+      background: var(--card);
+      padding: 2.25rem 2.25rem 1.5rem;
+    }
+    @keyframes q-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .q-body.animating { animation: q-in .22s ease both; }
+
+    .branch-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
     }
     .q-id {
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      color: var(--fg-muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      margin-bottom: .6rem;
+      color: var(--fg-muted);
+      margin-bottom: .5rem;
     }
     .q-text {
-      font-family: 'Lora', Georgia, serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.3125rem);
-      font-weight: 600;
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: clamp(1.1rem, 2.8vw, 1.3125rem);
+      font-weight: 500;
       color: var(--fg);
       line-height: 1.45;
       margin-bottom: .625rem;
@@ -256,182 +295,175 @@
     .q-hint {
       font-size: .875rem;
       color: var(--fg-muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.55;
+      line-height: 1.6;
+      margin-bottom: 1.625rem;
     }
     .q-hint:empty { display: none; }
 
-    /* Branch label */
-    .branch-label {
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: .5rem;
-    }
-
     /* Inputs */
-    .answer-area { display: flex; flex-direction: column; gap: .625rem; }
+    .answer-area { display: flex; flex-direction: column; gap: .5rem; }
     input[type="text"],
     textarea {
       width: 100%;
       background: var(--input-bg);
       border: 1.5px solid var(--border);
       border-radius: 8px;
-      padding: .75rem 1rem;
-      font-family: inherit;
+      padding: .8125rem 1rem;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: .9375rem;
       color: var(--fg);
+      line-height: 1.55;
       transition: border-color .15s;
       resize: vertical;
     }
     input[type="text"]:focus,
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent-border);
-    }
-    textarea { min-height: 110px; line-height: 1.55; }
+    textarea:focus { outline: none; border-color: var(--accent); }
+    textarea { min-height: 108px; }
 
-    /* Option cards */
+    /* Option cards — signature left-accent on selection */
     .option-card {
       display: flex;
       align-items: flex-start;
       gap: .875rem;
-      padding: .9375rem 1.1rem;
+      padding: .9375rem 1.125rem;
+      padding-left: calc(1.125rem - 1.5px); /* compensate so content stays aligned when border-left widens */
+      background: var(--card);
       border: 1.5px solid var(--border);
+      border-left-width: 1.5px;
       border-radius: 9px;
       cursor: pointer;
-      transition: border-color .15s, background .15s;
+      transition: border-color .15s, border-left-width .15s, background .15s, padding-left .15s;
       position: relative;
     }
-    .option-card:hover { border-color: var(--accent-border); background: var(--option-hover); }
-    .option-card.selected { border-color: var(--accent-border); background: var(--accent-subtle); }
+    .option-card:hover {
+      border-color: var(--border-h);
+      background: var(--opt-hover);
+    }
+    .option-card.selected {
+      border-color: var(--border);
+      border-left-color: var(--accent);
+      border-left-width: 3px;
+      padding-left: calc(1.125rem - 3px);
+      background: var(--accent-sub);
+    }
     .option-card input {
       position: absolute;
       opacity: 0;
-      width: 0;
-      height: 0;
+      width: 0; height: 0;
       pointer-events: none;
     }
-    .option-dot {
+    .opt-indicator {
       flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--border-hover);
-      border-radius: 50%;
+      width: 17px;
+      height: 17px;
+      border: 2px solid var(--border-h);
       display: flex;
       align-items: center;
       justify-content: center;
       transition: border-color .15s, background .15s;
-      margin-top: 2px;
+      margin-top: 3px;
     }
-    .option-card.selected .option-dot {
+    .opt-indicator.radio   { border-radius: 50%; }
+    .opt-indicator.checkbox { border-radius: 4px; }
+    .option-card.selected .opt-indicator {
       border-color: var(--accent);
       background: var(--accent);
     }
-    .option-dot::after {
-      content: "";
-      width: 6px;
-      height: 6px;
+    .opt-indicator::after { content: ""; opacity: 0; transition: opacity .12s; }
+    .opt-indicator.radio::after {
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: #fff;
-      opacity: 0;
-      transition: opacity .12s;
     }
-    .option-card.selected .option-dot::after { opacity: 1; }
-
-    /* Checkbox variant */
-    .option-check {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--border-hover);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color .15s, background .15s;
-      margin-top: 2px;
-    }
-    .option-card.selected .option-check {
-      border-color: var(--accent);
-      background: var(--accent);
-    }
-    .option-check::after {
-      content: "";
-      width: 10px;
-      height: 6px;
+    .opt-indicator.checkbox::after {
+      width: 9px; height: 5px;
       border-left: 2px solid #fff;
       border-bottom: 2px solid #fff;
       transform: rotate(-45deg) translate(1px, -1px);
-      opacity: 0;
-      transition: opacity .12s;
     }
-    .option-card.selected .option-check::after { opacity: 1; }
+    .option-card.selected .opt-indicator::after { opacity: 1; }
 
-    .option-label { flex: 1; min-width: 0; }
-    .option-label strong {
+    .opt-label { flex: 1; min-width: 0; }
+    .opt-label strong {
       display: block;
       font-size: .9375rem;
       font-weight: 500;
       color: var(--fg);
       line-height: 1.35;
     }
-    .option-label span {
+    .opt-label span {
       display: block;
       font-size: .8125rem;
       color: var(--fg-muted);
       margin-top: .2rem;
+      line-height: 1.5;
     }
 
-    /* Alert boxes */
+    /* Alerts */
     .alert {
       border-radius: 8px;
       padding: .875rem 1rem;
       font-size: .875rem;
-      line-height: 1.55;
+      line-height: 1.6;
       margin-top: 1rem;
     }
     .alert.warn {
       background: var(--warn-bg);
-      border: 1px solid var(--warn-border);
-      color: var(--warn-text);
+      border: 1px solid var(--warn-bd);
+      color: var(--warn-tx);
     }
     .alert.info {
       background: var(--info-bg);
-      border: 1px solid var(--info-border);
-      color: var(--info-text);
+      border: 1px solid var(--info-bd);
+      color: var(--info-tx);
     }
     .alert strong { font-weight: 600; }
-
-    /* Validation error */
     .field-error {
       font-size: .8125rem;
-      color: #DC2626;
-      margin-top: .375rem;
+      color: #C8253A;
+      margin-top: .5rem;
       display: none;
     }
     .field-error.visible { display: block; }
 
     /* Nav row */
     .nav-row {
-      padding: 1.25rem 2.25rem 1.75rem;
+      background: var(--card);
+      padding: 1.125rem 2.25rem 1.875rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      border-top: 1px solid var(--border);
     }
     @media (max-width: 480px) {
-      .survey-header { padding: 1rem 1.25rem .75rem; }
-      .question-body { padding: 1.5rem 1.25rem 1rem; }
-      .nav-row { padding: 1rem 1.25rem 1.5rem; }
+      .s-header { padding: 1rem 1.25rem .75rem; }
+      .q-body   { padding: 1.5rem 1.25rem 1.25rem; }
+      .nav-row  { padding: 1rem 1.25rem 1.5rem; }
     }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .8125rem 1.625rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: .9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      letter-spacing: .01em;
+    }
+    .btn-primary:hover   { background: var(--accent-h); }
+    .btn-primary:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
     .btn-back {
       background: none;
       border: none;
-      font-family: inherit;
-      font-size: .9375rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: .875rem;
       font-weight: 500;
       color: var(--fg-muted);
       cursor: pointer;
@@ -440,28 +472,44 @@
       transition: color .15s;
     }
     .btn-back:hover { color: var(--fg); }
-    .btn-back:disabled { opacity: .35; cursor: default; }
+    .btn-back:disabled { opacity: .3; cursor: default; }
     .btn-back:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    /* ── End screen ─────────────────────────────────────────── */
+    /* ── END SCREEN ─────────────────────────────────────────── */
     #end-screen { display: none; }
     #end-screen.active { display: block; }
+
     .end-header {
-      padding: 2.5rem 2.5rem 1.75rem;
-      border-bottom: 1px solid var(--border);
+      background: var(--hdr);
+      padding: 2.25rem 2.75rem;
+    }
+    .end-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: .875rem;
     }
     .end-title {
-      font-family: 'Lora', Georgia, serif;
+      font-family: 'IBM Plex Serif', Georgia, serif;
       font-size: 1.625rem;
-      font-weight: 600;
-      color: var(--fg);
-      margin-bottom: .4rem;
+      font-weight: 500;
+      color: #FFFFFF;
+      margin-bottom: .375rem;
     }
-    .end-subtitle { font-size: .9375rem; color: var(--fg-muted); }
+    .end-sub {
+      font-size: .875rem;
+      color: rgba(255,255,255,.5);
+    }
+
     .end-actions {
-      padding: 1.5rem 2.5rem;
+      background: var(--card);
+      padding: 1.375rem 2.25rem;
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       gap: .75rem;
       border-bottom: 1px solid var(--border);
     }
@@ -469,116 +517,126 @@
       display: inline-flex;
       align-items: center;
       gap: .4rem;
-      background: none;
+      background: transparent;
       border: 1.5px solid var(--border);
       border-radius: 8px;
       padding: .6875rem 1.25rem;
-      font-family: inherit;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: .875rem;
       font-weight: 600;
       color: var(--fg-2);
       cursor: pointer;
       transition: border-color .15s, background .15s;
     }
-    .btn-secondary:hover { border-color: var(--accent-border); background: var(--option-hover); }
+    .btn-secondary:hover { border-color: var(--accent); background: var(--accent-sub); }
     .btn-secondary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     .btn-ghost {
       background: none;
       border: none;
-      font-family: inherit;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: .875rem;
       font-weight: 500;
       color: var(--fg-muted);
       cursor: pointer;
-      padding: .6875rem .25rem;
+      padding: .5rem .25rem;
+      margin-left: auto;
     }
     .btn-ghost:hover { color: var(--fg); }
     .copy-confirm {
-      font-size: .8125rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .75rem;
+      font-weight: 600;
       color: var(--accent);
-      font-weight: 500;
+      letter-spacing: .05em;
       display: none;
       align-items: center;
       gap: .3rem;
     }
     .copy-confirm.visible { display: inline-flex; }
-    .summary-section { padding: 1.5rem 2.5rem; border-bottom: 1px solid var(--border); }
+
+    /* Summary */
+    .summary-section {
+      background: var(--card);
+      padding: 1.75rem 2.25rem;
+      border-bottom: 1px solid var(--border);
+    }
     .summary-section:last-child { border-bottom: none; }
-    .summary-module-label {
-      font-size: .7rem;
-      font-weight: 700;
+    .sum-mod-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      font-weight: 600;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--navy);
-      margin-bottom: 1rem;
+      color: var(--fg-muted);
+      margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
-      gap: .5rem;
+      gap: .75rem;
     }
-    .summary-module-label::after {
+    .sum-mod-label::after {
       content: "";
       flex: 1;
       height: 1px;
       background: var(--border);
     }
-    .summary-item { margin-bottom: 1.25rem; }
-    .summary-item:last-child { margin-bottom: 0; }
-    .summary-q {
-      font-size: .8125rem;
-      color: var(--fg-muted);
-      margin-bottom: .25rem;
-      line-height: 1.5;
-    }
-    .summary-q em {
-      font-style: normal;
+    .sum-item { margin-bottom: 1.375rem; }
+    .sum-item:last-child { margin-bottom: 0; }
+    .sum-q {
+      font-family: 'IBM Plex Mono', monospace;
       font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
       color: var(--fg-muted);
-      opacity: .7;
+      margin-bottom: .3rem;
+      letter-spacing: .03em;
     }
-    .summary-a {
+    .sum-a {
       font-size: .9375rem;
       color: var(--fg);
-      line-height: 1.55;
+      line-height: 1.6;
       white-space: pre-wrap;
     }
     @media (max-width: 480px) {
-      .end-header { padding: 1.75rem 1.25rem 1.25rem; }
-      .end-actions { padding: 1.25rem; }
-      .summary-section { padding: 1.25rem; }
+      .end-header   { padding: 1.75rem 1.25rem; }
+      .end-actions  { padding: 1.125rem 1.25rem; }
+      .summary-section { padding: 1.375rem 1.25rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── START SCREEN ──────────────────────────────────────── -->
+<!-- ── START ──────────────────────────────────────────────── -->
 <div id="start-screen" class="card">
-  <div class="start-eyebrow">Account Team Intake</div>
-  <h1 class="start-title">The Proving Ground</h1>
-  <p class="start-subtitle">For account teams interested in running an immersive lab with their client</p>
-  <div class="start-note">
-    <strong>How this works.</strong> Answer one question at a time. Your responses to key questions automatically route you through the relevant follow-up questions — you'll skip anything that doesn't apply. At the end, you'll get a complete summary you can copy or download for the CIO Program team.<br><br>
-    <strong>Before you begin:</strong> This intake uses synthetic data only. No real client data, PII, or sensitive information. Every question can be answered by the account team — no input is needed from the CIO Program team or Mission Incubator.
+  <div class="start-inner">
+    <div class="start-eyebrow">GPS Core Consulting · CIO Program</div>
+    <h1 class="start-title">The Proving Ground</h1>
+    <p class="start-sub">Account Team Intake · Draft v3</p>
+    <hr class="start-divider">
+    <p class="start-meta">
+      <span>11 modules</span> · branching questions · complete in ~20 min
+    </p>
+    <div class="start-note">
+      <strong>How this works.</strong> Answer one question at a time. Key answers automatically route you to the relevant follow-up questions — anything that doesn't apply to your situation is skipped. At the end you'll get a structured summary to copy or download for the CIO Program team.<br><br>
+      <strong>Before you begin:</strong> This intake uses synthetic data only. No real client data, PII, or sensitive information. Every question can be answered by the account team — no input is needed from the CIO Program team or Mission Incubator.
+    </div>
+    <button class="btn-begin" id="btn-start">
+      Begin Intake <span class="arrow" aria-hidden="true">→</span>
+    </button>
   </div>
-  <button class="btn-primary" id="btn-start">Begin Intake <span aria-hidden="true">→</span></button>
 </div>
 
-<!-- ── SURVEY SCREEN ─────────────────────────────────────── -->
+<!-- ── SURVEY ─────────────────────────────────────────────── -->
 <div id="survey-screen" class="card">
-  <div class="survey-header">
-    <div style="display:flex;align-items:center;gap:.75rem;min-width:0;flex:1">
-      <span class="module-badge" id="module-badge">M0</span>
-      <span class="module-name" id="module-name">Opportunity Context</span>
+  <div class="s-header">
+    <div class="s-header-left">
+      <span class="mod-tag" id="mod-tag">M0</span>
+      <span class="mod-name" id="mod-name">Opportunity Context</span>
     </div>
-    <span class="q-counter" id="q-counter">1 of 39</span>
+    <span class="q-count" id="q-count">1 of 39</span>
   </div>
   <div class="progress-track">
     <div class="progress-fill" id="progress-fill" style="width:0%"></div>
   </div>
 
-  <div class="question-body" id="question-body">
+  <div class="q-body" id="q-body">
     <div class="branch-label" id="branch-label" style="display:none"></div>
     <div class="q-id" id="q-id">0.1</div>
     <div class="q-text" id="q-text"></div>
@@ -586,7 +644,7 @@
     <div class="answer-area" id="answer-area"></div>
     <div class="alert warn" id="alert-warn" style="display:none"></div>
     <div class="alert info" id="alert-info" style="display:none"></div>
-    <div class="field-error" id="field-error">Please provide an answer before continuing.</div>
+    <div class="field-error" id="field-error">This question requires an answer before continuing.</div>
   </div>
 
   <div class="nav-row">
@@ -595,17 +653,17 @@
   </div>
 </div>
 
-<!-- ── END SCREEN ────────────────────────────────────────── -->
+<!-- ── END ────────────────────────────────────────────────── -->
 <div id="end-screen" class="card">
   <div class="end-header">
-    <div class="end-title">Intake complete</div>
-    <div class="end-subtitle">Review your answers below, then copy or download to share with the CIO Program team.</div>
+    <div class="end-tag">Intake complete</div>
+    <div class="end-title">Review your answers</div>
+    <div class="end-sub">Copy or download below, then share with the CIO Program team.</div>
   </div>
   <div class="end-actions">
     <button class="btn-primary" id="btn-copy">Copy to clipboard</button>
     <button class="btn-secondary" id="btn-download">Download .txt</button>
     <span class="copy-confirm" id="copy-confirm">✓ Copied</span>
-    <div style="flex:1"></div>
     <button class="btn-ghost" id="btn-restart">Start over</button>
   </div>
   <div id="summary-body"></div>
@@ -668,7 +726,7 @@ const QUESTIONS = [
     type: "single", required: true,
     options: [
       { value: "demo",      label: "Deloitte builds and demonstrates", desc: "A working demonstration the account team shows the client" },
-      { value: "co-create", label: "Client co-creates with us",         desc: "An immersive session where the client builds alongside the Deloitte team in a simulated environment" }
+      { value: "co-create", label: "Client co-creates with us",        desc: "An immersive session where the client builds alongside the Deloitte team in a simulated environment" }
     ]
   },
   {
@@ -687,9 +745,9 @@ const QUESTIONS = [
     hint: "\"Connected\" means the experience integrates with a realistic back end — this triggers additional technical questions later in the intake.",
     type: "single", required: true,
     options: [
-      { value: "screens",   label: "Screens only",                        desc: "UI mockup or static prototype, no live logic" },
-      { value: "working",   label: "Working application on sample data",   desc: "Real application logic, synthetic database" },
-      { value: "connected", label: "Connected to realistic systems",       desc: "Integrated back-end and realistic data flows — triggers additional tech questions" }
+      { value: "screens",   label: "Screens only",                      desc: "UI mockup or static prototype, no live logic" },
+      { value: "working",   label: "Working application on sample data", desc: "Real application logic, synthetic database" },
+      { value: "connected", label: "Connected to realistic systems",     desc: "Integrated back-end and realistic data flows — triggers additional tech questions" }
     ]
   },
   {
@@ -849,11 +907,11 @@ const QUESTIONS = [
     text: "Which cost driver should the lab visibly reduce?",
     type: "single", required: false,
     options: [
-      { value: "manual-keying",    label: "Manual keying" },
-      { value: "duplicate-entry",  label: "Duplicate entry" },
-      { value: "rework",           label: "Rework" },
-      { value: "waiting",          label: "Waiting / handoff delays" },
-      { value: "other",            label: "Other" }
+      { value: "manual-keying",   label: "Manual keying" },
+      { value: "duplicate-entry", label: "Duplicate entry" },
+      { value: "rework",          label: "Rework" },
+      { value: "waiting",         label: "Waiting / handoff delays" },
+      { value: "other",           label: "Other" }
     ],
     condition: r => getActiveBranch(r) === "2"
   },
@@ -957,11 +1015,11 @@ const QUESTIONS = [
     text: "What is the client participants' level of technical understanding?",
     type: "single", required: true,
     options: [
-      { value: "executive",             label: "Executive / business-focused",  desc: "Interested in outcomes, limited technical background" },
-      { value: "technology-aware",      label: "Technology-aware",              desc: "Comfortable discussing technology concepts and use cases" },
-      { value: "technical-practitioner",label: "Technical practitioner",        desc: "Can evaluate solution design, trade-offs, and implementation" },
-      { value: "technical-expert",      label: "Technical expert",              desc: "Deep expertise in architecture, engineering, data, or emerging technologies" },
-      { value: "mixed",                 label: "Mixed audience",                desc: "Participants have varied levels of technical expertise" }
+      { value: "executive",              label: "Executive / business-focused",  desc: "Interested in outcomes, limited technical background" },
+      { value: "technology-aware",       label: "Technology-aware",              desc: "Comfortable discussing technology concepts and use cases" },
+      { value: "technical-practitioner", label: "Technical practitioner",        desc: "Can evaluate solution design, trade-offs, and implementation" },
+      { value: "technical-expert",       label: "Technical expert",              desc: "Deep expertise in architecture, engineering, data, or emerging technologies" },
+      { value: "mixed",                  label: "Mixed audience",                desc: "Participants have varied levels of technical expertise" }
     ]
   },
   {
@@ -1224,7 +1282,7 @@ const QUESTIONS = [
 
 // ── STATE ────────────────────────────────────────────────────────
 let responses  = {};
-let history    = [];   // array of question IDs visited
+let history    = [];
 let currentQId = null;
 
 // ── ENGINE ───────────────────────────────────────────────────────
@@ -1236,9 +1294,7 @@ function getQ(id) {
   return QUESTIONS.find(q => q.id === id);
 }
 
-function isFirst() {
-  return history.length === 0;
-}
+function isFirst() { return history.length === 0; }
 
 function isLast() {
   const vis = getVisible();
@@ -1246,20 +1302,20 @@ function isLast() {
 }
 
 function posInVisible() {
-  const vis = getVisible();
-  return vis.findIndex(q => q.id === currentQId);
+  return getVisible().findIndex(q => q.id === currentQId);
 }
 
 // ── RENDER ───────────────────────────────────────────────────────
 function render(animate) {
-  const body = document.getElementById("question-body");
+  const body = document.getElementById("q-body");
+
   if (animate) {
-    body.style.opacity = "0";
-    setTimeout(() => { fillQuestion(); body.style.opacity = "1"; }, 150);
-  } else {
-    fillQuestion();
-    body.style.opacity = "1";
+    body.classList.remove("animating");
+    void body.offsetWidth; // reflow to restart animation
+    body.classList.add("animating");
   }
+
+  fillQuestion();
 
   const vis   = getVisible();
   const pos   = posInVisible();
@@ -1267,11 +1323,11 @@ function render(animate) {
   const pct   = total > 0 ? ((pos + 1) / total) * 100 : 0;
 
   document.getElementById("progress-fill").style.width = pct + "%";
-  document.getElementById("q-counter").textContent = `${pos + 1} of ${total}`;
+  document.getElementById("q-count").textContent = `${pos + 1} of ${total}`;
 
   const q = getQ(currentQId);
-  document.getElementById("module-badge").textContent = q.module;
-  document.getElementById("module-name").textContent  = MODULE_LABELS[q.module] || "";
+  document.getElementById("mod-tag").textContent  = q.module;
+  document.getElementById("mod-name").textContent = MODULE_LABELS[q.module] || "";
 
   document.getElementById("btn-back").disabled = isFirst();
   document.getElementById("btn-next").textContent = isLast() ? "Finish →" : "Next →";
@@ -1282,7 +1338,6 @@ function fillQuestion() {
   const q = getQ(currentQId);
   if (!q) return;
 
-  // Branch label
   const bl = document.getElementById("branch-label");
   if (q.branchLabel) { bl.textContent = q.branchLabel; bl.style.display = "block"; }
   else { bl.style.display = "none"; }
@@ -1291,7 +1346,6 @@ function fillQuestion() {
   document.getElementById("q-text").textContent = q.text;
   document.getElementById("q-hint").textContent = q.hint || "";
 
-  // Build answer area
   const area = document.getElementById("answer-area");
   area.innerHTML = "";
 
@@ -1304,7 +1358,7 @@ function fillQuestion() {
     if (responses[q.id]) inp.value = responses[q.id];
     inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); handleNext(); } });
     area.appendChild(inp);
-    inp.focus();
+    setTimeout(() => inp.focus(), 30);
   }
   else if (q.type === "textarea") {
     const ta = document.createElement("textarea");
@@ -1315,16 +1369,16 @@ function fillQuestion() {
       if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); handleNext(); }
     });
     area.appendChild(ta);
-    ta.focus();
+    setTimeout(() => ta.focus(), 30);
   }
   else if (q.type === "single") {
     let opts = q.options;
     if (q.dynamicOptions) {
-      const selected = (responses["1.2"] || []).filter(i => i !== "7");
-      opts = selected.map(v => ({ value: v, label: ISSUE_LABELS[v] }));
+      const sel = (responses["1.2"] || []).filter(i => i !== "7");
+      opts = sel.map(v => ({ value: v, label: ISSUE_LABELS[v] }));
     }
     opts.forEach(opt => {
-      const card = buildOptionCard(opt, "radio", "q-option", responses[q.id] === opt.value);
+      const card = buildOptionCard(opt, "radio", responses[q.id] === opt.value);
       card.addEventListener("click", () => {
         area.querySelectorAll(".option-card").forEach(c => c.classList.remove("selected"));
         card.classList.add("selected");
@@ -1337,7 +1391,7 @@ function fillQuestion() {
   else if (q.type === "multi") {
     const saved = responses[q.id] || [];
     q.options.forEach(opt => {
-      const card = buildOptionCard(opt, "checkbox", "q-option", saved.includes(opt.value));
+      const card = buildOptionCard(opt, "checkbox", saved.includes(opt.value));
       card.addEventListener("click", () => {
         card.classList.toggle("selected");
         card.querySelector("input").checked = card.classList.contains("selected");
@@ -1347,32 +1401,31 @@ function fillQuestion() {
     });
   }
 
-  // Restore alerts
   updateAlerts(q, area);
 }
 
-function buildOptionCard(opt, inputType, name, checked) {
-  const card  = document.createElement("label");
+function buildOptionCard(opt, inputType, checked) {
+  const card = document.createElement("label");
   card.className = "option-card" + (checked ? " selected" : "");
 
   const inp = document.createElement("input");
-  inp.type  = inputType;
-  inp.name  = name;
-  inp.value = opt.value;
+  inp.type    = inputType;
+  inp.name    = "q-option";
+  inp.value   = opt.value;
   inp.checked = checked;
 
   const dot = document.createElement("div");
-  dot.className = inputType === "radio" ? "option-dot" : "option-check";
+  dot.className = `opt-indicator ${inputType}`;
 
-  const lbl  = document.createElement("div");
-  lbl.className = "option-label";
-  const strong = document.createElement("strong");
-  strong.textContent = opt.label;
-  lbl.appendChild(strong);
+  const lbl = document.createElement("div");
+  lbl.className = "opt-label";
+  const s = document.createElement("strong");
+  s.textContent = opt.label;
+  lbl.appendChild(s);
   if (opt.desc) {
-    const span = document.createElement("span");
-    span.textContent = opt.desc;
-    lbl.appendChild(span);
+    const d = document.createElement("span");
+    d.textContent = opt.desc;
+    lbl.appendChild(d);
   }
 
   card.appendChild(inp);
@@ -1388,16 +1441,16 @@ function updateAlerts(q, area) {
   infoEl.style.display = "none";
 
   if (q.specialCheck === "issue7") {
-    const sevenChecked = area.querySelector('input[value="7"]');
-    if (sevenChecked && sevenChecked.checked) {
+    const chk = area.querySelector('input[value="7"]');
+    if (chk && chk.checked) {
       warnEl.innerHTML = "<strong>None of these selected.</strong> Contact the CIO Program team to discuss whether a lab is the right fit for this challenge.";
       warnEl.style.display = "block";
     }
   }
   if (q.specialCheck === "noUseCase") {
-    const noChecked = area.querySelector('input[value="no"]');
-    if (noChecked && noChecked.checked) {
-      infoEl.innerHTML = "<strong>No use case yet.</strong> Work with your account team to narrow to a specific use case before submitting. The use-case detail module (Module 2) will be skipped.";
+    const chk = area.querySelector('input[value="no"]');
+    if (chk && chk.checked) {
+      infoEl.innerHTML = "<strong>No use case yet.</strong> Work with your account team to narrow to a specific use case before submitting. The use case detail module (Module 2) will be skipped.";
       infoEl.style.display = "block";
     }
   }
@@ -1433,19 +1486,14 @@ function handleNext() {
     return;
   }
 
-  // Save (null means unanswered optional → store empty string so back-fill works)
   responses[currentQId] = val !== null ? val : "";
 
-  // Clear any stale 1.2a if 1.2 changed
   if (currentQId === "1.2") {
     const nonSeven = (val || []).filter(i => i !== "7");
     if (nonSeven.length < 2) delete responses["1.2a"];
   }
 
-  if (isLast()) {
-    showEnd();
-    return;
-  }
+  if (isLast()) { showEnd(); return; }
 
   const vis = getVisible();
   const pos = posInVisible();
@@ -1468,54 +1516,52 @@ function showEnd() {
 }
 
 function buildSummary() {
-  const vis   = getVisible();
-  const body  = document.getElementById("summary-body");
+  const vis  = getVisible();
+  const body = document.getElementById("summary-body");
   body.innerHTML = "";
 
-  // Group by module
   const grouped = {};
   vis.forEach(q => {
     const r = responses[q.id];
-    if (!r && !q.required) return; // skip unanswered optionals with no answer
+    if (!r && !q.required) return;
     if (!grouped[q.module]) grouped[q.module] = [];
     grouped[q.module].push(q);
   });
 
-  Object.keys(grouped).sort((a, b) => {
-    const order = Object.keys(MODULE_LABELS);
-    return order.indexOf(a) - order.indexOf(b);
-  }).forEach(mod => {
+  const modOrder = Object.keys(MODULE_LABELS);
+  modOrder.forEach(mod => {
+    if (!grouped[mod]) return;
     const section = document.createElement("div");
     section.className = "summary-section";
 
-    const mlabel = document.createElement("div");
-    mlabel.className = "summary-module-label";
-    mlabel.textContent = `${mod} · ${MODULE_LABELS[mod]}`;
-    section.appendChild(mlabel);
+    const ml = document.createElement("div");
+    ml.className = "sum-mod-label";
+    ml.textContent = `${mod} · ${MODULE_LABELS[mod]}`;
+    section.appendChild(ml);
 
     grouped[mod].forEach(q => {
       const val = responses[q.id];
       if (!val && !Array.isArray(val)) return;
 
       const item = document.createElement("div");
-      item.className = "summary-item";
+      item.className = "sum-item";
 
       const qEl = document.createElement("div");
-      qEl.className = "summary-q";
-      qEl.innerHTML = `<em>${q.id}</em>  ${q.text}`;
+      qEl.className = "sum-q";
+      qEl.textContent = `${q.id}  ·  ${q.text}`;
       item.appendChild(qEl);
 
       const aEl = document.createElement("div");
-      aEl.className = "summary-a";
+      aEl.className = "sum-a";
       if (Array.isArray(val)) {
-        // For 1.2, show issue names
-        if (q.id === "1.2") {
-          aEl.textContent = val.map(v => v === "7" ? "None of these" : ISSUE_LABELS[v]).join("\n");
-        } else {
-          aEl.textContent = val.join(", ");
-        }
+        aEl.textContent = q.id === "1.2"
+          ? val.map(v => v === "7" ? "None of these" : ISSUE_LABELS[v]).join("\n")
+          : val.join(", ");
       } else if (q.type === "single" && q.options) {
-        const found = q.options.find(o => o.value === val);
+        const found = (q.dynamicOptions
+          ? (responses["1.2"] || []).filter(i => i !== "7").map(v => ({ value: v, label: ISSUE_LABELS[v] }))
+          : q.options
+        ).find(o => o.value === val);
         aEl.textContent = found ? found.label : val;
       } else {
         aEl.textContent = val;
@@ -1530,9 +1576,9 @@ function buildSummary() {
 
 function generateText() {
   const vis = getVisible();
-  const lines = ["THE PROVING GROUND — Account Team Intake", "=" .repeat(50), ""];
-
+  const lines = ["THE PROVING GROUND — Account Team Intake", "=".repeat(52), ""];
   let lastMod = null;
+
   vis.forEach(q => {
     const val = responses[q.id];
     if (!val && !Array.isArray(val)) return;
@@ -1544,13 +1590,14 @@ function generateText() {
 
     lines.push(`\n[${q.id}] ${q.text}`);
     if (Array.isArray(val)) {
-      if (q.id === "1.2") {
-        lines.push(val.map(v => v === "7" ? "  - None of these" : `  - ${ISSUE_LABELS[v]}`).join("\n"));
-      } else {
-        lines.push(val.map(v => `  - ${v}`).join("\n"));
-      }
+      lines.push(q.id === "1.2"
+        ? val.map(v => `  - ${v === "7" ? "None of these" : ISSUE_LABELS[v]}`).join("\n")
+        : val.map(v => `  - ${v}`).join("\n"));
     } else if (q.type === "single" && q.options) {
-      const found = q.options.find(o => o.value === val);
+      const opts = q.dynamicOptions
+        ? (responses["1.2"] || []).filter(i => i !== "7").map(v => ({ value: v, label: ISSUE_LABELS[v] }))
+        : q.options;
+      const found = opts.find(o => o.value === val);
       lines.push(found ? found.label : val);
     } else {
       lines.push(val);
@@ -1572,14 +1619,10 @@ document.getElementById("btn-next").addEventListener("click", handleNext);
 document.getElementById("btn-back").addEventListener("click", handleBack);
 
 document.addEventListener("keydown", e => {
-  if (document.getElementById("survey-screen").classList.contains("active")) {
-    if (e.key === "ArrowRight" && !["TEXTAREA","INPUT"].includes(document.activeElement.tagName)) {
-      handleNext();
-    }
-    if (e.key === "ArrowLeft" && !["TEXTAREA","INPUT"].includes(document.activeElement.tagName)) {
-      handleBack();
-    }
-  }
+  if (!document.getElementById("survey-screen").classList.contains("active")) return;
+  const tag = document.activeElement.tagName;
+  if (e.key === "ArrowRight" && !["TEXTAREA","INPUT"].includes(tag)) handleNext();
+  if (e.key === "ArrowLeft"  && !["TEXTAREA","INPUT"].includes(tag)) handleBack();
 });
 
 document.getElementById("btn-copy").addEventListener("click", () => {
@@ -1590,35 +1633,24 @@ document.getElementById("btn-copy").addEventListener("click", () => {
     setTimeout(() => confirm.classList.remove("visible"), 2500);
   }).catch(() => {
     const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.opacity  = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
+    ta.value = text; ta.style.cssText = "position:fixed;opacity:0";
+    document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); document.body.removeChild(ta);
     confirm.classList.add("visible");
     setTimeout(() => confirm.classList.remove("visible"), 2500);
   });
 });
 
 document.getElementById("btn-download").addEventListener("click", () => {
-  const text = generateText();
-  const blob = new Blob([text], { type: "text/plain" });
+  const blob = new Blob([generateText()], { type: "text/plain" });
   const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = "proving-ground-intake.txt";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const a    = Object.assign(document.createElement("a"), { href: url, download: "proving-ground-intake.txt" });
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
 });
 
 document.getElementById("btn-restart").addEventListener("click", () => {
-  responses  = {};
-  history    = [];
-  currentQId = null;
+  responses = {}; history = []; currentQId = null;
   document.getElementById("end-screen").classList.remove("active");
   document.getElementById("start-screen").style.display = "block";
 });
