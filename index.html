@@ -1381,8 +1381,12 @@ function fillQuestion() {
     }
     opts.forEach(opt => {
       const card = buildOptionCard(opt, "radio", responses[q.id] === opt.value);
-      card.addEventListener("click", () => {
-        area.querySelectorAll(".option-card").forEach(c => c.classList.remove("selected"));
+      card.addEventListener("click", (e) => {
+        e.preventDefault();
+        area.querySelectorAll(".option-card").forEach(c => {
+          c.classList.remove("selected");
+          c.querySelector("input").checked = false;
+        });
         card.classList.add("selected");
         card.querySelector("input").checked = true;
         updateAlerts(q, area);
@@ -1394,7 +1398,8 @@ function fillQuestion() {
     const saved = responses[q.id] || [];
     q.options.forEach(opt => {
       const card = buildOptionCard(opt, "checkbox", saved.includes(opt.value));
-      card.addEventListener("click", () => {
+      card.addEventListener("click", (e) => {
+        e.preventDefault();
         card.classList.toggle("selected");
         card.querySelector("input").checked = card.classList.contains("selected");
         updateAlerts(q, area);
