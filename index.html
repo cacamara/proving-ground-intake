@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Proving Ground Intake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens ─────────────────────────────────────────────── */
+    :root {
+      --bg:              #ECEEF3;
+      --card:            #FFFFFF;
+      --fg:              #111827;
+      --fg-2:            #374151;
+      --fg-muted:        #6B7280;
+      --accent:          #4D9100;
+      --accent-hover:    #3E7500;
+      --accent-subtle:   #EBF5DC;
+      --accent-border:   #86BC25;
+      --navy:            #012169;
+      --navy-light:      #E8EDF7;
+      --border:          #DDE1E9;
+      --border-hover:    #C4CAD6;
+      --option-hover:    #F5F7FA;
+      --input-bg:        #FAFBFC;
+      --warn-bg:         #FFFBEB;
+      --warn-border:     #F59E0B;
+      --warn-text:       #92400E;
+      --info-bg:         #EFF6FF;
+      --info-border:     #3B82F6;
+      --info-text:       #1E40AF;
+      --progress-track:  #DDE1E9;
+      --shadow:          0 1px 3px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.07);
+      --radius:          12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg:              #0D1017;
+        --card:            #161D2B;
+        --fg:              #EDF0F5;
+        --fg-2:            #C9D0DC;
+        --fg-muted:        #8A95A8;
+        --accent:          #86BC25;
+        --accent-hover:    #9DD12D;
+        --accent-subtle:   #192610;
+        --accent-border:   #86BC25;
+        --navy:            #2251A8;
+        --navy-light:      #0F1C3A;
+        --border:          #252E42;
+        --border-hover:    #333F5A;
+        --option-hover:    #1C2535;
+        --input-bg:        #1C2535;
+        --warn-bg:         #271D06;
+        --warn-border:     #D97706;
+        --warn-text:       #FDE68A;
+        --info-bg:         #0C1A30;
+        --info-border:     #2563EB;
+        --info-text:       #93C5FD;
+        --progress-track:  #252E42;
+        --shadow:          0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg:              #0D1017;
+      --card:            #161D2B;
+      --fg:              #EDF0F5;
+      --fg-2:            #C9D0DC;
+      --fg-muted:        #8A95A8;
+      --accent:          #86BC25;
+      --accent-hover:    #9DD12D;
+      --accent-subtle:   #192610;
+      --accent-border:   #86BC25;
+      --navy:            #2251A8;
+      --navy-light:      #0F1C3A;
+      --border:          #252E42;
+      --border-hover:    #333F5A;
+      --option-hover:    #1C2535;
+      --input-bg:        #1C2535;
+      --warn-bg:         #271D06;
+      --warn-border:     #D97706;
+      --warn-text:       #FDE68A;
+      --info-bg:         #0C1A30;
+      --info-border:     #2563EB;
+      --info-text:       #93C5FD;
+      --progress-track:  #252E42;
+      --shadow:          0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+      color-scheme: dark;
+    }
+
+    /* ── Reset & base ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-block: 2.5rem;
+      padding-left:  max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    @media (max-width: 480px) {
+      body { padding-block: 1.25rem; }
+    }
+
+    /* ── Card shell ─────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* ── Start screen ───────────────────────────────────────── */
+    #start-screen {
+      padding: 3rem 2.5rem;
+      text-align: left;
+    }
+    .start-eyebrow {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+    .start-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.25;
+      margin-bottom: .5rem;
+    }
+    .start-subtitle {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      margin-bottom: 2rem;
+    }
+    .start-note {
+      background: var(--navy-light);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 6px 6px 0;
+      padding: 1rem 1.25rem;
+      font-size: .875rem;
+      color: var(--fg-2);
+      margin-bottom: 2.25rem;
+      line-height: 1.6;
+    }
+    .start-note strong { color: var(--fg); }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .8125rem 1.75rem;
+      font-family: inherit;
+      font-size: .9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* ── Survey screen ──────────────────────────────────────── */
+    #survey-screen { display: none; flex-direction: column; }
+    #survey-screen.active { display: flex; }
+
+    .survey-header {
+      padding: 1.25rem 1.75rem .75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--navy);
+      color: #fff;
+      font-size: .6875rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .3rem .75rem;
+      border-radius: 100px;
+    }
+    .module-name {
+      font-size: .8125rem;
+      color: var(--fg-muted);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 300px;
+    }
+    .q-counter {
+      font-size: .8125rem;
+      color: var(--fg-muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Progress bar */
+    .progress-track {
+      height: 3px;
+      background: var(--progress-track);
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-border);
+      transition: width .3s ease;
+    }
+
+    /* Question area */
+    .question-body {
+      padding: 2rem 2.25rem 1.5rem;
+      transition: opacity .15s ease;
+    }
+    .q-id {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+    .q-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.3125rem);
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.45;
+      margin-bottom: .625rem;
+      text-wrap: balance;
+    }
+    .q-hint {
+      font-size: .875rem;
+      color: var(--fg-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.55;
+    }
+    .q-hint:empty { display: none; }
+
+    /* Branch label */
+    .branch-label {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+
+    /* Inputs */
+    .answer-area { display: flex; flex-direction: column; gap: .625rem; }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      font-family: inherit;
+      font-size: .9375rem;
+      color: var(--fg);
+      transition: border-color .15s;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-border);
+    }
+    textarea { min-height: 110px; line-height: 1.55; }
+
+    /* Option cards */
+    .option-card {
+      display: flex;
+      align-items: flex-start;
+      gap: .875rem;
+      padding: .9375rem 1.1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      position: relative;
+    }
+    .option-card:hover { border-color: var(--accent-border); background: var(--option-hover); }
+    .option-card.selected { border-color: var(--accent-border); background: var(--accent-subtle); }
+    .option-card input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .option-dot {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border-hover);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .15s, background .15s;
+      margin-top: 2px;
+    }
+    .option-card.selected .option-dot {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    .option-dot::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0;
+      transition: opacity .12s;
+    }
+    .option-card.selected .option-dot::after { opacity: 1; }
+
+    /* Checkbox variant */
+    .option-check {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border-hover);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .15s, background .15s;
+      margin-top: 2px;
+    }
+    .option-card.selected .option-check {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    .option-check::after {
+      content: "";
+      width: 10px;
+      height: 6px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translate(1px, -1px);
+      opacity: 0;
+      transition: opacity .12s;
+    }
+    .option-card.selected .option-check::after { opacity: 1; }
+
+    .option-label { flex: 1; min-width: 0; }
+    .option-label strong {
+      display: block;
+      font-size: .9375rem;
+      font-weight: 500;
+      color: var(--fg);
+      line-height: 1.35;
+    }
+    .option-label span {
+      display: block;
+      font-size: .8125rem;
+      color: var(--fg-muted);
+      margin-top: .2rem;
+    }
+
+    /* Alert boxes */
+    .alert {
+      border-radius: 8px;
+      padding: .875rem 1rem;
+      font-size: .875rem;
+      line-height: 1.55;
+      margin-top: 1rem;
+    }
+    .alert.warn {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      color: var(--warn-text);
+    }
+    .alert.info {
+      background: var(--info-bg);
+      border: 1px solid var(--info-border);
+      color: var(--info-text);
+    }
+    .alert strong { font-weight: 600; }
+
+    /* Validation error */
+    .field-error {
+      font-size: .8125rem;
+      color: #DC2626;
+      margin-top: .375rem;
+      display: none;
+    }
+    .field-error.visible { display: block; }
+
+    /* Nav row */
+    .nav-row {
+      padding: 1.25rem 2.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) {
+      .survey-header { padding: 1rem 1.25rem .75rem; }
+      .question-body { padding: 1.5rem 1.25rem 1rem; }
+      .nav-row { padding: 1rem 1.25rem 1.5rem; }
+    }
+    .btn-back {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: .9375rem;
+      font-weight: 500;
+      color: var(--fg-muted);
+      cursor: pointer;
+      padding: .5rem .25rem;
+      border-radius: 6px;
+      transition: color .15s;
+    }
+    .btn-back:hover { color: var(--fg); }
+    .btn-back:disabled { opacity: .35; cursor: default; }
+    .btn-back:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ── End screen ─────────────────────────────────────────── */
+    #end-screen { display: none; }
+    #end-screen.active { display: block; }
+    .end-header {
+      padding: 2.5rem 2.5rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .end-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.625rem;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: .4rem;
+    }
+    .end-subtitle { font-size: .9375rem; color: var(--fg-muted); }
+    .end-actions {
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: .6875rem 1.25rem;
+      font-family: inherit;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--fg-2);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    .btn-secondary:hover { border-color: var(--accent-border); background: var(--option-hover); }
+    .btn-secondary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .btn-ghost {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--fg-muted);
+      cursor: pointer;
+      padding: .6875rem .25rem;
+    }
+    .btn-ghost:hover { color: var(--fg); }
+    .copy-confirm {
+      font-size: .8125rem;
+      color: var(--accent);
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: .3rem;
+    }
+    .copy-confirm.visible { display: inline-flex; }
+    .summary-section { padding: 1.5rem 2.5rem; border-bottom: 1px solid var(--border); }
+    .summary-section:last-child { border-bottom: none; }
+    .summary-module-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .summary-module-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .summary-item { margin-bottom: 1.25rem; }
+    .summary-item:last-child { margin-bottom: 0; }
+    .summary-q {
+      font-size: .8125rem;
+      color: var(--fg-muted);
+      margin-bottom: .25rem;
+      line-height: 1.5;
+    }
+    .summary-q em {
+      font-style: normal;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      opacity: .7;
+    }
+    .summary-a {
+      font-size: .9375rem;
+      color: var(--fg);
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    @media (max-width: 480px) {
+      .end-header { padding: 1.75rem 1.25rem 1.25rem; }
+      .end-actions { padding: 1.25rem; }
+      .summary-section { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── START SCREEN ──────────────────────────────────────── -->
+<div id="start-screen" class="card">
+  <div class="start-eyebrow">Account Team Intake</div>
+  <h1 class="start-title">The Proving Ground</h1>
+  <p class="start-subtitle">For account teams interested in running an immersive lab with their client</p>
+  <div class="start-note">
+    <strong>How this works.</strong> Answer one question at a time. Your responses to key questions automatically route you through the relevant follow-up questions — you'll skip anything that doesn't apply. At the end, you'll get a complete summary you can copy or download for the CIO Program team.<br><br>
+    <strong>Before you begin:</strong> This intake uses synthetic data only. No real client data, PII, or sensitive information. Every question can be answered by the account team — no input is needed from the CIO Program team or Mission Incubator.
+  </div>
+  <button class="btn-primary" id="btn-start">Begin Intake <span aria-hidden="true">→</span></button>
+</div>
+
+<!-- ── SURVEY SCREEN ─────────────────────────────────────── -->
+<div id="survey-screen" class="card">
+  <div class="survey-header">
+    <div style="display:flex;align-items:center;gap:.75rem;min-width:0;flex:1">
+      <span class="module-badge" id="module-badge">M0</span>
+      <span class="module-name" id="module-name">Opportunity Context</span>
+    </div>
+    <span class="q-counter" id="q-counter">1 of 39</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+
+  <div class="question-body" id="question-body">
+    <div class="branch-label" id="branch-label" style="display:none"></div>
+    <div class="q-id" id="q-id">0.1</div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-hint" id="q-hint"></div>
+    <div class="answer-area" id="answer-area"></div>
+    <div class="alert warn" id="alert-warn" style="display:none"></div>
+    <div class="alert info" id="alert-info" style="display:none"></div>
+    <div class="field-error" id="field-error">Please provide an answer before continuing.</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back" disabled>← Back</button>
+    <button class="btn-primary" id="btn-next">Next →</button>
+  </div>
+</div>
+
+<!-- ── END SCREEN ────────────────────────────────────────── -->
+<div id="end-screen" class="card">
+  <div class="end-header">
+    <div class="end-title">Intake complete</div>
+    <div class="end-subtitle">Review your answers below, then copy or download to share with the CIO Program team.</div>
+  </div>
+  <div class="end-actions">
+    <button class="btn-primary" id="btn-copy">Copy to clipboard</button>
+    <button class="btn-secondary" id="btn-download">Download .txt</button>
+    <span class="copy-confirm" id="copy-confirm">✓ Copied</span>
+    <div style="flex:1"></div>
+    <button class="btn-ghost" id="btn-restart">Start over</button>
+  </div>
+  <div id="summary-body"></div>
+</div>
+
+<script>
+// ── MODULE LABELS ────────────────────────────────────────────────
+const MODULE_LABELS = {
+  M0:  "Opportunity Context & Experience Routing",
+  M1:  "Challenge and Outcomes",
+  M2:  "Use Case Detail",
+  M3:  "Signature Issue Branch",
+  M4:  "Audience, Participants & Personas",
+  M5:  "Opportunity and Account Context",
+  M6:  "Constraints and Governance",
+  M7:  "Client Digital Environment",
+  M8:  "Experience Design and Logistics",
+  M9:  "Account Team, Funding & Approvals",
+  M10: "Success and Follow-On"
+};
+
+const ISSUE_LABELS = {
+  "1": "Align IT with mission value",
+  "2": "Deliver cost-effective IT operational excellence",
+  "3": "Harness data, analytics, and AI/ML",
+  "4": "Accelerate delivery of innovative solutions",
+  "5": "Evolve to a digital agency for enhanced citizen experience",
+  "6": "Enhance cyber security posture and compliance"
+};
+
+function getActiveBranch(r) {
+  const issues = (r["1.2"] || []).filter(i => i !== "7");
+  if (issues.length === 1) return issues[0];
+  return r["1.2a"] || null;
+}
+
+// ── QUESTIONS DATA ────────────────────────────────────────────────
+const QUESTIONS = [
+  // ══ MODULE 0 ══════════════════════════════════════════════════
+  {
+    id: "0.1", module: "M0",
+    text: "Which client and program area is this for, and which sector?",
+    hint: "Include the agency or organization name, the specific program or initiative, and whether this is Federal or State and local.",
+    type: "textarea", required: true
+  },
+  {
+    id: "0.2", module: "M0",
+    text: "What sales opportunity or account objective is driving this request, and what role should the experience play in advancing it?",
+    type: "textarea", required: true
+  },
+  {
+    id: "0.2a", module: "M0",
+    text: "What is the Jupiter ID for this client?",
+    hint: "The opportunity or engagement ID. Skip if not yet assigned.",
+    type: "text", required: false
+  },
+  {
+    id: "0.3", module: "M0",
+    text: "What kind of experience are you looking for?",
+    type: "single", required: true,
+    options: [
+      { value: "demo",      label: "Deloitte builds and demonstrates", desc: "A working demonstration the account team shows the client" },
+      { value: "co-create", label: "Client co-creates with us",         desc: "An immersive session where the client builds alongside the Deloitte team in a simulated environment" }
+    ]
+  },
+  {
+    id: "0.4", module: "M0",
+    text: "Is your main goal to educate the client on what is possible, or to build something together with them?",
+    type: "single", required: true,
+    options: [
+      { value: "educate", label: "Educate — show what's possible" },
+      { value: "build",   label: "Build together — create something with the client in the room" }
+    ],
+    condition: r => r["0.3"] === "co-create"
+  },
+  {
+    id: "0.5", module: "M0",
+    text: "How real should it feel to the client?",
+    hint: "\"Connected\" means the experience integrates with a realistic back end — this triggers additional technical questions later in the intake.",
+    type: "single", required: true,
+    options: [
+      { value: "screens",   label: "Screens only",                        desc: "UI mockup or static prototype, no live logic" },
+      { value: "working",   label: "Working application on sample data",   desc: "Real application logic, synthetic database" },
+      { value: "connected", label: "Connected to realistic systems",       desc: "Integrated back-end and realistic data flows — triggers additional tech questions" }
+    ]
+  },
+  {
+    id: "0.6", module: "M0",
+    text: "Is a specific date driving this request? If so, what is the date and how firm is it?",
+    hint: "Examples: orals, a leadership transition, a fiscal-year deadline. If the date is under 4 weeks away, the CIO Program team will flag the timing risk — a Deloitte-led demonstration is the faster option.",
+    type: "text", required: false
+  },
+
+  // ══ MODULE 1 ══════════════════════════════════════════════════
+  {
+    id: "1.1", module: "M1",
+    text: "What challenge is the client facing, and what outcome do they want?",
+    hint: "State it in one or two sentences — start with the client's problem, not the technical solution or the sales goal.",
+    type: "textarea", required: true
+  },
+  {
+    id: "1.1a", module: "M1",
+    text: "How well-defined is the core challenge coming into the lab?",
+    type: "single", required: true,
+    options: [
+      { value: "exploring",    label: "Exploring",    desc: "We know something is broken but haven't defined it yet" },
+      { value: "defined",      label: "Defined",      desc: "We have a clear, validated problem statement" },
+      { value: "mid-solution", label: "Mid-solution", desc: "We have a direction and need to build or validate it" }
+    ]
+  },
+  {
+    id: "1.1b", module: "M1",
+    text: "What has the client already tried, if anything, to address this?",
+    type: "textarea", required: false,
+    condition: r => r["1.1a"] === "exploring"
+  },
+  {
+    id: "1.1c", module: "M1",
+    text: "What is currently blocking them from finishing the build?",
+    hint: "Select all that apply.",
+    type: "multi", required: false,
+    options: [
+      { value: "technical",   label: "Technical uncertainty" },
+      { value: "stakeholder", label: "Stakeholder buy-in" },
+      { value: "resourcing",  label: "Resourcing or capacity" },
+      { value: "scope",       label: "Unclear scope" }
+    ],
+    condition: r => r["1.1a"] === "mid-solution"
+  },
+  {
+    id: "1.2", module: "M1",
+    text: "Which signature issues does the challenge touch?",
+    hint: "Select all that apply. If you select \"None of these,\" the CIO Program team will need to discuss whether a lab is the right fit.",
+    type: "multi", required: true,
+    options: [
+      { value: "1", label: "Align IT with mission value" },
+      { value: "2", label: "Deliver cost-effective IT operational excellence" },
+      { value: "3", label: "Harness data, analytics, and AI/ML" },
+      { value: "4", label: "Accelerate delivery of innovative solutions" },
+      { value: "5", label: "Evolve to a digital agency for enhanced citizen experience" },
+      { value: "6", label: "Enhance cyber security posture and compliance" },
+      { value: "7", label: "None of these" }
+    ],
+    specialCheck: "issue7"
+  },
+  {
+    id: "1.2a", module: "M1",
+    text: "Which one issue should the lab center on?",
+    hint: "Choose the issue the lab should show most directly. This determines which branch of questions comes next.",
+    type: "single", required: true,
+    dynamicOptions: true,
+    condition: r => (r["1.2"] || []).filter(i => i !== "7").length >= 2
+  },
+  {
+    id: "1.3", module: "M1",
+    text: "What would a successful outcome look like for Deloitte, and how would that success be measured?",
+    hint: "Examples: follow-on work awarded, additional scope added, executive relationship strengthened.",
+    type: "textarea", required: false
+  },
+  {
+    id: "1.4", module: "M1",
+    text: "Has your team identified a specific use case for this experience?",
+    hint: "Examples of use cases: document intake and validation, image or field-evidence analysis, a multi-party workflow, cross-system data and analytics.",
+    type: "single", required: true,
+    options: [
+      { value: "yes", label: "Yes — we have a specific use case in mind" },
+      { value: "no",  label: "Not yet — still exploring candidates" }
+    ],
+    specialCheck: "noUseCase"
+  },
+  {
+    id: "1.4b", module: "M1",
+    text: "Describe the use case.",
+    hint: "Who are the actors? What does the process look like start to finish?",
+    type: "textarea", required: true,
+    condition: r => r["1.4"] === "yes"
+  },
+
+  // ══ MODULE 2 ══════════════════════════════════════════════════
+  {
+    id: "2.1", module: "M2",
+    text: "Walk through the use case from start to finish.",
+    hint: "Who acts at each step? What are the inputs, decisions, outputs, and handoffs? If you have a journey map or process flow, describe it here. Sanitized only — no real client data or PII.",
+    type: "textarea", required: true,
+    condition: r => r["1.4"] === "yes"
+  },
+  {
+    id: "2.2", module: "M2",
+    text: "Which artifacts or data flow through the use case, and can you obtain sanitized samples?",
+    hint: "Examples: documents, images, data tables, messages. Note any samples you can share. Sanitized only — no real client data or PII.",
+    type: "textarea", required: false,
+    condition: r => r["1.4"] === "yes"
+  },
+  {
+    id: "2.3", module: "M2",
+    text: "Where do delays, rework loops, and manual re-keying occur today?",
+    type: "textarea", required: false,
+    condition: r => r["1.4"] === "yes"
+  },
+  {
+    id: "2.4", module: "M2",
+    text: "Which rules or checks govern decisions, and what should happen when a check fails?",
+    hint: "Should the system block, warn, or route to a person?",
+    type: "textarea", required: false,
+    condition: r => r["1.4"] === "yes"
+  },
+  {
+    id: "2.5", module: "M2",
+    text: "Which decisions need human judgment, and how accurate must any automated result be?",
+    type: "textarea", required: false,
+    condition: r => r["1.4"] === "yes"
+  },
+
+  // ══ MODULE 3 — BRANCHES ══════════════════════════════════════
+  {
+    id: "3A.1", module: "M3",
+    branchLabel: "Branch 3A · Align IT with mission value",
+    text: "What measure or evidence does the client use today to judge progress on the mission outcome this use case supports?",
+    hint: "The lab will show this use case traced end to end to a mission outcome, with the measure visible on screen.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "1"
+  },
+  {
+    id: "3A.2", module: "M3",
+    branchLabel: "Branch 3A · Align IT with mission value",
+    text: "What would client leaders need to see in the room to believe this use case moves that outcome?",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "1"
+  },
+  {
+    id: "3B.1", module: "M3",
+    branchLabel: "Branch 3B · Cost-effective IT operational excellence",
+    text: "What baseline numbers exist for this process?",
+    hint: "Examples: volume, cycle time, hours or cost per case. The lab will show a before-and-after efficiency demo on this process.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "2"
+  },
+  {
+    id: "3B.2", module: "M3",
+    branchLabel: "Branch 3B · Cost-effective IT operational excellence",
+    text: "Which cost driver should the lab visibly reduce?",
+    type: "single", required: false,
+    options: [
+      { value: "manual-keying",    label: "Manual keying" },
+      { value: "duplicate-entry",  label: "Duplicate entry" },
+      { value: "rework",           label: "Rework" },
+      { value: "waiting",          label: "Waiting / handoff delays" },
+      { value: "other",            label: "Other" }
+    ],
+    condition: r => getActiveBranch(r) === "2"
+  },
+  {
+    id: "3C.1", module: "M3",
+    branchLabel: "Branch 3C · Data, analytics, and AI/ML",
+    text: "Which decision or service in this use case depends on data that is hard to access, trust, or combine today?",
+    hint: "The lab will show messy data becoming a trusted decision, with a human checkpoint.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "3"
+  },
+  {
+    id: "3C.2", module: "M3",
+    branchLabel: "Branch 3C · Data, analytics, and AI/ML",
+    text: "What data should the lab include, and what quality problems should it show?",
+    hint: "Examples: missing fields, duplicates, conflicting sources.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "3"
+  },
+  {
+    id: "3C.3", module: "M3",
+    branchLabel: "Branch 3C · Data, analytics, and AI/ML",
+    text: "Which AI or analytics capability should the lab show, and where does a person review the result?",
+    hint: "Examples: extraction, image analysis, summarization, forecasting.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "3"
+  },
+  {
+    id: "3D.1", module: "M3",
+    branchLabel: "Branch 3D · Accelerate delivery of innovative solutions",
+    text: "What does it take today to go from idea to a working capability?",
+    hint: "Describe the steps, approvals, and typical time. The lab will compress this live.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "4"
+  },
+  {
+    id: "3D.2", module: "M3",
+    branchLabel: "Branch 3D · Accelerate delivery of innovative solutions",
+    text: "Which new capability or technology does the client want to explore, and what stops them from adopting it today?",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "4"
+  },
+  {
+    id: "3E.1", module: "M3",
+    branchLabel: "Branch 3E · Digital agency / citizen experience",
+    text: "Which citizen-facing interaction does this use case improve, and through which channels?",
+    hint: "Examples: applying, checking status, submitting documents. Channels: web, mobile, call center, in person. The lab will show one citizen journey, before and after.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "5"
+  },
+  {
+    id: "3E.2", module: "M3",
+    branchLabel: "Branch 3E · Digital agency / citizen experience",
+    text: "What does the \"before\" look like for the citizen, and what should the \"after\" feel like?",
+    hint: "Describe the steps, waits, and forms before; describe the target experience after.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "5"
+  },
+  {
+    id: "3F.1", module: "M3",
+    branchLabel: "Branch 3F · Cyber security posture and compliance",
+    text: "Which scenario should the lab center on, and should participants watch it or practice it?",
+    hint: "Examples: ransomware recovery, access control, audit readiness. The lab can be observed or hands-on.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "6"
+  },
+  {
+    id: "3F.2", module: "M3",
+    branchLabel: "Branch 3F · Cyber security posture and compliance",
+    text: "Which security architecture elements should the environment represent, and which changes are planned?",
+    hint: "Examples: identity and access, zero trust, monitoring.",
+    type: "textarea", required: false,
+    condition: r => getActiveBranch(r) === "6"
+  },
+
+  // ══ MODULE 4 ══════════════════════════════════════════════════
+  {
+    id: "4.1", module: "M4",
+    text: "Who is the intended end-user for the solution being shown?",
+    hint: "The people the solution is built for — not necessarily the session attendees.",
+    type: "textarea", required: false
+  },
+  {
+    id: "4.2", module: "M4",
+    text: "Which user personas and journeys should appear, and how should their experiences differ?",
+    type: "textarea", required: false
+  },
+  {
+    id: "4.3", module: "M4",
+    text: "Which end-user perspectives must be represented in the room, and can any of those people attend or be interviewed beforehand?",
+    type: "textarea", required: false
+  },
+  {
+    id: "4.4", module: "M4",
+    text: "Who will attend the session?",
+    hint: "Names, roles, and count — both client and Deloitte.",
+    type: "textarea", required: false
+  },
+  {
+    id: "4.5", module: "M4",
+    text: "What is the client participants' level of technical understanding?",
+    type: "single", required: true,
+    options: [
+      { value: "executive",             label: "Executive / business-focused",  desc: "Interested in outcomes, limited technical background" },
+      { value: "technology-aware",      label: "Technology-aware",              desc: "Comfortable discussing technology concepts and use cases" },
+      { value: "technical-practitioner",label: "Technical practitioner",        desc: "Can evaluate solution design, trade-offs, and implementation" },
+      { value: "technical-expert",      label: "Technical expert",              desc: "Deep expertise in architecture, engineering, data, or emerging technologies" },
+      { value: "mixed",                 label: "Mixed audience",                desc: "Participants have varied levels of technical expertise" }
+    ]
+  },
+  {
+    id: "4.6", module: "M4",
+    text: "Do participants prefer exploratory \"art of the possible\" conversation or structured working sessions?",
+    type: "single", required: false,
+    options: [
+      { value: "exploratory", label: "Exploratory — open-ended conversation" },
+      { value: "structured",  label: "Structured — working sessions with defined outputs" },
+      { value: "mix",         label: "Mix of both" }
+    ]
+  },
+  {
+    id: "4.7", module: "M4",
+    text: "Will client participants have hands-on keyboard? Which devices, accounts, and network access do they need?",
+    type: "textarea", required: false,
+    condition: r => r["0.3"] === "co-create" && ["technical-practitioner","technical-expert","mixed"].includes(r["4.5"])
+  },
+  {
+    id: "4.8", module: "M4",
+    text: "Are there sensitivities to plan around?",
+    hint: "Examples: skeptics in the room, incumbent vendor relationships, topics to avoid.",
+    type: "textarea", required: false
+  },
+
+  // ══ MODULE 5 ══════════════════════════════════════════════════
+  {
+    id: "5.1", module: "M5",
+    text: "What is the opportunity type and stage, and what are the key dates?",
+    hint: "Examples: proposal submission, orals, award date.",
+    type: "textarea", required: false
+  },
+  {
+    id: "5.2", module: "M5",
+    text: "Is a procurement active or upcoming?",
+    type: "single", required: true,
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no",  label: "No" }
+    ]
+  },
+  {
+    id: "5.3", module: "M5",
+    text: "What procurement, ethics, or contact rules limit what we can do or say with the client before and during the session?",
+    type: "textarea", required: false,
+    condition: r => r["5.2"] === "yes"
+  },
+  {
+    id: "5.4", module: "M5",
+    text: "Who are the competitors, and what have they shown this client?",
+    type: "textarea", required: false,
+    condition: r => r["5.2"] === "yes"
+  },
+  {
+    id: "5.5", module: "M5",
+    text: "What does the client believe about Deloitte's capabilities today, and what impression should they leave with?",
+    type: "textarea", required: false
+  },
+  {
+    id: "5.6_check", module: "M5",
+    text: "Is there a recently appointed client leader who is the primary target audience for this experience?",
+    type: "single", required: false,
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no",  label: "No" }
+    ]
+  },
+  {
+    id: "5.6", module: "M5",
+    text: "Is engagement with this new leader better now or after they are settled in?",
+    hint: "Consider their onboarding timeline and availability for a session of this kind.",
+    type: "textarea", required: false,
+    condition: r => r["5.6_check"] === "yes"
+  },
+
+  // ══ MODULE 6 ══════════════════════════════════════════════════
+  {
+    id: "6.1", module: "M6",
+    text: "Which technology environment constraints apply?",
+    hint: "Examples: user base size, platforms in use, authorization requirements, environment limits.",
+    type: "textarea", required: false
+  },
+  {
+    id: "6.2", module: "M6",
+    text: "Which real constraints should the experience show rather than hide?",
+    hint: "Examples: Zero Trust requirements, access controls, policy guardrails.",
+    type: "textarea", required: false
+  },
+  {
+    id: "6.3", module: "M6",
+    text: "Does the client restrict which AI tools or models can be used or shown?",
+    type: "textarea", required: false
+  },
+
+  // ══ MODULE 7 ══════════════════════════════════════════════════
+  {
+    id: "7.1", module: "M7",
+    text: "Which applications support this use case today?",
+    hint: "For each: name, commercial vs. custom, and who owns it.",
+    type: "textarea", required: false
+  },
+  {
+    id: "7.2", module: "M7",
+    text: "Which databases or data stores sit behind them?",
+    type: "textarea", required: false
+  },
+  {
+    id: "7.3", module: "M7",
+    text: "What environment details can legitimately be shared with Deloitte and Mission Incubator today?",
+    hint: "Which contract, NDA, or data-sharing terms apply? If little can be shared, the team will use public documentation and a client SME interview.",
+    type: "single", required: false,
+    options: [
+      { value: "yes", label: "Yes — environment details can be shared" },
+      { value: "no",  label: "No or limited sharing only" }
+    ]
+  },
+  {
+    id: "7.4", module: "M7",
+    text: "Can you obtain screenshots or a recorded walkthrough of the key screens and forms?",
+    type: "single", required: false,
+    options: [
+      { value: "yes",   label: "Yes" },
+      { value: "no",    label: "No" },
+      { value: "maybe", label: "Possibly — need to check" }
+    ],
+    condition: r => r["7.3"] === "yes"
+  },
+  {
+    id: "7.5", module: "M7",
+    text: "Which interfaces connect the systems?",
+    hint: "Examples: APIs, batch files, manual re-keying.",
+    type: "textarea", required: false,
+    condition: r => r["7.3"] === "yes" && r["0.5"] === "connected"
+  },
+  {
+    id: "7.6", module: "M7",
+    text: "How do users sign in, and which roles and permissions apply?",
+    type: "textarea", required: false,
+    condition: r => r["7.3"] === "yes" && r["0.5"] === "connected"
+  },
+  {
+    id: "7.7", module: "M7",
+    text: "Who is the client technical SME for follow-ups, and are they available before the build starts?",
+    hint: "Name and availability for a working session with the Mission Incubator developers.",
+    type: "textarea", required: false
+  },
+
+  // ══ MODULE 8 ══════════════════════════════════════════════════
+  {
+    id: "8.1", module: "M8",
+    text: "Would you like a half-day or full-day experience?",
+    type: "single", required: false,
+    options: [
+      { value: "half",      label: "Half-day" },
+      { value: "full",      label: "Full-day" },
+      { value: "undecided", label: "Undecided" }
+    ]
+  },
+  {
+    id: "8.2", module: "M8",
+    text: "Where will it be held?",
+    type: "single", required: false,
+    options: [
+      { value: "mi-space", label: "Mission Incubator space" },
+      { value: "virtual",  label: "Virtual" },
+      { value: "hybrid",   label: "Hybrid" }
+    ]
+  },
+  {
+    id: "8.3", module: "M8",
+    text: "What travel and visitor access do client attendees need?",
+    type: "textarea", required: false,
+    condition: r => ["mi-space","hybrid"].includes(r["8.2"])
+  },
+  {
+    id: "8.4", module: "M8",
+    text: "Do you have preferences or must-haves for how the session runs?",
+    hint: "Examples: working sessions, a competition format, guided walkthroughs, specific agenda items.",
+    type: "textarea", required: false
+  },
+  {
+    id: "8.5", module: "M8",
+    text: "Which pre-session touchpoints with the client are allowed and planned?",
+    hint: "Examples: a briefing, challenge priming. Check against procurement rules if 5.2 is Yes.",
+    type: "textarea", required: false
+  },
+  {
+    id: "8.6", module: "M8",
+    text: "Which realistic details matter for credibility?",
+    hint: "Examples: system names, form look and feel, agency-specific terminology.",
+    type: "textarea", required: false
+  },
+
+  // ══ MODULE 9 ══════════════════════════════════════════════════
+  {
+    id: "9.1", module: "M9",
+    text: "Who is the account-side point of contact for client communication and logistics?",
+    type: "text", required: false
+  },
+  {
+    id: "9.2", module: "M9",
+    text: "Will the account contribute funding to this lab?",
+    type: "single", required: false,
+    options: [
+      { value: "yes",     label: "Yes" },
+      { value: "partial", label: "Partial" },
+      { value: "no",      label: "No" }
+    ]
+  },
+  {
+    id: "9.3", module: "M9",
+    text: "How much, from which budget, and who approves it?",
+    type: "textarea", required: false,
+    condition: r => ["yes","partial"].includes(r["9.2"])
+  },
+  {
+    id: "9.4", module: "M9",
+    text: "What is the funding gap, and what alternatives do you see?",
+    hint: "Examples: client contribution, sector or program support.",
+    type: "textarea", required: false,
+    condition: r => ["partial","no"].includes(r["9.2"])
+  },
+  {
+    id: "9.5", module: "M9",
+    text: "Which Deloitte approvals do you need to run this, and who owns them?",
+    hint: "Examples: engagement leadership, risk, QRM.",
+    type: "textarea", required: false
+  },
+  {
+    id: "9.6", module: "M9",
+    text: "What are the top account-side risks and dependencies?",
+    hint: "Examples: staff availability, client SME access, timeline constraints.",
+    type: "textarea", required: false
+  },
+
+  // ══ MODULE 10 ═════════════════════════════════════════════════
+  {
+    id: "10.1", module: "M10",
+    text: "What is the intended way forward after the experience?",
+    hint: "Examples: follow-on session, deeper build, next pursuit step.",
+    type: "textarea", required: false
+  },
+  {
+    id: "10.2", module: "M10",
+    text: "What are the metrics for success for this experience?",
+    hint: "Examples: follow-on conversion, client satisfaction, time to a working demonstration, evaluator feedback.",
+    type: "textarea", required: false
+  },
+  {
+    id: "10.3", module: "M10",
+    text: "How and when will client feedback be collected?",
+    type: "textarea", required: false
+  },
+  {
+    id: "10.4", module: "M10",
+    text: "Could the use case and what we build for it be reused or adapted for other accounts, and are there client confidentiality limits on reuse?",
+    type: "textarea", required: false
+  }
+];
+
+// ── STATE ────────────────────────────────────────────────────────
+let responses  = {};
+let history    = [];   // array of question IDs visited
+let currentQId = null;
+
+// ── ENGINE ───────────────────────────────────────────────────────
+function getVisible() {
+  return QUESTIONS.filter(q => !q.condition || q.condition(responses));
+}
+
+function getQ(id) {
+  return QUESTIONS.find(q => q.id === id);
+}
+
+function isFirst() {
+  return history.length === 0;
+}
+
+function isLast() {
+  const vis = getVisible();
+  return vis[vis.length - 1].id === currentQId;
+}
+
+function posInVisible() {
+  const vis = getVisible();
+  return vis.findIndex(q => q.id === currentQId);
+}
+
+// ── RENDER ───────────────────────────────────────────────────────
+function render(animate) {
+  const body = document.getElementById("question-body");
+  if (animate) {
+    body.style.opacity = "0";
+    setTimeout(() => { fillQuestion(); body.style.opacity = "1"; }, 150);
+  } else {
+    fillQuestion();
+    body.style.opacity = "1";
+  }
+
+  const vis   = getVisible();
+  const pos   = posInVisible();
+  const total = vis.length;
+  const pct   = total > 0 ? ((pos + 1) / total) * 100 : 0;
+
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("q-counter").textContent = `${pos + 1} of ${total}`;
+
+  const q = getQ(currentQId);
+  document.getElementById("module-badge").textContent = q.module;
+  document.getElementById("module-name").textContent  = MODULE_LABELS[q.module] || "";
+
+  document.getElementById("btn-back").disabled = isFirst();
+  document.getElementById("btn-next").textContent = isLast() ? "Finish →" : "Next →";
+  document.getElementById("field-error").classList.remove("visible");
+}
+
+function fillQuestion() {
+  const q = getQ(currentQId);
+  if (!q) return;
+
+  // Branch label
+  const bl = document.getElementById("branch-label");
+  if (q.branchLabel) { bl.textContent = q.branchLabel; bl.style.display = "block"; }
+  else { bl.style.display = "none"; }
+
+  document.getElementById("q-id").textContent   = q.id;
+  document.getElementById("q-text").textContent = q.text;
+  document.getElementById("q-hint").textContent = q.hint || "";
+
+  // Build answer area
+  const area = document.getElementById("answer-area");
+  area.innerHTML = "";
+
+  if (q.type === "text") {
+    const inp = document.createElement("input");
+    inp.type = "text";
+    inp.id   = "q-input";
+    inp.placeholder = "Your answer...";
+    inp.autocomplete = "off";
+    if (responses[q.id]) inp.value = responses[q.id];
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); handleNext(); } });
+    area.appendChild(inp);
+    inp.focus();
+  }
+  else if (q.type === "textarea") {
+    const ta = document.createElement("textarea");
+    ta.id = "q-input";
+    ta.placeholder = "Your answer...";
+    if (responses[q.id]) ta.value = responses[q.id];
+    ta.addEventListener("keydown", e => {
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); handleNext(); }
+    });
+    area.appendChild(ta);
+    ta.focus();
+  }
+  else if (q.type === "single") {
+    let opts = q.options;
+    if (q.dynamicOptions) {
+      const selected = (responses["1.2"] || []).filter(i => i !== "7");
+      opts = selected.map(v => ({ value: v, label: ISSUE_LABELS[v] }));
+    }
+    opts.forEach(opt => {
+      const card = buildOptionCard(opt, "radio", "q-option", responses[q.id] === opt.value);
+      card.addEventListener("click", () => {
+        area.querySelectorAll(".option-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        card.querySelector("input").checked = true;
+        updateAlerts(q, area);
+      });
+      area.appendChild(card);
+    });
+  }
+  else if (q.type === "multi") {
+    const saved = responses[q.id] || [];
+    q.options.forEach(opt => {
+      const card = buildOptionCard(opt, "checkbox", "q-option", saved.includes(opt.value));
+      card.addEventListener("click", () => {
+        card.classList.toggle("selected");
+        card.querySelector("input").checked = card.classList.contains("selected");
+        updateAlerts(q, area);
+      });
+      area.appendChild(card);
+    });
+  }
+
+  // Restore alerts
+  updateAlerts(q, area);
+}
+
+function buildOptionCard(opt, inputType, name, checked) {
+  const card  = document.createElement("label");
+  card.className = "option-card" + (checked ? " selected" : "");
+
+  const inp = document.createElement("input");
+  inp.type  = inputType;
+  inp.name  = name;
+  inp.value = opt.value;
+  inp.checked = checked;
+
+  const dot = document.createElement("div");
+  dot.className = inputType === "radio" ? "option-dot" : "option-check";
+
+  const lbl  = document.createElement("div");
+  lbl.className = "option-label";
+  const strong = document.createElement("strong");
+  strong.textContent = opt.label;
+  lbl.appendChild(strong);
+  if (opt.desc) {
+    const span = document.createElement("span");
+    span.textContent = opt.desc;
+    lbl.appendChild(span);
+  }
+
+  card.appendChild(inp);
+  card.appendChild(dot);
+  card.appendChild(lbl);
+  return card;
+}
+
+function updateAlerts(q, area) {
+  const warnEl = document.getElementById("alert-warn");
+  const infoEl = document.getElementById("alert-info");
+  warnEl.style.display = "none";
+  infoEl.style.display = "none";
+
+  if (q.specialCheck === "issue7") {
+    const sevenChecked = area.querySelector('input[value="7"]');
+    if (sevenChecked && sevenChecked.checked) {
+      warnEl.innerHTML = "<strong>None of these selected.</strong> Contact the CIO Program team to discuss whether a lab is the right fit for this challenge.";
+      warnEl.style.display = "block";
+    }
+  }
+  if (q.specialCheck === "noUseCase") {
+    const noChecked = area.querySelector('input[value="no"]');
+    if (noChecked && noChecked.checked) {
+      infoEl.innerHTML = "<strong>No use case yet.</strong> Work with your account team to narrow to a specific use case before submitting. The use-case detail module (Module 2) will be skipped.";
+      infoEl.style.display = "block";
+    }
+  }
+}
+
+// ── NAVIGATION ───────────────────────────────────────────────────
+function readResponse() {
+  const q = getQ(currentQId);
+  if (q.type === "single") {
+    const inp = document.querySelector('input[name="q-option"]:checked');
+    return inp ? inp.value : null;
+  }
+  if (q.type === "multi") {
+    const inps = Array.from(document.querySelectorAll('input[name="q-option"]:checked'));
+    return inps.length > 0 ? inps.map(i => i.value) : null;
+  }
+  const el = document.getElementById("q-input");
+  return el ? (el.value.trim() || null) : null;
+}
+
+function hasValue(val) {
+  if (!val) return false;
+  if (Array.isArray(val)) return val.length > 0;
+  return val.length > 0;
+}
+
+function handleNext() {
+  const q   = getQ(currentQId);
+  const val = readResponse();
+
+  if (q.required && !hasValue(val)) {
+    document.getElementById("field-error").classList.add("visible");
+    return;
+  }
+
+  // Save (null means unanswered optional → store empty string so back-fill works)
+  responses[currentQId] = val !== null ? val : "";
+
+  // Clear any stale 1.2a if 1.2 changed
+  if (currentQId === "1.2") {
+    const nonSeven = (val || []).filter(i => i !== "7");
+    if (nonSeven.length < 2) delete responses["1.2a"];
+  }
+
+  if (isLast()) {
+    showEnd();
+    return;
+  }
+
+  const vis = getVisible();
+  const pos = posInVisible();
+  history.push(currentQId);
+  currentQId = vis[pos + 1].id;
+  render(true);
+}
+
+function handleBack() {
+  if (history.length === 0) return;
+  currentQId = history.pop();
+  render(true);
+}
+
+// ── END SCREEN ───────────────────────────────────────────────────
+function showEnd() {
+  document.getElementById("survey-screen").classList.remove("active");
+  document.getElementById("end-screen").classList.add("active");
+  buildSummary();
+}
+
+function buildSummary() {
+  const vis   = getVisible();
+  const body  = document.getElementById("summary-body");
+  body.innerHTML = "";
+
+  // Group by module
+  const grouped = {};
+  vis.forEach(q => {
+    const r = responses[q.id];
+    if (!r && !q.required) return; // skip unanswered optionals with no answer
+    if (!grouped[q.module]) grouped[q.module] = [];
+    grouped[q.module].push(q);
+  });
+
+  Object.keys(grouped).sort((a, b) => {
+    const order = Object.keys(MODULE_LABELS);
+    return order.indexOf(a) - order.indexOf(b);
+  }).forEach(mod => {
+    const section = document.createElement("div");
+    section.className = "summary-section";
+
+    const mlabel = document.createElement("div");
+    mlabel.className = "summary-module-label";
+    mlabel.textContent = `${mod} · ${MODULE_LABELS[mod]}`;
+    section.appendChild(mlabel);
+
+    grouped[mod].forEach(q => {
+      const val = responses[q.id];
+      if (!val && !Array.isArray(val)) return;
+
+      const item = document.createElement("div");
+      item.className = "summary-item";
+
+      const qEl = document.createElement("div");
+      qEl.className = "summary-q";
+      qEl.innerHTML = `<em>${q.id}</em>  ${q.text}`;
+      item.appendChild(qEl);
+
+      const aEl = document.createElement("div");
+      aEl.className = "summary-a";
+      if (Array.isArray(val)) {
+        // For 1.2, show issue names
+        if (q.id === "1.2") {
+          aEl.textContent = val.map(v => v === "7" ? "None of these" : ISSUE_LABELS[v]).join("\n");
+        } else {
+          aEl.textContent = val.join(", ");
+        }
+      } else if (q.type === "single" && q.options) {
+        const found = q.options.find(o => o.value === val);
+        aEl.textContent = found ? found.label : val;
+      } else {
+        aEl.textContent = val;
+      }
+      item.appendChild(aEl);
+      section.appendChild(item);
+    });
+
+    body.appendChild(section);
+  });
+}
+
+function generateText() {
+  const vis = getVisible();
+  const lines = ["THE PROVING GROUND — Account Team Intake", "=" .repeat(50), ""];
+
+  let lastMod = null;
+  vis.forEach(q => {
+    const val = responses[q.id];
+    if (!val && !Array.isArray(val)) return;
+
+    if (q.module !== lastMod) {
+      lines.push(`\n── ${q.module}: ${MODULE_LABELS[q.module]} ──`);
+      lastMod = q.module;
+    }
+
+    lines.push(`\n[${q.id}] ${q.text}`);
+    if (Array.isArray(val)) {
+      if (q.id === "1.2") {
+        lines.push(val.map(v => v === "7" ? "  - None of these" : `  - ${ISSUE_LABELS[v]}`).join("\n"));
+      } else {
+        lines.push(val.map(v => `  - ${v}`).join("\n"));
+      }
+    } else if (q.type === "single" && q.options) {
+      const found = q.options.find(o => o.value === val);
+      lines.push(found ? found.label : val);
+    } else {
+      lines.push(val);
+    }
+  });
+
+  return lines.join("\n");
+}
+
+// ── EVENTS ───────────────────────────────────────────────────────
+document.getElementById("btn-start").addEventListener("click", () => {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("survey-screen").classList.add("active");
+  currentQId = QUESTIONS[0].id;
+  render(false);
+});
+
+document.getElementById("btn-next").addEventListener("click", handleNext);
+document.getElementById("btn-back").addEventListener("click", handleBack);
+
+document.addEventListener("keydown", e => {
+  if (document.getElementById("survey-screen").classList.contains("active")) {
+    if (e.key === "ArrowRight" && !["TEXTAREA","INPUT"].includes(document.activeElement.tagName)) {
+      handleNext();
+    }
+    if (e.key === "ArrowLeft" && !["TEXTAREA","INPUT"].includes(document.activeElement.tagName)) {
+      handleBack();
+    }
+  }
+});
+
+document.getElementById("btn-copy").addEventListener("click", () => {
+  const text = generateText();
+  const confirm = document.getElementById("copy-confirm");
+  navigator.clipboard.writeText(text).then(() => {
+    confirm.classList.add("visible");
+    setTimeout(() => confirm.classList.remove("visible"), 2500);
+  }).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity  = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    confirm.classList.add("visible");
+    setTimeout(() => confirm.classList.remove("visible"), 2500);
+  });
+});
+
+document.getElementById("btn-download").addEventListener("click", () => {
+  const text = generateText();
+  const blob = new Blob([text], { type: "text/plain" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = "proving-ground-intake.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("btn-restart").addEventListener("click", () => {
+  responses  = {};
+  history    = [];
+  currentQId = null;
+  document.getElementById("end-screen").classList.remove("active");
+  document.getElementById("start-screen").style.display = "block";
+});
+</script>
+</body>
+</html>
