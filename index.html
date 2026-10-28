@@ -954,7 +954,7 @@ function fillInputArea(q) {
     ta.placeholder = "Your answer...";
     if (responses[q.id]) ta.value = responses[q.id];
     ta.addEventListener("keydown", e => {
-      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); handleSend(); }
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
     });
     area.appendChild(ta);
     setTimeout(() => ta.focus(), 40);
@@ -1294,7 +1294,8 @@ document.getElementById("btn-back").addEventListener("click", handleBack);
 
 document.addEventListener("keydown", e => {
   if (!document.getElementById("chat-screen").classList.contains("active")) return;
-  if (e.key === "Enter" && e.metaKey) handleSend();
+  const tag = document.activeElement.tagName;
+  if (e.key === "Enter" && !e.shiftKey && tag !== "TEXTAREA" && tag !== "INPUT") handleSend();
 });
 
 document.getElementById("btn-copy").addEventListener("click", () => {
