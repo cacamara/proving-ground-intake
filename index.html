@@ -865,7 +865,6 @@ function addQBubble(q) {
     wrap.appendChild(hint);
   }
   thread.appendChild(wrap);
-  scrollToBottom();
 }
 
 function addABubble(q, val) {
@@ -934,6 +933,7 @@ function render() {
 
   addQBubble(q);
   fillInputArea(q);
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollToBottom()));
 }
 
 function fillInputArea(q) {
@@ -1175,7 +1175,7 @@ function handleBack() {
   document.getElementById("field-error").classList.remove("visible");
 
   fillInputArea(q);
-  scrollToBottom();
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollToBottom()));
 }
 
 // ── END SCREEN ─────────────────────────────────────────────────
