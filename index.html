@@ -8,693 +8,522 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-    /* ── Design tokens ──────────────────────────────────────────
-       Signature: IBM Plex family + dark header band (technical
-       briefing document aesthetic for Deloitte GPS consultants)
-    ─────────────────────────────────────────────────────────── */
     :root {
-      --bg:           #E7EAF1;
-      --card:         #FFFFFF;
-      --hdr:          #0C1526;
-      --hdr-2:        #111D35;
-      --fg:           #0F1623;
-      --fg-2:         #394259;
-      --fg-muted:     #61708A;
-      --accent:       #1A7A3C;
-      --accent-h:     #146030;
-      --accent-sub:   #E4F2EB;
-      --signal:       #86BC25;
-      --border:       #DCE0EA;
-      --border-h:     #B8BFCE;
-      --opt-hover:    #F4F6FA;
-      --input-bg:     #F8F9FC;
-      --warn-bg:      #FFF8EC;
-      --warn-bd:      #E5960E;
-      --warn-tx:      #6E3B00;
-      --info-bg:      #EEF4FF;
-      --info-bd:      #3B72D9;
-      --info-tx:      #1A3A8F;
-      --shadow:       0 2px 4px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.09);
-      --r:            14px;
+      --bg:        #E7EAF1;
+      --card:      #FFFFFF;
+      --hdr:       #0C1526;
+      --hdr-2:     #111D35;
+      --fg:        #0F1623;
+      --fg-2:      #394259;
+      --fg-muted:  #61708A;
+      --accent:    #1A7A3C;
+      --accent-h:  #146030;
+      --accent-sub:#E4F2EB;
+      --signal:    #86BC25;
+      --border:    #DCE0EA;
+      --opt-hover: #F4F6FA;
+      --input-bg:  #F8F9FC;
+      --warn-bg:   #FFF8EC;
+      --warn-bd:   #E5960E;
+      --warn-tx:   #6E3B00;
+      --info-bg:   #EEF4FF;
+      --info-bd:   #3B72D9;
+      --info-tx:   #1A3A8F;
+      --shadow:    0 2px 4px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.09);
+      --r:         14px;
+      --bubble-q-bg: #1A2540;
+      --bubble-q-fg: #D8E0F0;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg:           #070D1A;
-        --card:         #0F1827;
-        --hdr:          #070D1A;
-        --hdr-2:        #0B1220;
-        --fg:           #E4EAF5;
-        --fg-2:         #A5B0C8;
-        --fg-muted:     #62718C;
-        --accent:       #21A050;
-        --accent-h:     #1D8A44;
-        --accent-sub:   #082416;
-        --signal:       #86BC25;
-        --border:       #1C2A3E;
-        --border-h:     #2D3F58;
-        --opt-hover:    #141E30;
-        --input-bg:     #141E30;
-        --warn-bg:      #1C1000;
-        --warn-bd:      #C47D0A;
-        --warn-tx:      #F5CC72;
-        --info-bg:      #080F24;
-        --info-bd:      #2B5CC8;
-        --info-tx:      #87ADFF;
-        --shadow:       0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.6);
+        --bg: #070D1A; --card: #0F1827; --hdr: #070D1A; --hdr-2: #0B1220;
+        --fg: #E4EAF5; --fg-2: #A5B0C8; --fg-muted: #62718C;
+        --accent: #21A050; --accent-h: #1D8A44; --accent-sub: #082416;
+        --border: #1C2A3E; --opt-hover: #141E30; --input-bg: #141E30;
+        --warn-bg: #1C1000; --warn-bd: #C47D0A; --warn-tx: #F5CC72;
+        --info-bg: #080F24; --info-bd: #2B5CC8; --info-tx: #87ADFF;
+        --shadow: 0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.6);
+        --bubble-q-bg: #0F1827; --bubble-q-fg: #C8D4EC;
         color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --bg:           #070D1A;
-      --card:         #0F1827;
-      --hdr:          #070D1A;
-      --hdr-2:        #0B1220;
-      --fg:           #E4EAF5;
-      --fg-2:         #A5B0C8;
-      --fg-muted:     #62718C;
-      --accent:       #21A050;
-      --accent-h:     #1D8A44;
-      --accent-sub:   #082416;
-      --signal:       #86BC25;
-      --border:       #1C2A3E;
-      --border-h:     #2D3F58;
-      --opt-hover:    #141E30;
-      --input-bg:     #141E30;
-      --warn-bg:      #1C1000;
-      --warn-bd:      #C47D0A;
-      --warn-tx:      #F5CC72;
-      --info-bg:      #080F24;
-      --info-bd:      #2B5CC8;
-      --info-tx:      #87ADFF;
-      --shadow:       0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.6);
+      --bg: #070D1A; --card: #0F1827; --hdr: #070D1A; --hdr-2: #0B1220;
+      --fg: #E4EAF5; --fg-2: #A5B0C8; --fg-muted: #62718C;
+      --accent: #21A050; --accent-h: #1D8A44; --accent-sub: #082416;
+      --border: #1C2A3E; --opt-hover: #141E30; --input-bg: #141E30;
+      --warn-bg: #1C1000; --warn-bd: #C47D0A; --warn-tx: #F5CC72;
+      --info-bg: #080F24; --info-bd: #2B5CC8; --info-tx: #87ADFF;
+      --shadow: 0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.6);
+      --bubble-q-bg: #0F1827; --bubble-q-fg: #C8D4EC;
       color-scheme: dark;
     }
 
-    /* ── Base ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background: var(--bg);
       color: var(--fg);
       font-family: 'IBM Plex Sans', system-ui, sans-serif;
       line-height: 1.6;
-      min-height: 100dvh;
+      height: 100dvh;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding-block: 2.75rem;
-      padding-left:  max(16px, env(safe-area-inset-left,  0px));
-      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      justify-content: center;
     }
-    @media (max-width: 480px) { body { padding-block: 1.25rem; } }
 
-    /* ── Card shell ─────────────────────────────────────────── */
-    .card {
-      width: 100%;
-      max-width: 700px;
+    /* ── START SCREEN ─────────────────────────────────────── */
+    #start-screen {
+      width: 100%; max-width: 640px;
+      background: var(--hdr);
       border-radius: var(--r);
       box-shadow: var(--shadow);
-      overflow: hidden;
+      margin: 1.5rem;
     }
-
-    /* ── START SCREEN ───────────────────────────────────────── */
-    #start-screen {
-      background: var(--hdr);
-    }
-    .start-inner {
-      padding: 3rem 2.75rem 2.75rem;
-    }
+    .start-inner { padding: 3rem 2.75rem 2.75rem; }
     .start-eyebrow {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--signal);
-      margin-bottom: 1.5rem;
+      font-size: .7rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--signal); margin-bottom: 1.5rem;
     }
     .start-title {
       font-family: 'IBM Plex Serif', Georgia, serif;
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      font-weight: 500;
-      color: #FFFFFF;
-      line-height: 1.15;
-      letter-spacing: -.01em;
+      font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 500;
+      color: #FFF; line-height: 1.15; letter-spacing: -.01em;
     }
     .start-sub {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: .8125rem;
-      font-weight: 400;
-      color: rgba(255,255,255,.45);
-      margin-top: .5rem;
-      letter-spacing: .04em;
+      font-size: .8125rem; color: rgba(255,255,255,.45);
+      margin-top: .5rem; letter-spacing: .04em;
     }
-    .start-divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,.1);
-      margin: 2rem 0;
-    }
+    .start-divider { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 2rem 0; }
     .start-meta {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: .75rem;
-      color: rgba(255,255,255,.4);
-      letter-spacing: .05em;
-      margin-bottom: 2rem;
+      font-size: .75rem; color: rgba(255,255,255,.4);
+      letter-spacing: .05em; margin-bottom: 2rem;
     }
     .start-meta span { color: rgba(255,255,255,.7); }
     .start-note {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 9px;
-      padding: 1.125rem 1.25rem;
-      font-size: .875rem;
-      color: rgba(255,255,255,.6);
-      line-height: 1.65;
-      margin-bottom: 2.25rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 9px; padding: 1.125rem 1.25rem;
+      font-size: .875rem; color: rgba(255,255,255,.6);
+      line-height: 1.65; margin-bottom: 2.25rem;
     }
     .start-note strong { color: rgba(255,255,255,.9); font-weight: 600; }
     .btn-begin {
-      display: inline-flex;
-      align-items: center;
-      gap: .625rem;
-      background: #FFFFFF;
-      color: var(--hdr);
-      border: none;
-      border-radius: 8px;
-      padding: .875rem 1.875rem;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .9375rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .15s, transform .1s;
+      display: inline-flex; align-items: center; gap: .625rem;
+      background: #FFF; color: var(--hdr);
+      border: none; border-radius: 8px; padding: .875rem 1.875rem;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: .9375rem;
+      font-weight: 600; cursor: pointer; transition: background .15s, transform .1s;
       letter-spacing: .01em;
     }
     .btn-begin:hover { background: #F0F3FF; }
     .btn-begin:active { transform: scale(.98); }
-    .btn-begin:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
     .arrow { font-size: 1rem; transition: transform .15s; }
     .btn-begin:hover .arrow { transform: translateX(3px); }
 
-    /* ── SURVEY SCREEN ──────────────────────────────────────── */
-    #survey-screen { display: none; }
-    #survey-screen.active { display: block; }
+    /* ── CHAT SCREEN ──────────────────────────────────────── */
+    #chat-screen {
+      display: none;
+      flex-direction: column;
+      width: 100%; max-width: 700px;
+      height: 100dvh;
+      position: relative;
+    }
+    #chat-screen.active { display: flex; }
 
-    /* Header band */
-    .s-header {
+    .chat-header {
       background: var(--hdr);
-      padding: 1.125rem 1.875rem .875rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      flex-shrink: 0;
+      padding: 0 1.5rem;
     }
-    .s-header-left {
-      display: flex;
-      align-items: center;
-      gap: .875rem;
+    .chat-hdr-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 0 .75rem;
+    }
+    #btn-back {
+      background: rgba(255,255,255,.1); border: none;
+      border-radius: 7px; padding: .4rem .75rem;
+      color: rgba(255,255,255,.7); font-family: 'IBM Plex Mono', monospace;
+      font-size: .875rem; cursor: pointer;
+      transition: background .15s;
+      flex-shrink: 0;
+    }
+    #btn-back:hover { background: rgba(255,255,255,.18); }
+    #btn-back:disabled { opacity: .3; cursor: default; }
+    .hdr-mid {
+      flex: 1; display: flex; align-items: center; gap: .75rem;
       min-width: 0;
-      flex: 1;
     }
-    .mod-tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,.12);
-      color: rgba(255,255,255,.9);
-      padding: .3rem .7rem;
-      border-radius: 5px;
-      white-space: nowrap;
+    #mod-tag {
+      font-family: 'IBM Plex Mono', monospace; font-size: .7rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      background: rgba(255,255,255,.12); color: rgba(255,255,255,.9);
+      padding: .3rem .7rem; border-radius: 5px; white-space: nowrap;
     }
-    .mod-name {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      letter-spacing: .04em;
-      color: rgba(255,255,255,.4);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    #mod-name {
+      font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+      color: rgba(255,255,255,.4); letter-spacing: .04em;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .q-count {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .75rem;
-      color: rgba(255,255,255,.4);
-      white-space: nowrap;
+    #q-count {
+      font-family: 'IBM Plex Mono', monospace; font-size: .75rem;
+      color: rgba(255,255,255,.4); white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
-
-    /* Progress bar */
-    .progress-track {
-      height: 2px;
-      background: rgba(255,255,255,.08);
-    }
+    .progress-track { height: 2px; background: rgba(255,255,255,.08); }
     .progress-fill {
-      height: 100%;
-      background: var(--signal);
+      height: 100%; background: var(--signal);
       transition: width .35s cubic-bezier(.4,0,.2,1);
     }
 
-    /* Question body */
-    .q-body {
-      background: var(--card);
-      padding: 2.25rem 2.25rem 1.5rem;
+    /* ── THREAD ───────────────────────────────────────────── */
+    #thread {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem 1.25rem .75rem;
+      display: flex;
+      flex-direction: column;
+      gap: .625rem;
+      background: var(--bg);
+      scroll-behavior: smooth;
     }
-    @keyframes q-in {
+
+    @keyframes bubble-up {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .q-body.animating { animation: q-in .22s ease both; }
+    .bubble-in { animation: bubble-up .2s ease both; }
 
-    .branch-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .75rem;
+    /* System question bubble (left) */
+    .q-bubble {
+      align-self: flex-start;
+      max-width: min(82%, 520px);
+      background: var(--bubble-q-bg);
+      color: var(--bubble-q-fg);
+      border-radius: 4px 16px 16px 16px;
+      padding: .875rem 1.125rem;
     }
-    .q-id {
+    .q-bubble-branch {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      margin-bottom: .5rem;
+      font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--signal);
+      margin-bottom: .4rem;
     }
-    .q-text {
+    .q-bubble-id {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem; color: rgba(200,212,236,.4);
+      margin-bottom: .3rem; letter-spacing: .08em;
+    }
+    .q-bubble-text {
       font-family: 'IBM Plex Serif', Georgia, serif;
-      font-size: clamp(1.1rem, 2.8vw, 1.3125rem);
-      font-weight: 500;
-      color: var(--fg);
-      line-height: 1.45;
-      margin-bottom: .625rem;
-      text-wrap: balance;
+      font-size: clamp(.95rem, 2.5vw, 1.1rem); font-weight: 500;
+      line-height: 1.5; color: var(--bubble-q-fg);
     }
-    .q-hint {
-      font-size: .875rem;
-      color: var(--fg-muted);
-      line-height: 1.6;
-      margin-bottom: 1.625rem;
-    }
-    .q-hint:empty { display: none; }
-
-    /* Inputs */
-    .answer-area { display: flex; flex-direction: column; gap: .5rem; }
-    input[type="text"],
-    textarea {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: .8125rem 1rem;
+    .q-bubble-hint {
       font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .9375rem;
-      color: var(--fg);
-      line-height: 1.55;
-      transition: border-color .15s;
-      resize: vertical;
+      font-size: .8rem; color: rgba(200,212,236,.5);
+      line-height: 1.55; margin-top: .4rem;
     }
-    input[type="text"]:focus,
-    textarea:focus { outline: none; border-color: var(--accent); }
-    textarea { min-height: 108px; }
 
-    /* Option cards — signature left-accent on selection */
-    .option-card {
-      display: flex;
-      align-items: flex-start;
-      gap: .875rem;
-      padding: .9375rem 1.125rem;
-      padding-left: calc(1.125rem - 1.5px); /* compensate so content stays aligned when border-left widens */
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-left-width: 1.5px;
-      border-radius: 9px;
-      cursor: pointer;
-      transition: border-color .15s, border-left-width .15s, background .15s, padding-left .15s;
-      position: relative;
-    }
-    .option-card:hover {
-      border-color: var(--border-h);
-      background: var(--opt-hover);
-    }
-    .option-card.selected {
-      border-color: var(--border);
-      border-left-color: var(--accent);
-      border-left-width: 3px;
-      padding-left: calc(1.125rem - 3px);
-      background: var(--accent-sub);
-    }
-    .option-card input {
-      position: absolute;
-      opacity: 0;
-      width: 0; height: 0;
-      pointer-events: none;
-    }
-    .opt-indicator {
-      flex-shrink: 0;
-      width: 17px;
-      height: 17px;
-      border: 2px solid var(--border-h);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color .15s, background .15s;
-      margin-top: 3px;
-    }
-    .opt-indicator.radio   { border-radius: 50%; }
-    .opt-indicator.checkbox { border-radius: 4px; }
-    .option-card.selected .opt-indicator {
-      border-color: var(--accent);
+    /* User answer bubble (right) */
+    .a-bubble {
+      align-self: flex-end;
+      max-width: min(75%, 460px);
       background: var(--accent);
-    }
-    .opt-indicator::after { content: ""; opacity: 0; transition: opacity .12s; }
-    .opt-indicator.radio::after {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #fff;
-    }
-    .opt-indicator.checkbox::after {
-      width: 9px; height: 5px;
-      border-left: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      transform: rotate(-45deg) translate(1px, -1px);
-    }
-    .option-card.selected .opt-indicator::after { opacity: 1; }
-
-    .opt-label { flex: 1; min-width: 0; }
-    .opt-label strong {
-      display: block;
-      font-size: .9375rem;
-      font-weight: 500;
-      color: var(--fg);
-      line-height: 1.35;
-    }
-    .opt-label span {
-      display: block;
-      font-size: .8125rem;
-      color: var(--fg-muted);
-      margin-top: .2rem;
-      line-height: 1.5;
+      color: #FFF;
+      border-radius: 16px 16px 4px 16px;
+      padding: .75rem 1rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: .9375rem; line-height: 1.5;
+      word-break: break-word;
     }
 
-    /* Alerts */
-    .alert {
-      border-radius: 8px;
+    /* Transition / divider bubbles */
+    .transition-bubble {
+      align-self: center;
+      background: rgba(134,188,37,.1);
+      border: 1px solid rgba(134,188,37,.25);
+      border-radius: 9999px;
+      padding: .35rem 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem; font-weight: 600; letter-spacing: .07em;
+      color: var(--signal); text-align: center;
+    }
+    .module-divider {
+      align-self: stretch;
+      display: flex; align-items: center; gap: .75rem;
+      color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
+      margin: .375rem 0;
+    }
+    .module-divider::before, .module-divider::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* Alert inline bubbles */
+    .alert-warn, .alert-info {
+      align-self: flex-start; max-width: min(82%, 520px);
+      border-radius: 8px; padding: .625rem .875rem;
+      font-size: .825rem; line-height: 1.55;
+    }
+    .alert-warn { background: var(--warn-bg); border: 1px solid var(--warn-bd); color: var(--warn-tx); }
+    .alert-info { background: var(--info-bg); border: 1px solid var(--info-bd); color: var(--info-tx); }
+
+    /* ── INPUT AREA ───────────────────────────────────────── */
+    .chat-input-area {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: .875rem 1.25rem 1.125rem;
+      flex-shrink: 0;
+    }
+
+    /* Pill chips (for options without desc) */
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .875rem; }
+    .chip {
+      padding: .5rem 1.125rem;
+      border: 1.5px solid var(--border);
+      border-radius: 9999px;
+      background: var(--input-bg);
+      color: var(--fg-2);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: .875rem; cursor: pointer;
+      transition: background .12s, border-color .12s, color .12s, transform .1s;
+      user-select: none;
+    }
+    .chip:hover { background: var(--opt-hover); border-color: var(--accent); }
+    .chip.selected {
+      background: var(--accent); border-color: var(--accent);
+      color: #FFF;
+    }
+    .chip:active { transform: scale(.97); }
+
+    /* Option cards (for options with desc) */
+    .opt-cards { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .875rem; }
+    .option-card {
+      display: flex; align-items: flex-start; gap: .875rem;
+      border: 1.5px solid var(--border);
+      background: var(--input-bg);
+      border-radius: 10px;
       padding: .875rem 1rem;
-      font-size: .875rem;
-      line-height: 1.6;
-      margin-top: 1rem;
+      cursor: pointer;
+      transition: background .12s, border-color .12s;
+      user-select: none;
     }
-    .alert.warn {
-      background: var(--warn-bg);
-      border: 1px solid var(--warn-bd);
-      color: var(--warn-tx);
+    .option-card:hover { background: var(--opt-hover); border-color: var(--accent); }
+    .option-card.selected {
+      border-color: var(--accent); background: var(--accent-sub);
     }
-    .alert.info {
-      background: var(--info-bg);
-      border: 1px solid var(--info-bd);
-      color: var(--info-tx);
+    .option-card.selected .opt-indicator { border-color: var(--accent); background: var(--accent); }
+    .opt-indicator {
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+      border: 2px solid var(--border); border-radius: 50%;
+      transition: background .12s, border-color .12s;
     }
-    .alert strong { font-weight: 600; }
+    .opt-indicator.checkbox { border-radius: 5px; }
+    .opt-label strong { font-weight: 600; font-size: .9rem; color: var(--fg); display: block; }
+    .opt-label span { font-size: .825rem; color: var(--fg-muted); line-height: 1.5; }
+    .option-card input { display: none; }
+
+    /* Text inputs */
+    .chat-input-area input[type="text"],
+    .chat-input-area textarea {
+      width: 100%; border: 1.5px solid var(--border);
+      background: var(--input-bg); color: var(--fg);
+      border-radius: 10px; padding: .75rem 1rem;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: .9375rem;
+      resize: vertical; line-height: 1.55;
+      transition: border-color .15s;
+      margin-bottom: .875rem;
+    }
+    .chat-input-area input[type="text"]:focus,
+    .chat-input-area textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .chat-input-area textarea { min-height: 90px; max-height: 200px; }
+
     .field-error {
-      font-size: .8125rem;
-      color: #C8253A;
-      margin-top: .5rem;
-      display: none;
+      font-size: .8rem; color: #C0392B;
+      margin-bottom: .5rem; display: none;
     }
     .field-error.visible { display: block; }
 
-    /* Nav row */
-    .nav-row {
-      background: var(--card);
-      padding: 1.125rem 2.25rem 1.875rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      border-top: 1px solid var(--border);
+    .send-row { display: flex; justify-content: flex-end; gap: .75rem; }
+    #btn-send {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--accent); color: #FFF;
+      border: none; border-radius: 8px; padding: .75rem 1.5rem;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: .9375rem;
+      font-weight: 600; cursor: pointer;
+      transition: background .15s, transform .1s;
     }
-    @media (max-width: 480px) {
-      .s-header { padding: 1rem 1.25rem .75rem; }
-      .q-body   { padding: 1.5rem 1.25rem 1.25rem; }
-      .nav-row  { padding: 1rem 1.25rem 1.5rem; }
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: .8125rem 1.625rem;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .9375rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .15s;
-      letter-spacing: .01em;
-    }
-    .btn-primary:hover   { background: var(--accent-h); }
-    .btn-primary:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
-    .btn-back {
-      background: none;
-      border: none;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .875rem;
-      font-weight: 500;
-      color: var(--fg-muted);
-      cursor: pointer;
-      padding: .5rem .25rem;
-      border-radius: 6px;
-      transition: color .15s;
-    }
-    .btn-back:hover { color: var(--fg); }
-    .btn-back:disabled { opacity: .3; cursor: default; }
-    .btn-back:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    #btn-send:hover { background: var(--accent-h); }
+    #btn-send:active { transform: scale(.97); }
 
-    /* ── END SCREEN ─────────────────────────────────────────── */
-    #end-screen { display: none; }
-    #end-screen.active { display: block; }
+    /* ── END SCREEN ───────────────────────────────────────── */
+    #end-screen {
+      display: none;
+      width: 100%; max-width: 700px;
+      height: 100dvh;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #end-screen.active { display: flex; }
 
     .end-header {
       background: var(--hdr);
-      padding: 2.25rem 2.75rem;
+      padding: 1.5rem 2rem 1.25rem;
+      flex-shrink: 0;
     }
-    .end-tag {
+    .end-eyebrow {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--signal);
-      margin-bottom: .875rem;
+      font-size: .7rem; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--signal); margin-bottom: .625rem;
     }
     .end-title {
       font-family: 'IBM Plex Serif', Georgia, serif;
-      font-size: 1.625rem;
-      font-weight: 500;
-      color: #FFFFFF;
-      margin-bottom: .375rem;
+      font-size: 1.5rem; font-weight: 500; color: #FFF; line-height: 1.25;
     }
-    .end-sub {
-      font-size: .875rem;
-      color: rgba(255,255,255,.5);
-    }
+    .end-sub { font-size: .875rem; color: rgba(255,255,255,.5); margin-top: .375rem; }
 
     .end-actions {
+      display: flex; flex-wrap: wrap; gap: .625rem;
+      padding: 1rem 1.5rem;
       background: var(--card);
-      padding: 1.375rem 2.25rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: .75rem;
       border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
     }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: .4rem;
-      background: transparent;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: .6875rem 1.25rem;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .875rem;
-      font-weight: 600;
-      color: var(--fg-2);
-      cursor: pointer;
-      transition: border-color .15s, background .15s;
+    .btn-action {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: .55rem 1.125rem;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: .875rem;
+      font-weight: 500; color: var(--fg-2); cursor: pointer;
+      transition: background .12s, border-color .12s;
     }
-    .btn-secondary:hover { border-color: var(--accent); background: var(--accent-sub); }
-    .btn-secondary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .btn-ghost {
-      background: none;
-      border: none;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .875rem;
-      font-weight: 500;
-      color: var(--fg-muted);
-      cursor: pointer;
-      padding: .5rem .25rem;
-      margin-left: auto;
+    .btn-action:hover { background: var(--opt-hover); border-color: var(--accent); color: var(--accent); }
+    .btn-action.primary {
+      background: var(--accent); border-color: var(--accent); color: #FFF;
     }
-    .btn-ghost:hover { color: var(--fg); }
-    .copy-confirm {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .75rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: .05em;
-      display: none;
-      align-items: center;
-      gap: .3rem;
-    }
-    .copy-confirm.visible { display: inline-flex; }
+    .btn-action.primary:hover { background: var(--accent-h); }
+    #copy-confirm { font-size: .8rem; color: var(--accent); display: none; align-self: center; }
+    #copy-confirm.visible { display: block; }
 
-    /* Summary */
-    .summary-section {
-      background: var(--card);
-      padding: 1.75rem 2.25rem;
-      border-bottom: 1px solid var(--border);
+    #summary-body {
+      flex: 1; overflow-y: auto;
+      padding: 1.25rem 1.5rem 2rem;
+      background: var(--bg);
     }
-    .summary-section:last-child { border-bottom: none; }
+    .summary-section { margin-bottom: 1.75rem; }
     .sum-mod-label {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: .68rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      margin-bottom: 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: .75rem;
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent);
+      padding-bottom: .5rem; margin-bottom: .75rem;
+      border-bottom: 1px solid var(--border);
     }
-    .sum-mod-label::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .sum-item { margin-bottom: 1.375rem; }
-    .sum-item:last-child { margin-bottom: 0; }
-    .sum-q {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .7rem;
-      color: var(--fg-muted);
-      margin-bottom: .3rem;
-      letter-spacing: .03em;
-    }
+    .sum-item { margin-bottom: 1rem; }
+    .sum-q { font-size: .8125rem; color: var(--fg-muted); margin-bottom: .25rem; }
     .sum-a {
-      font-size: .9375rem;
-      color: var(--fg);
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-    @media (max-width: 480px) {
-      .end-header   { padding: 1.75rem 1.25rem; }
-      .end-actions  { padding: 1.125rem 1.25rem; }
-      .summary-section { padding: 1.375rem 1.25rem; }
+      font-size: .9375rem; color: var(--fg);
+      background: var(--card); border-radius: 8px;
+      padding: .625rem .875rem; border: 1px solid var(--border);
+      white-space: pre-wrap; line-height: 1.55;
     }
   </style>
 </head>
 <body>
 
-<!-- ── START ──────────────────────────────────────────────── -->
-<div id="start-screen" class="card">
+<!-- ── START SCREEN ──────────────────────────────────────────── -->
+<div id="start-screen">
   <div class="start-inner">
-    <div class="start-eyebrow">GPS Core Consulting · CIO Program</div>
-    <h1 class="start-title">The Proving Ground</h1>
-    <p class="start-sub">Account Team Intake · Draft v3</p>
+    <div class="start-eyebrow">CIO Program · Mission Incubator</div>
+    <div class="start-title">The Proving Ground</div>
+    <div class="start-sub">Account Team Intake</div>
     <hr class="start-divider">
-    <p class="start-meta">
-      <span>11 modules</span> · branching questions · complete in ~20 min
-    </p>
+    <div class="start-meta">
+      Estimated time: <span>10–15 minutes</span> &nbsp;·&nbsp; Questions: <span>~20–25</span>
+    </div>
     <div class="start-note">
-      <strong>How this works.</strong> Answer one question at a time. Key answers automatically route you to the relevant follow-up questions — anything that doesn't apply to your situation is skipped. At the end you'll get a structured summary to copy or download for the CIO Program team.<br><br>
-      <strong>Before you begin:</strong> This intake uses synthetic data only. No real client data, PII, or sensitive information. Every question can be answered by the account team — no input is needed from the CIO Program team or Mission Incubator.
+      <strong>Before you begin:</strong> This intake helps the CIO Program team understand your client situation, the experience you have in mind, and what it will take to build it. Your answers shape the recommendation the team sends back. Be as specific as you can — vague answers slow the process.
     </div>
-    <button class="btn-begin" id="btn-start">
-      Begin Intake <span class="arrow" aria-hidden="true">→</span>
-    </button>
+    <button class="btn-begin" id="btn-start">Begin intake <span class="arrow">→</span></button>
   </div>
 </div>
 
-<!-- ── SURVEY ─────────────────────────────────────────────── -->
-<div id="survey-screen" class="card">
-  <div class="s-header">
-    <div class="s-header-left">
-      <span class="mod-tag" id="mod-tag">M0</span>
-      <span class="mod-name" id="mod-name">Opportunity Context</span>
+<!-- ── CHAT SCREEN ───────────────────────────────────────────── -->
+<div id="chat-screen">
+  <div class="chat-header">
+    <div class="chat-hdr-row">
+      <button id="btn-back" disabled>← Back</button>
+      <div class="hdr-mid">
+        <div id="mod-tag">M0</div>
+        <div id="mod-name">Setup</div>
+      </div>
+      <div id="q-count">1 of 33</div>
     </div>
-    <span class="q-count" id="q-count">1 of 39</span>
-  </div>
-  <div class="progress-track">
-    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-  </div>
-
-  <div class="q-body" id="q-body">
-    <div class="branch-label" id="branch-label" style="display:none"></div>
-    <div class="q-id" id="q-id">0.1</div>
-    <div class="q-text" id="q-text"></div>
-    <div class="q-hint" id="q-hint"></div>
-    <div class="answer-area" id="answer-area"></div>
-    <div class="alert warn" id="alert-warn" style="display:none"></div>
-    <div class="alert info" id="alert-info" style="display:none"></div>
-    <div class="field-error" id="field-error">This question requires an answer before continuing.</div>
+    <div class="progress-track">
+      <div id="progress-fill" class="progress-fill" style="width:0%"></div>
+    </div>
   </div>
 
-  <div class="nav-row">
-    <button class="btn-back" id="btn-back" disabled>← Back</button>
-    <button class="btn-primary" id="btn-next">Next →</button>
+  <div id="thread"></div>
+
+  <div class="chat-input-area">
+    <div id="answer-area"></div>
+    <div id="field-error" class="field-error">This field is required before continuing.</div>
+    <div class="send-row">
+      <button id="btn-send">Send →</button>
+    </div>
   </div>
 </div>
 
-<!-- ── END ────────────────────────────────────────────────── -->
-<div id="end-screen" class="card">
+<!-- ── END SCREEN ───────────────────────────────────────────── -->
+<div id="end-screen">
   <div class="end-header">
-    <div class="end-tag">Intake complete</div>
-    <div class="end-title">Review your answers</div>
-    <div class="end-sub">Copy or download below, then share with the CIO Program team.</div>
+    <div class="end-eyebrow">Intake complete</div>
+    <div class="end-title">Proving Ground — Response Summary</div>
+    <div class="end-sub">Submitted to the CIO Program team for review.</div>
   </div>
   <div class="end-actions">
-    <button class="btn-primary" id="btn-copy">Copy to clipboard</button>
-    <button class="btn-secondary" id="btn-download">Download .txt</button>
-    <span class="copy-confirm" id="copy-confirm">✓ Copied</span>
-    <button class="btn-ghost" id="btn-restart">Start over</button>
+    <button class="btn-action primary" id="btn-email">✉ Send via email</button>
+    <button class="btn-action" id="btn-copy">Copy to clipboard</button>
+    <button class="btn-action" id="btn-download">Download .txt</button>
+    <button class="btn-action" id="btn-restart">Start over</button>
+    <span id="copy-confirm">Copied!</span>
   </div>
   <div id="summary-body"></div>
 </div>
 
 <script>
-// ── MODULE LABELS ────────────────────────────────────────────────
+// ── CONSTANTS ──────────────────────────────────────────────────
+const WEBHOOK_URL = "https://flow.epoch.deloitte.com/webhook/c9219443-54e9-4642-9645-35d60d2ef999";
+const EMAIL_RECIPIENTS = "cacamara@deloitte.com,callevin@deloitte.com,ifreund@deloitte.com,emlee@deloitte.com";
+
 const MODULE_LABELS = {
-  M0:  "Opportunity Context & Experience Routing",
-  M1:  "Challenge and Outcomes",
+  M0:  "Setup",
+  M1:  "Challenge",
   M2:  "Use Case Detail",
-  M3:  "Signature Issue Branch",
-  M4:  "Audience, Participants & Personas",
-  M5:  "Opportunity and Account Context",
-  M6:  "Constraints and Governance",
-  M7:  "Client Digital Environment",
-  M8:  "Experience Design and Logistics",
-  M9:  "Account Team, Funding & Approvals",
-  M10: "Success and Follow-On"
+  M3:  "Signature Issue",
+  M4:  "Audience",
+  M5:  "Opportunity",
+  M6:  "Environment",
+  M7:  "Data Sharing",
+  M8:  "Logistics",
+  M9:  "Account Readiness",
+  M10: "Follow-Through"
 };
 
 const ISSUE_LABELS = {
   "1": "Align IT with mission value",
-  "2": "Deliver cost-effective IT operational excellence",
+  "2": "Cost-effective IT operational excellence",
   "3": "Harness data, analytics, and AI/ML",
   "4": "Accelerate delivery of innovative solutions",
-  "5": "Evolve to a digital agency for enhanced citizen experience",
+  "5": "Digital agency / citizen experience",
   "6": "Enhance cyber security posture and compliance"
 };
-
-const WEBHOOK_URL = "https://flow.epoch.deloitte.com/webhook/c9219443-54e9-4642-9645-35d60d2ef999";
 
 function getActiveBranch(r) {
   const issues = (r["1.2"] || []).filter(i => i !== "7");
@@ -702,839 +531,671 @@ function getActiveBranch(r) {
   return r["1.2a"] || null;
 }
 
-// ── QUESTIONS DATA ────────────────────────────────────────────────
+// ── QUESTIONS ──────────────────────────────────────────────────
 const QUESTIONS = [
-  // ══ MODULE 0 ══════════════════════════════════════════════════
-  {
-    id: "0.1", module: "M0",
-    text: "Which client and program area is this for, and which sector?",
-    hint: "Include the agency or organization name, the specific program or initiative, and whether this is Federal or State and local.",
-    type: "textarea", required: true
-  },
-  {
-    id: "0.2", module: "M0",
-    text: "What sales opportunity or account objective is driving this request, and what role should the experience play in advancing it?",
-    type: "textarea", required: true
-  },
-  {
-    id: "0.2a", module: "M0",
-    text: "What is the Jupiter ID for this client?",
-    hint: "The opportunity or engagement ID. Skip if not yet assigned.",
-    type: "text", required: false
-  },
-  {
-    id: "0.3", module: "M0",
-    text: "What kind of experience are you looking for?",
-    type: "single", required: true,
-    options: [
-      { value: "demo",      label: "Deloitte builds and demonstrates", desc: "A working demonstration the account team shows the client" },
-      { value: "co-create", label: "Client co-creates with us",        desc: "An immersive session where the client builds alongside the Deloitte team in a simulated environment" }
-    ]
-  },
-  {
-    id: "0.4", module: "M0",
-    text: "Is your main goal to educate the client on what is possible, or to build something together with them?",
-    type: "single", required: true,
-    options: [
-      { value: "educate", label: "Educate — show what's possible" },
-      { value: "build",   label: "Build together — create something with the client in the room" }
+  // M0
+  { id:"0.1", module:"M0",
+    text:"Which client and program area is this for, and which sector?",
+    hint:"Include the agency or organization name, the specific program or initiative, and whether this is Federal or State and local.",
+    type:"textarea", required:true },
+  { id:"0.2", module:"M0",
+    text:"What sales opportunity or account objective is driving this request?",
+    hint:"What role should the experience play in advancing it?",
+    type:"textarea", required:true },
+  { id:"0.3", module:"M0",
+    text:"What kind of experience are you looking for?",
+    type:"single", required:true,
+    options:[
+      { value:"demo",      label:"Deloitte builds and demonstrates", desc:"A working demonstration the account team shows the client" },
+      { value:"co-create", label:"Client co-creates with us",        desc:"An immersive session where the client builds alongside the Deloitte team" }
+    ] },
+  { id:"0.5", module:"M0",
+    text:"How real should it feel to the client?",
+    hint:"\"Connected\" means the experience integrates with a realistic back end — this triggers additional technical questions later.",
+    type:"single", required:true,
+    options:[
+      { value:"screens",   label:"Screens only",                      desc:"UI mockup or static prototype, no live logic" },
+      { value:"working",   label:"Working application on sample data", desc:"Real application logic, synthetic database" },
+      { value:"connected", label:"Connected to realistic systems",     desc:"Integrated back-end and realistic data flows" }
+    ] },
+  { id:"0.6", module:"M0",
+    text:"Is a specific date driving this request?",
+    hint:"If so, include the date and how firm it is. Dates under 4 weeks away will flag a timing risk — a Deloitte-led demonstration is the faster option.",
+    type:"text", required:false },
+
+  // M1
+  { id:"1.1", module:"M1",
+    text:"What challenge is the client facing, and what outcome do they want?",
+    hint:"One or two sentences — start with the client's problem, not the technical solution.",
+    type:"textarea", required:true },
+  { id:"1.1a", module:"M1",
+    text:"How well-defined is the core challenge coming into the lab?",
+    type:"single", required:true,
+    options:[
+      { value:"exploring",    label:"Exploring",    desc:"We know something is broken but haven't defined it yet" },
+      { value:"defined",      label:"Defined",      desc:"We have a clear, validated problem statement" },
+      { value:"mid-solution", label:"Mid-solution", desc:"We have a direction and need to build or validate it" }
+    ] },
+  { id:"1.2", module:"M1",
+    text:"Which signature issues does the challenge touch?",
+    hint:"Select all that apply. If you select \"None of these,\" the CIO Program team will need to discuss whether a lab is the right fit.",
+    type:"multi", required:true,
+    options:[
+      { value:"1", label:"Align IT with mission value" },
+      { value:"2", label:"Deliver cost-effective IT operational excellence" },
+      { value:"3", label:"Harness data, analytics, and AI/ML" },
+      { value:"4", label:"Accelerate delivery of innovative solutions" },
+      { value:"5", label:"Evolve to a digital agency for enhanced citizen experience" },
+      { value:"6", label:"Enhance cyber security posture and compliance" },
+      { value:"7", label:"None of these" }
     ],
-    condition: r => r["0.3"] === "co-create"
-  },
-  {
-    id: "0.5", module: "M0",
-    text: "How real should it feel to the client?",
-    hint: "\"Connected\" means the experience integrates with a realistic back end — this triggers additional technical questions later in the intake.",
-    type: "single", required: true,
-    options: [
-      { value: "screens",   label: "Screens only",                      desc: "UI mockup or static prototype, no live logic" },
-      { value: "working",   label: "Working application on sample data", desc: "Real application logic, synthetic database" },
-      { value: "connected", label: "Connected to realistic systems",     desc: "Integrated back-end and realistic data flows — triggers additional tech questions" }
-    ]
-  },
-  {
-    id: "0.6", module: "M0",
-    text: "Is a specific date driving this request? If so, what is the date and how firm is it?",
-    hint: "Examples: orals, a leadership transition, a fiscal-year deadline. If the date is under 4 weeks away, the CIO Program team will flag the timing risk — a Deloitte-led demonstration is the faster option.",
-    type: "text", required: false
-  },
-
-  // ══ MODULE 1 ══════════════════════════════════════════════════
-  {
-    id: "1.1", module: "M1",
-    text: "What challenge is the client facing, and what outcome do they want?",
-    hint: "State it in one or two sentences — start with the client's problem, not the technical solution or the sales goal.",
-    type: "textarea", required: true
-  },
-  {
-    id: "1.1a", module: "M1",
-    text: "How well-defined is the core challenge coming into the lab?",
-    type: "single", required: true,
-    options: [
-      { value: "exploring",    label: "Exploring",    desc: "We know something is broken but haven't defined it yet" },
-      { value: "defined",      label: "Defined",      desc: "We have a clear, validated problem statement" },
-      { value: "mid-solution", label: "Mid-solution", desc: "We have a direction and need to build or validate it" }
-    ]
-  },
-  {
-    id: "1.1b", module: "M1",
-    text: "What has the client already tried, if anything, to address this?",
-    type: "textarea", required: false,
-    condition: r => r["1.1a"] === "exploring"
-  },
-  {
-    id: "1.1c", module: "M1",
-    text: "What is currently blocking them from finishing the build?",
-    hint: "Select all that apply.",
-    type: "multi", required: false,
-    options: [
-      { value: "technical",   label: "Technical uncertainty" },
-      { value: "stakeholder", label: "Stakeholder buy-in" },
-      { value: "resourcing",  label: "Resourcing or capacity" },
-      { value: "scope",       label: "Unclear scope" }
+    specialCheck:"issue7" },
+  { id:"1.2a", module:"M1",
+    text:"Which one issue should the lab center on?",
+    hint:"This determines which branch of questions comes next.",
+    type:"single", required:true, dynamicOptions:true,
+    condition: r => (r["1.2"]||[]).filter(i=>i!=="7").length >= 2 },
+  { id:"1.4", module:"M1",
+    text:"Has your team identified a specific use case for this experience?",
+    hint:"Examples: document intake and validation, image or field-evidence analysis, a multi-party workflow, cross-system data and analytics.",
+    type:"single", required:true,
+    options:[
+      { value:"yes", label:"Yes — we have a specific use case in mind" },
+      { value:"no",  label:"Not yet — still exploring candidates" }
     ],
-    condition: r => r["1.1a"] === "mid-solution"
-  },
-  {
-    id: "1.2", module: "M1",
-    text: "Which signature issues does the challenge touch?",
-    hint: "Select all that apply. If you select \"None of these,\" the CIO Program team will need to discuss whether a lab is the right fit.",
-    type: "multi", required: true,
-    options: [
-      { value: "1", label: "Align IT with mission value" },
-      { value: "2", label: "Deliver cost-effective IT operational excellence" },
-      { value: "3", label: "Harness data, analytics, and AI/ML" },
-      { value: "4", label: "Accelerate delivery of innovative solutions" },
-      { value: "5", label: "Evolve to a digital agency for enhanced citizen experience" },
-      { value: "6", label: "Enhance cyber security posture and compliance" },
-      { value: "7", label: "None of these" }
+    specialCheck:"noUseCase" },
+  { id:"1.4b", module:"M1",
+    text:"Describe the use case.",
+    hint:"Who are the actors? What does the process look like start to finish?",
+    type:"textarea", required:true,
+    condition: r => r["1.4"] === "yes" },
+
+  // M2
+  { id:"2.1", module:"M2",
+    text:"Walk through the use case from start to finish.",
+    hint:"Who acts at each step? What are the inputs, decisions, outputs, and handoffs? Sanitized only — no real client data or PII.",
+    type:"textarea", required:true,
+    condition: r => r["1.4"] === "yes" },
+  { id:"2.2", module:"M2",
+    text:"Which artifacts or data flow through the use case, and can you obtain sanitized samples?",
+    hint:"Examples: documents, images, data tables, messages. Sanitized only — no real client data or PII.",
+    type:"textarea", required:false,
+    condition: r => r["1.4"] === "yes" },
+
+  // M3 — Branches
+  { id:"3A.1", module:"M3", branchLabel:"Branch 3A · Align IT with mission value",
+    text:"What measure or evidence does the client use today to judge progress on the mission outcome this use case supports?",
+    hint:"The lab will show this use case traced end to end to a mission outcome, with the measure visible on screen.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "1" },
+  { id:"3A.2", module:"M3", branchLabel:"Branch 3A · Align IT with mission value",
+    text:"What would client leaders need to see in the room to believe this use case moves that outcome?",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "1" },
+  { id:"3B.1", module:"M3", branchLabel:"Branch 3B · Cost-effective IT operational excellence",
+    text:"What baseline numbers exist for this process?",
+    hint:"Examples: volume, cycle time, hours or cost per case. The lab will show a before-and-after efficiency demo.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "2" },
+  { id:"3B.2", module:"M3", branchLabel:"Branch 3B · Cost-effective IT operational excellence",
+    text:"Which cost driver should the lab visibly reduce?",
+    type:"single", required:false,
+    options:[
+      { value:"manual-keying",   label:"Manual keying" },
+      { value:"duplicate-entry", label:"Duplicate entry" },
+      { value:"rework",          label:"Rework" },
+      { value:"waiting",         label:"Waiting / handoff delays" },
+      { value:"other",           label:"Other" }
     ],
-    specialCheck: "issue7"
-  },
-  {
-    id: "1.2a", module: "M1",
-    text: "Which one issue should the lab center on?",
-    hint: "Choose the issue the lab should show most directly. This determines which branch of questions comes next.",
-    type: "single", required: true,
-    dynamicOptions: true,
-    condition: r => (r["1.2"] || []).filter(i => i !== "7").length >= 2
-  },
-  {
-    id: "1.3", module: "M1",
-    text: "What would a successful outcome look like for Deloitte, and how would that success be measured?",
-    hint: "Examples: follow-on work awarded, additional scope added, executive relationship strengthened.",
-    type: "textarea", required: false
-  },
-  {
-    id: "1.4", module: "M1",
-    text: "Has your team identified a specific use case for this experience?",
-    hint: "Examples of use cases: document intake and validation, image or field-evidence analysis, a multi-party workflow, cross-system data and analytics.",
-    type: "single", required: true,
-    options: [
-      { value: "yes", label: "Yes — we have a specific use case in mind" },
-      { value: "no",  label: "Not yet — still exploring candidates" }
-    ],
-    specialCheck: "noUseCase"
-  },
-  {
-    id: "1.4b", module: "M1",
-    text: "Describe the use case.",
-    hint: "Who are the actors? What does the process look like start to finish?",
-    type: "textarea", required: true,
-    condition: r => r["1.4"] === "yes"
-  },
+    condition: r => getActiveBranch(r) === "2" },
+  { id:"3C.1", module:"M3", branchLabel:"Branch 3C · Data, analytics, and AI/ML",
+    text:"Which decision or service in this use case depends on data that is hard to access, trust, or combine today?",
+    hint:"The lab will show messy data becoming a trusted decision, with a human checkpoint.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "3" },
+  { id:"3C.2", module:"M3", branchLabel:"Branch 3C · Data, analytics, and AI/ML",
+    text:"Which AI or analytics capability should the lab show, and where does a person review the result?",
+    hint:"Examples: extraction, image analysis, summarization, forecasting.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "3" },
+  { id:"3D.1", module:"M3", branchLabel:"Branch 3D · Accelerate delivery of innovative solutions",
+    text:"What does it take today to go from idea to a working capability?",
+    hint:"Describe the steps, approvals, and typical time. The lab will compress this live.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "4" },
+  { id:"3D.2", module:"M3", branchLabel:"Branch 3D · Accelerate delivery of innovative solutions",
+    text:"Which new capability or technology does the client want to explore, and what stops them from adopting it today?",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "4" },
+  { id:"3E.1", module:"M3", branchLabel:"Branch 3E · Digital agency / citizen experience",
+    text:"Which citizen-facing interaction does this use case improve, and through which channels?",
+    hint:"Examples: applying, checking status, submitting documents. Channels: web, mobile, call center, in person.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "5" },
+  { id:"3E.2", module:"M3", branchLabel:"Branch 3E · Digital agency / citizen experience",
+    text:"What does the \"before\" look like for the citizen, and what should the \"after\" feel like?",
+    hint:"Describe the steps, waits, and forms before; describe the target experience after.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "5" },
+  { id:"3F.1", module:"M3", branchLabel:"Branch 3F · Cyber security posture and compliance",
+    text:"Which scenario should the lab center on, and should participants watch it or practice it?",
+    hint:"Examples: ransomware recovery, access control, audit readiness.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "6" },
+  { id:"3F.2", module:"M3", branchLabel:"Branch 3F · Cyber security posture and compliance",
+    text:"Which security architecture elements should the environment represent, and which changes are planned?",
+    hint:"Examples: identity and access, zero trust, monitoring.",
+    type:"textarea", required:false,
+    condition: r => getActiveBranch(r) === "6" },
 
-  // ══ MODULE 2 ══════════════════════════════════════════════════
-  {
-    id: "2.1", module: "M2",
-    text: "Walk through the use case from start to finish.",
-    hint: "Who acts at each step? What are the inputs, decisions, outputs, and handoffs? If you have a journey map or process flow, describe it here. Sanitized only — no real client data or PII.",
-    type: "textarea", required: true,
-    condition: r => r["1.4"] === "yes"
-  },
-  {
-    id: "2.2", module: "M2",
-    text: "Which artifacts or data flow through the use case, and can you obtain sanitized samples?",
-    hint: "Examples: documents, images, data tables, messages. Note any samples you can share. Sanitized only — no real client data or PII.",
-    type: "textarea", required: false,
-    condition: r => r["1.4"] === "yes"
-  },
-  {
-    id: "2.3", module: "M2",
-    text: "Where do delays, rework loops, and manual re-keying occur today?",
-    type: "textarea", required: false,
-    condition: r => r["1.4"] === "yes"
-  },
-  {
-    id: "2.4", module: "M2",
-    text: "Which rules or checks govern decisions, and what should happen when a check fails?",
-    hint: "Should the system block, warn, or route to a person?",
-    type: "textarea", required: false,
-    condition: r => r["1.4"] === "yes"
-  },
-  {
-    id: "2.5", module: "M2",
-    text: "Which decisions need human judgment, and how accurate must any automated result be?",
-    type: "textarea", required: false,
-    condition: r => r["1.4"] === "yes"
-  },
+  // M4
+  { id:"4.4", module:"M4",
+    text:"Who will attend the session?",
+    hint:"Names, roles, and count — both client and Deloitte.",
+    type:"textarea", required:false },
+  { id:"4.5", module:"M4",
+    text:"What is the client participants' level of technical understanding?",
+    type:"single", required:true,
+    options:[
+      { value:"executive",              label:"Executive / business-focused",  desc:"Interested in outcomes, limited technical background" },
+      { value:"technology-aware",       label:"Technology-aware",              desc:"Comfortable discussing technology concepts" },
+      { value:"technical-practitioner", label:"Technical practitioner",        desc:"Can evaluate solution design and trade-offs" },
+      { value:"technical-expert",       label:"Technical expert",              desc:"Deep expertise in architecture, engineering, or data" },
+      { value:"mixed",                  label:"Mixed audience",                desc:"Participants have varied levels of expertise" }
+    ] },
+  { id:"4.8", module:"M4",
+    text:"Are there sensitivities to plan around?",
+    hint:"Examples: skeptics in the room, incumbent vendor relationships, topics to avoid.",
+    type:"textarea", required:false },
 
-  // ══ MODULE 3 — BRANCHES ══════════════════════════════════════
-  {
-    id: "3A.1", module: "M3",
-    branchLabel: "Branch 3A · Align IT with mission value",
-    text: "What measure or evidence does the client use today to judge progress on the mission outcome this use case supports?",
-    hint: "The lab will show this use case traced end to end to a mission outcome, with the measure visible on screen.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "1"
-  },
-  {
-    id: "3A.2", module: "M3",
-    branchLabel: "Branch 3A · Align IT with mission value",
-    text: "What would client leaders need to see in the room to believe this use case moves that outcome?",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "1"
-  },
-  {
-    id: "3B.1", module: "M3",
-    branchLabel: "Branch 3B · Cost-effective IT operational excellence",
-    text: "What baseline numbers exist for this process?",
-    hint: "Examples: volume, cycle time, hours or cost per case. The lab will show a before-and-after efficiency demo on this process.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "2"
-  },
-  {
-    id: "3B.2", module: "M3",
-    branchLabel: "Branch 3B · Cost-effective IT operational excellence",
-    text: "Which cost driver should the lab visibly reduce?",
-    type: "single", required: false,
-    options: [
-      { value: "manual-keying",   label: "Manual keying" },
-      { value: "duplicate-entry", label: "Duplicate entry" },
-      { value: "rework",          label: "Rework" },
-      { value: "waiting",         label: "Waiting / handoff delays" },
-      { value: "other",           label: "Other" }
-    ],
-    condition: r => getActiveBranch(r) === "2"
-  },
-  {
-    id: "3C.1", module: "M3",
-    branchLabel: "Branch 3C · Data, analytics, and AI/ML",
-    text: "Which decision or service in this use case depends on data that is hard to access, trust, or combine today?",
-    hint: "The lab will show messy data becoming a trusted decision, with a human checkpoint.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "3"
-  },
-  {
-    id: "3C.2", module: "M3",
-    branchLabel: "Branch 3C · Data, analytics, and AI/ML",
-    text: "What data should the lab include, and what quality problems should it show?",
-    hint: "Examples: missing fields, duplicates, conflicting sources.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "3"
-  },
-  {
-    id: "3C.3", module: "M3",
-    branchLabel: "Branch 3C · Data, analytics, and AI/ML",
-    text: "Which AI or analytics capability should the lab show, and where does a person review the result?",
-    hint: "Examples: extraction, image analysis, summarization, forecasting.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "3"
-  },
-  {
-    id: "3D.1", module: "M3",
-    branchLabel: "Branch 3D · Accelerate delivery of innovative solutions",
-    text: "What does it take today to go from idea to a working capability?",
-    hint: "Describe the steps, approvals, and typical time. The lab will compress this live.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "4"
-  },
-  {
-    id: "3D.2", module: "M3",
-    branchLabel: "Branch 3D · Accelerate delivery of innovative solutions",
-    text: "Which new capability or technology does the client want to explore, and what stops them from adopting it today?",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "4"
-  },
-  {
-    id: "3E.1", module: "M3",
-    branchLabel: "Branch 3E · Digital agency / citizen experience",
-    text: "Which citizen-facing interaction does this use case improve, and through which channels?",
-    hint: "Examples: applying, checking status, submitting documents. Channels: web, mobile, call center, in person. The lab will show one citizen journey, before and after.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "5"
-  },
-  {
-    id: "3E.2", module: "M3",
-    branchLabel: "Branch 3E · Digital agency / citizen experience",
-    text: "What does the \"before\" look like for the citizen, and what should the \"after\" feel like?",
-    hint: "Describe the steps, waits, and forms before; describe the target experience after.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "5"
-  },
-  {
-    id: "3F.1", module: "M3",
-    branchLabel: "Branch 3F · Cyber security posture and compliance",
-    text: "Which scenario should the lab center on, and should participants watch it or practice it?",
-    hint: "Examples: ransomware recovery, access control, audit readiness. The lab can be observed or hands-on.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "6"
-  },
-  {
-    id: "3F.2", module: "M3",
-    branchLabel: "Branch 3F · Cyber security posture and compliance",
-    text: "Which security architecture elements should the environment represent, and which changes are planned?",
-    hint: "Examples: identity and access, zero trust, monitoring.",
-    type: "textarea", required: false,
-    condition: r => getActiveBranch(r) === "6"
-  },
+  // M5
+  { id:"5.2", module:"M5",
+    text:"Is a procurement active or upcoming?",
+    type:"single", required:true,
+    options:[
+      { value:"yes", label:"Yes" },
+      { value:"no",  label:"No" }
+    ] },
+  { id:"5.3", module:"M5",
+    text:"What procurement, ethics, or contact rules limit what we can do or say with the client before and during the session?",
+    type:"textarea", required:false,
+    condition: r => r["5.2"] === "yes" },
+  { id:"5.4", module:"M5",
+    text:"Who are the competitors, and what have they shown this client?",
+    type:"textarea", required:false,
+    condition: r => r["5.2"] === "yes" },
 
-  // ══ MODULE 4 ══════════════════════════════════════════════════
-  {
-    id: "4.1", module: "M4",
-    text: "Who is the intended end-user for the solution being shown?",
-    hint: "The people the solution is built for — not necessarily the session attendees.",
-    type: "textarea", required: false
-  },
-  {
-    id: "4.2", module: "M4",
-    text: "Which user personas and journeys should appear, and how should their experiences differ?",
-    type: "textarea", required: false
-  },
-  {
-    id: "4.3", module: "M4",
-    text: "Which end-user perspectives must be represented in the room, and can any of those people attend or be interviewed beforehand?",
-    type: "textarea", required: false
-  },
-  {
-    id: "4.4", module: "M4",
-    text: "Who will attend the session?",
-    hint: "Names, roles, and count — both client and Deloitte.",
-    type: "textarea", required: false
-  },
-  {
-    id: "4.5", module: "M4",
-    text: "What is the client participants' level of technical understanding?",
-    type: "single", required: true,
-    options: [
-      { value: "executive",              label: "Executive / business-focused",  desc: "Interested in outcomes, limited technical background" },
-      { value: "technology-aware",       label: "Technology-aware",              desc: "Comfortable discussing technology concepts and use cases" },
-      { value: "technical-practitioner", label: "Technical practitioner",        desc: "Can evaluate solution design, trade-offs, and implementation" },
-      { value: "technical-expert",       label: "Technical expert",              desc: "Deep expertise in architecture, engineering, data, or emerging technologies" },
-      { value: "mixed",                  label: "Mixed audience",                desc: "Participants have varied levels of technical expertise" }
-    ]
-  },
-  {
-    id: "4.6", module: "M4",
-    text: "Do participants prefer exploratory \"art of the possible\" conversation or structured working sessions?",
-    type: "single", required: false,
-    options: [
-      { value: "exploratory", label: "Exploratory — open-ended conversation" },
-      { value: "structured",  label: "Structured — working sessions with defined outputs" },
-      { value: "mix",         label: "Mix of both" }
-    ]
-  },
-  {
-    id: "4.7", module: "M4",
-    text: "Will client participants have hands-on keyboard? Which devices, accounts, and network access do they need?",
-    type: "textarea", required: false,
-    condition: r => r["0.3"] === "co-create" && ["technical-practitioner","technical-expert","mixed"].includes(r["4.5"])
-  },
-  {
-    id: "4.8", module: "M4",
-    text: "Are there sensitivities to plan around?",
-    hint: "Examples: skeptics in the room, incumbent vendor relationships, topics to avoid.",
-    type: "textarea", required: false
-  },
+  // M6
+  { id:"6.x", module:"M6",
+    text:"What constraints or governance rules apply to the environment being shown?",
+    hint:"Examples: technology restrictions, Zero Trust requirements, AI tool limitations, authorization requirements, rules about what can be shared.",
+    type:"textarea", required:false },
 
-  // ══ MODULE 5 ══════════════════════════════════════════════════
-  {
-    id: "5.1", module: "M5",
-    text: "What is the opportunity type and stage, and what are the key dates?",
-    hint: "Examples: proposal submission, orals, award date.",
-    type: "textarea", required: false
-  },
-  {
-    id: "5.2", module: "M5",
-    text: "Is a procurement active or upcoming?",
-    type: "single", required: true,
-    options: [
-      { value: "yes", label: "Yes" },
-      { value: "no",  label: "No" }
-    ]
-  },
-  {
-    id: "5.3", module: "M5",
-    text: "What procurement, ethics, or contact rules limit what we can do or say with the client before and during the session?",
-    type: "textarea", required: false,
-    condition: r => r["5.2"] === "yes"
-  },
-  {
-    id: "5.4", module: "M5",
-    text: "Who are the competitors, and what have they shown this client?",
-    type: "textarea", required: false,
-    condition: r => r["5.2"] === "yes"
-  },
-  {
-    id: "5.5", module: "M5",
-    text: "What does the client believe about Deloitte's capabilities today, and what impression should they leave with?",
-    type: "textarea", required: false
-  },
-  {
-    id: "5.6_check", module: "M5",
-    text: "Is there a recently appointed client leader who is the primary target audience for this experience?",
-    type: "single", required: false,
-    options: [
-      { value: "yes", label: "Yes" },
-      { value: "no",  label: "No" }
-    ]
-  },
-  {
-    id: "5.6", module: "M5",
-    text: "Is engagement with this new leader better now or after they are settled in?",
-    hint: "Consider their onboarding timeline and availability for a session of this kind.",
-    type: "textarea", required: false,
-    condition: r => r["5.6_check"] === "yes"
-  },
+  // M7
+  { id:"7.3", module:"M7",
+    text:"What environment details can legitimately be shared with Deloitte and Mission Incubator today?",
+    hint:"Which contract, NDA, or data-sharing terms apply? If little can be shared, the team will use public documentation and a client SME interview.",
+    type:"single", required:false,
+    options:[
+      { value:"yes", label:"Yes — environment details can be shared" },
+      { value:"no",  label:"No or limited sharing only" }
+    ] },
 
-  // ══ MODULE 6 ══════════════════════════════════════════════════
-  {
-    id: "6.1", module: "M6",
-    text: "Which technology environment constraints apply?",
-    hint: "Examples: user base size, platforms in use, authorization requirements, environment limits.",
-    type: "textarea", required: false
-  },
-  {
-    id: "6.2", module: "M6",
-    text: "Which real constraints should the experience show rather than hide?",
-    hint: "Examples: Zero Trust requirements, access controls, policy guardrails.",
-    type: "textarea", required: false
-  },
-  {
-    id: "6.3", module: "M6",
-    text: "Does the client restrict which AI tools or models can be used or shown?",
-    type: "textarea", required: false
-  },
+  // M8
+  { id:"8.1", module:"M8",
+    text:"Would you like a half-day or full-day experience?",
+    type:"single", required:false,
+    options:[
+      { value:"half",      label:"Half-day" },
+      { value:"full",      label:"Full-day" },
+      { value:"undecided", label:"Undecided" }
+    ] },
+  { id:"8.2", module:"M8",
+    text:"Where will it be held?",
+    type:"single", required:false,
+    options:[
+      { value:"mi-space", label:"Mission Incubator space" },
+      { value:"virtual",  label:"Virtual" },
+      { value:"hybrid",   label:"Hybrid" }
+    ] },
+  { id:"8.3", module:"M8",
+    text:"What travel and visitor access do client attendees need?",
+    type:"textarea", required:false,
+    condition: r => ["mi-space","hybrid"].includes(r["8.2"]) },
 
-  // ══ MODULE 7 ══════════════════════════════════════════════════
-  {
-    id: "7.1", module: "M7",
-    text: "Which applications support this use case today?",
-    hint: "For each: name, commercial vs. custom, and who owns it.",
-    type: "textarea", required: false
-  },
-  {
-    id: "7.2", module: "M7",
-    text: "Which databases or data stores sit behind them?",
-    type: "textarea", required: false
-  },
-  {
-    id: "7.3", module: "M7",
-    text: "What environment details can legitimately be shared with Deloitte and Mission Incubator today?",
-    hint: "Which contract, NDA, or data-sharing terms apply? If little can be shared, the team will use public documentation and a client SME interview.",
-    type: "single", required: false,
-    options: [
-      { value: "yes", label: "Yes — environment details can be shared" },
-      { value: "no",  label: "No or limited sharing only" }
-    ]
-  },
-  {
-    id: "7.4", module: "M7",
-    text: "Can you obtain screenshots or a recorded walkthrough of the key screens and forms?",
-    type: "single", required: false,
-    options: [
-      { value: "yes",   label: "Yes" },
-      { value: "no",    label: "No" },
-      { value: "maybe", label: "Possibly — need to check" }
-    ],
-    condition: r => r["7.3"] === "yes"
-  },
-  {
-    id: "7.5", module: "M7",
-    text: "Which interfaces connect the systems?",
-    hint: "Examples: APIs, batch files, manual re-keying.",
-    type: "textarea", required: false,
-    condition: r => r["7.3"] === "yes" && r["0.5"] === "connected"
-  },
-  {
-    id: "7.6", module: "M7",
-    text: "How do users sign in, and which roles and permissions apply?",
-    type: "textarea", required: false,
-    condition: r => r["7.3"] === "yes" && r["0.5"] === "connected"
-  },
-  {
-    id: "7.7", module: "M7",
-    text: "Who is the client technical SME for follow-ups, and are they available before the build starts?",
-    hint: "Name and availability for a working session with the Mission Incubator developers.",
-    type: "textarea", required: false
-  },
+  // M9
+  { id:"9.1", module:"M9",
+    text:"Who is the account-side point of contact for client communication and logistics?",
+    type:"text", required:false },
+  { id:"9.2", module:"M9",
+    text:"Will the account contribute funding to this lab?",
+    type:"single", required:false,
+    options:[
+      { value:"yes",     label:"Yes" },
+      { value:"partial", label:"Partial" },
+      { value:"no",      label:"No" }
+    ] },
+  { id:"9.3", module:"M9",
+    text:"How much, from which budget, and who approves it?",
+    type:"textarea", required:false,
+    condition: r => ["yes","partial"].includes(r["9.2"]) },
+  { id:"9.4", module:"M9",
+    text:"What is the funding gap, and what alternatives do you see?",
+    hint:"Examples: client contribution, sector or program support.",
+    type:"textarea", required:false,
+    condition: r => ["partial","no"].includes(r["9.2"]) },
 
-  // ══ MODULE 8 ══════════════════════════════════════════════════
-  {
-    id: "8.1", module: "M8",
-    text: "Would you like a half-day or full-day experience?",
-    type: "single", required: false,
-    options: [
-      { value: "half",      label: "Half-day" },
-      { value: "full",      label: "Full-day" },
-      { value: "undecided", label: "Undecided" }
-    ]
-  },
-  {
-    id: "8.2", module: "M8",
-    text: "Where will it be held?",
-    type: "single", required: false,
-    options: [
-      { value: "mi-space", label: "Mission Incubator space" },
-      { value: "virtual",  label: "Virtual" },
-      { value: "hybrid",   label: "Hybrid" }
-    ]
-  },
-  {
-    id: "8.3", module: "M8",
-    text: "What travel and visitor access do client attendees need?",
-    type: "textarea", required: false,
-    condition: r => ["mi-space","hybrid"].includes(r["8.2"])
-  },
-  {
-    id: "8.4", module: "M8",
-    text: "Do you have preferences or must-haves for how the session runs?",
-    hint: "Examples: working sessions, a competition format, guided walkthroughs, specific agenda items.",
-    type: "textarea", required: false
-  },
-  {
-    id: "8.5", module: "M8",
-    text: "Which pre-session touchpoints with the client are allowed and planned?",
-    hint: "Examples: a briefing, challenge priming. Check against procurement rules if 5.2 is Yes.",
-    type: "textarea", required: false
-  },
-  {
-    id: "8.6", module: "M8",
-    text: "Which realistic details matter for credibility?",
-    hint: "Examples: system names, form look and feel, agency-specific terminology.",
-    type: "textarea", required: false
-  },
-
-  // ══ MODULE 9 ══════════════════════════════════════════════════
-  {
-    id: "9.1", module: "M9",
-    text: "Who is the account-side point of contact for client communication and logistics?",
-    type: "text", required: false
-  },
-  {
-    id: "9.2", module: "M9",
-    text: "Will the account contribute funding to this lab?",
-    type: "single", required: false,
-    options: [
-      { value: "yes",     label: "Yes" },
-      { value: "partial", label: "Partial" },
-      { value: "no",      label: "No" }
-    ]
-  },
-  {
-    id: "9.3", module: "M9",
-    text: "How much, from which budget, and who approves it?",
-    type: "textarea", required: false,
-    condition: r => ["yes","partial"].includes(r["9.2"])
-  },
-  {
-    id: "9.4", module: "M9",
-    text: "What is the funding gap, and what alternatives do you see?",
-    hint: "Examples: client contribution, sector or program support.",
-    type: "textarea", required: false,
-    condition: r => ["partial","no"].includes(r["9.2"])
-  },
-  {
-    id: "9.5", module: "M9",
-    text: "Which Deloitte approvals do you need to run this, and who owns them?",
-    hint: "Examples: engagement leadership, risk, QRM.",
-    type: "textarea", required: false
-  },
-  {
-    id: "9.6", module: "M9",
-    text: "What are the top account-side risks and dependencies?",
-    hint: "Examples: staff availability, client SME access, timeline constraints.",
-    type: "textarea", required: false
-  },
-
-  // ══ MODULE 10 ═════════════════════════════════════════════════
-  {
-    id: "10.1", module: "M10",
-    text: "What is the intended way forward after the experience?",
-    hint: "Examples: follow-on session, deeper build, next pursuit step.",
-    type: "textarea", required: false
-  },
-  {
-    id: "10.2", module: "M10",
-    text: "What are the metrics for success for this experience?",
-    hint: "Examples: follow-on conversion, client satisfaction, time to a working demonstration, evaluator feedback.",
-    type: "textarea", required: false
-  },
-  {
-    id: "10.3", module: "M10",
-    text: "How and when will client feedback be collected?",
-    type: "textarea", required: false
-  },
-  {
-    id: "10.4", module: "M10",
-    text: "Could the use case and what we build for it be reused or adapted for other accounts, and are there client confidentiality limits on reuse?",
-    type: "textarea", required: false
-  }
+  // M10
+  { id:"10.1", module:"M10",
+    text:"What is the intended way forward after the experience?",
+    hint:"Examples: follow-on session, deeper build, next pursuit step.",
+    type:"textarea", required:false },
+  { id:"10.2", module:"M10",
+    text:"What are the metrics for success for this experience?",
+    hint:"Examples: follow-on conversion, client satisfaction, evaluator feedback.",
+    type:"textarea", required:false }
 ];
 
-// ── STATE ────────────────────────────────────────────────────────
+// ── STATE ──────────────────────────────────────────────────────
 let responses  = {};
 let history    = [];
 let currentQId = null;
 
-// ── ENGINE ───────────────────────────────────────────────────────
+// ── ENGINE ─────────────────────────────────────────────────────
 function getVisible() {
   return QUESTIONS.filter(q => !q.condition || q.condition(responses));
 }
-
-function getQ(id) {
-  return QUESTIONS.find(q => q.id === id);
-}
-
+function getQ(id) { return QUESTIONS.find(q => q.id === id); }
 function isFirst() { return history.length === 0; }
-
 function isLast() {
   const vis = getVisible();
-  return vis[vis.length - 1].id === currentQId;
+  return vis[vis.length-1].id === currentQId;
 }
-
 function posInVisible() {
   return getVisible().findIndex(q => q.id === currentQId);
 }
 
-// ── RENDER ───────────────────────────────────────────────────────
-function render(animate) {
-  const body = document.getElementById("q-body");
+// ── THREAD HELPERS ─────────────────────────────────────────────
+const thread = document.getElementById("thread");
 
-  if (animate) {
-    body.classList.remove("animating");
-    void body.offsetWidth; // reflow to restart animation
-    body.classList.add("animating");
-  }
-
-  fillQuestion();
-
-  const vis   = getVisible();
-  const pos   = posInVisible();
-  const total = vis.length;
-  const pct   = total > 0 ? ((pos + 1) / total) * 100 : 0;
-
-  document.getElementById("progress-fill").style.width = pct + "%";
-  document.getElementById("q-count").textContent = `${pos + 1} of ${total}`;
-
-  const q = getQ(currentQId);
-  document.getElementById("mod-tag").textContent  = q.module;
-  document.getElementById("mod-name").textContent = MODULE_LABELS[q.module] || "";
-
-  document.getElementById("btn-back").disabled = isFirst();
-  document.getElementById("btn-next").textContent = isLast() ? "Finish →" : "Next →";
-  document.getElementById("field-error").classList.remove("visible");
+function scrollToBottom() {
+  thread.scrollTop = thread.scrollHeight;
 }
 
-function fillQuestion() {
-  const q = getQ(currentQId);
-  if (!q) return;
+function insertModuleDivider(module, qId) {
+  const el = document.createElement("div");
+  el.className = "module-divider bubble-in";
+  el.dataset.qId = qId;
+  el.textContent = `${module} · ${MODULE_LABELS[module] || ""}`;
+  thread.appendChild(el);
+}
 
-  const bl = document.getElementById("branch-label");
-  if (q.branchLabel) { bl.textContent = q.branchLabel; bl.style.display = "block"; }
-  else { bl.style.display = "none"; }
+function insertBranchTransition(branch) {
+  const label = ISSUE_LABELS[branch] || "this challenge";
+  const el = document.createElement("div");
+  el.className = "transition-bubble bubble-in";
+  el.dataset.qId = currentQId;
+  el.innerHTML = `Now focusing on: <strong>${label}</strong>`;
+  thread.appendChild(el);
+}
 
-  document.getElementById("q-id").textContent   = q.id;
-  document.getElementById("q-text").textContent = q.text;
-  document.getElementById("q-hint").textContent = q.hint || "";
+function addQBubble(q) {
+  const wrap = document.createElement("div");
+  wrap.className = "q-bubble bubble-in";
+  wrap.dataset.qId = q.id;
 
+  if (q.branchLabel) {
+    const bl = document.createElement("div");
+    bl.className = "q-bubble-branch";
+    bl.textContent = q.branchLabel;
+    wrap.appendChild(bl);
+  }
+  const id = document.createElement("div");
+  id.className = "q-bubble-id";
+  id.textContent = q.id;
+  const text = document.createElement("div");
+  text.className = "q-bubble-text";
+  text.textContent = q.text;
+  wrap.appendChild(id);
+  wrap.appendChild(text);
+  if (q.hint) {
+    const hint = document.createElement("div");
+    hint.className = "q-bubble-hint";
+    hint.textContent = q.hint;
+    wrap.appendChild(hint);
+  }
+  thread.appendChild(wrap);
+  scrollToBottom();
+}
+
+function addABubble(q, val) {
+  const bubble = document.createElement("div");
+  bubble.className = "a-bubble bubble-in";
+  bubble.dataset.aId = q.id;
+
+  let display = "";
+  if (Array.isArray(val)) {
+    display = q.id === "1.2"
+      ? val.map(v => v === "7" ? "None of these" : (ISSUE_LABELS[v] || v)).join(", ")
+      : val.map(v => {
+          const opt = (q.options || []).find(o => o.value === v);
+          return opt ? opt.label : v;
+        }).join(", ");
+  } else if (q.type === "single" && q.options) {
+    const opts = q.dynamicOptions
+      ? (responses["1.2"] || []).filter(i => i !== "7").map(v => ({ value: v, label: ISSUE_LABELS[v] }))
+      : q.options;
+    const found = opts.find(o => o.value === val);
+    display = found ? found.label : val;
+  } else {
+    display = val || "(no answer)";
+  }
+  bubble.textContent = display || "(skipped)";
+  thread.appendChild(bubble);
+  scrollToBottom();
+}
+
+function addAlertBubble(type, html) {
+  const el = document.createElement("div");
+  el.className = `alert-${type} bubble-in`;
+  el.dataset.qId = currentQId;
+  el.innerHTML = html;
+  thread.appendChild(el);
+  scrollToBottom();
+}
+
+// ── RENDER ─────────────────────────────────────────────────────
+function render() {
+  const q   = getQ(currentQId);
+  const vis = getVisible();
+  const pos = posInVisible();
+  const tot = vis.length;
+
+  // Header
+  document.getElementById("mod-tag").textContent  = q.module;
+  document.getElementById("mod-name").textContent = MODULE_LABELS[q.module] || "";
+  document.getElementById("q-count").textContent  = `${pos+1} of ${tot}`;
+  document.getElementById("progress-fill").style.width = ((pos+1)/tot*100) + "%";
+  document.getElementById("btn-back").disabled = isFirst();
+  document.getElementById("field-error").classList.remove("visible");
+
+  // Module divider?
+  if (history.length > 0) {
+    const prevQ = getQ(history[history.length-1]);
+    if (prevQ && prevQ.module !== q.module) {
+      insertModuleDivider(q.module, q.id);
+    }
+    // Branch transition into M3?
+    if (q.module === "M3" && prevQ && prevQ.module !== "M3") {
+      const branch = getActiveBranch(responses);
+      if (branch) insertBranchTransition(branch);
+    }
+  }
+
+  addQBubble(q);
+  fillInputArea(q);
+}
+
+function fillInputArea(q) {
   const area = document.getElementById("answer-area");
   area.innerHTML = "";
 
   if (q.type === "text") {
     const inp = document.createElement("input");
-    inp.type = "text";
-    inp.id   = "q-input";
-    inp.placeholder = "Your answer...";
+    inp.type = "text"; inp.placeholder = "Your answer...";
     inp.autocomplete = "off";
     if (responses[q.id]) inp.value = responses[q.id];
-    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); handleNext(); } });
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); handleSend(); } });
     area.appendChild(inp);
-    setTimeout(() => inp.focus(), 30);
+    setTimeout(() => inp.focus(), 40);
   }
   else if (q.type === "textarea") {
     const ta = document.createElement("textarea");
-    ta.id = "q-input";
     ta.placeholder = "Your answer...";
     if (responses[q.id]) ta.value = responses[q.id];
     ta.addEventListener("keydown", e => {
-      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); handleNext(); }
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); handleSend(); }
     });
     area.appendChild(ta);
-    setTimeout(() => ta.focus(), 30);
+    setTimeout(() => ta.focus(), 40);
   }
   else if (q.type === "single") {
-    let opts = q.options;
+    let opts = q.options || [];
     if (q.dynamicOptions) {
       const sel = (responses["1.2"] || []).filter(i => i !== "7");
       opts = sel.map(v => ({ value: v, label: ISSUE_LABELS[v] }));
     }
-    opts.forEach(opt => {
-      const card = buildOptionCard(opt, "radio", responses[q.id] === opt.value);
-      card.addEventListener("click", (e) => {
-        e.preventDefault();
-        area.querySelectorAll(".option-card").forEach(c => {
-          c.classList.remove("selected");
-          c.querySelector("input").checked = false;
+    const hasDesc = opts.some(o => o.desc);
+    if (hasDesc) {
+      const wrap = document.createElement("div");
+      wrap.className = "opt-cards";
+      opts.forEach(opt => {
+        const card = buildOptionCard(opt, "radio", responses[q.id] === opt.value);
+        card.addEventListener("click", e => {
+          e.preventDefault();
+          wrap.querySelectorAll(".option-card").forEach(c => {
+            c.classList.remove("selected");
+            c.querySelector("input").checked = false;
+          });
+          card.classList.add("selected");
+          card.querySelector("input").checked = true;
+          updateAlerts(q);
         });
-        card.classList.add("selected");
-        card.querySelector("input").checked = true;
-        updateAlerts(q, area);
+        wrap.appendChild(card);
       });
-      area.appendChild(card);
-    });
+      area.appendChild(wrap);
+    } else {
+      const chips = document.createElement("div");
+      chips.className = "chips";
+      opts.forEach(opt => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip" + (responses[q.id] === opt.value ? " selected" : "");
+        chip.dataset.value = opt.value;
+        chip.textContent = opt.label;
+        chip.addEventListener("click", () => {
+          chips.querySelectorAll(".chip").forEach(c => c.classList.remove("selected"));
+          chip.classList.add("selected");
+          updateAlerts(q);
+        });
+        chips.appendChild(chip);
+      });
+      area.appendChild(chips);
+    }
   }
   else if (q.type === "multi") {
     const saved = responses[q.id] || [];
-    q.options.forEach(opt => {
-      const card = buildOptionCard(opt, "checkbox", saved.includes(opt.value));
-      card.addEventListener("click", (e) => {
-        e.preventDefault();
-        card.classList.toggle("selected");
-        card.querySelector("input").checked = card.classList.contains("selected");
-        updateAlerts(q, area);
+    const hasDesc = q.options.some(o => o.desc);
+    if (hasDesc) {
+      const wrap = document.createElement("div");
+      wrap.className = "opt-cards";
+      q.options.forEach(opt => {
+        const card = buildOptionCard(opt, "checkbox", saved.includes(opt.value));
+        card.addEventListener("click", e => {
+          e.preventDefault();
+          card.classList.toggle("selected");
+          card.querySelector("input").checked = card.classList.contains("selected");
+          updateAlerts(q);
+        });
+        wrap.appendChild(card);
       });
-      area.appendChild(card);
-    });
+      area.appendChild(wrap);
+    } else {
+      const chips = document.createElement("div");
+      chips.className = "chips";
+      q.options.forEach(opt => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip" + (saved.includes(opt.value) ? " selected" : "");
+        chip.dataset.value = opt.value;
+        chip.textContent = opt.label;
+        chip.addEventListener("click", () => {
+          chip.classList.toggle("selected");
+          updateAlerts(q);
+        });
+        chips.appendChild(chip);
+      });
+      area.appendChild(chips);
+    }
   }
 
-  updateAlerts(q, area);
+  updateAlerts(q);
 }
 
 function buildOptionCard(opt, inputType, checked) {
   const card = document.createElement("label");
   card.className = "option-card" + (checked ? " selected" : "");
-
   const inp = document.createElement("input");
-  inp.type    = inputType;
-  inp.name    = "q-option";
-  inp.value   = opt.value;
-  inp.checked = checked;
+  inp.type = inputType; inp.name = "q-option";
+  inp.value = opt.value; inp.checked = checked;
   inp.addEventListener("click", e => e.stopPropagation());
-
   const dot = document.createElement("div");
   dot.className = `opt-indicator ${inputType}`;
-
   const lbl = document.createElement("div");
   lbl.className = "opt-label";
-  const s = document.createElement("strong");
-  s.textContent = opt.label;
+  const s = document.createElement("strong"); s.textContent = opt.label;
   lbl.appendChild(s);
-  if (opt.desc) {
-    const d = document.createElement("span");
-    d.textContent = opt.desc;
-    lbl.appendChild(d);
-  }
-
-  card.appendChild(inp);
-  card.appendChild(dot);
-  card.appendChild(lbl);
+  if (opt.desc) { const d = document.createElement("span"); d.textContent = opt.desc; lbl.appendChild(d); }
+  card.appendChild(inp); card.appendChild(dot); card.appendChild(lbl);
   return card;
 }
 
-function updateAlerts(q, area) {
-  const warnEl = document.getElementById("alert-warn");
-  const infoEl = document.getElementById("alert-info");
-  warnEl.style.display = "none";
-  infoEl.style.display = "none";
-
+// ── ALERTS ─────────────────────────────────────────────────────
+let alertNodes = [];
+function updateAlerts(q) {
+  alertNodes.forEach(n => n.remove());
+  alertNodes = [];
   if (q.specialCheck === "issue7") {
-    const chk = area.querySelector('input[value="7"]');
-    if (chk && chk.checked) {
-      warnEl.innerHTML = "<strong>None of these selected.</strong> Contact the CIO Program team to discuss whether a lab is the right fit for this challenge.";
-      warnEl.style.display = "block";
+    const val = readResponseFor(q);
+    if (Array.isArray(val) && val.includes("7")) {
+      const el = document.createElement("div");
+      el.className = "alert-warn";
+      el.innerHTML = "<strong>None of these selected.</strong> Contact the CIO Program team to discuss whether a lab is the right fit.";
+      thread.appendChild(el);
+      alertNodes.push(el);
+      scrollToBottom();
     }
   }
   if (q.specialCheck === "noUseCase") {
-    const chk = area.querySelector('input[value="no"]');
-    if (chk && chk.checked) {
-      infoEl.innerHTML = "<strong>No use case yet.</strong> Work with your account team to narrow to a specific use case before submitting. The use case detail module (Module 2) will be skipped.";
-      infoEl.style.display = "block";
+    const val = readResponseFor(q);
+    if (val === "no") {
+      const el = document.createElement("div");
+      el.className = "alert-info";
+      el.innerHTML = "<strong>No use case yet.</strong> Work with your account team to narrow to a specific use case before submitting. The use case detail module (Module 2) will be skipped.";
+      thread.appendChild(el);
+      alertNodes.push(el);
+      scrollToBottom();
     }
   }
 }
 
-// ── NAVIGATION ───────────────────────────────────────────────────
-function readResponse() {
-  const q = getQ(currentQId);
+// ── READ RESPONSE ──────────────────────────────────────────────
+function readResponseFor(q) {
+  const area = document.getElementById("answer-area");
   if (q.type === "single") {
-    const inp = document.querySelector('input[name="q-option"]:checked');
+    const sel = area.querySelector(".chip.selected");
+    if (sel) return sel.dataset.value;
+    const inp = area.querySelector('input[name="q-option"]:checked');
     return inp ? inp.value : null;
   }
   if (q.type === "multi") {
-    const inps = Array.from(document.querySelectorAll('input[name="q-option"]:checked'));
-    return inps.length > 0 ? inps.map(i => i.value) : null;
+    const chips = Array.from(area.querySelectorAll(".chip.selected")).map(c => c.dataset.value);
+    if (chips.length) return chips;
+    const inps = Array.from(area.querySelectorAll('input[name="q-option"]:checked')).map(i => i.value);
+    return inps.length ? inps : null;
   }
-  const el = document.getElementById("q-input");
+  const el = area.querySelector("input[type='text'], textarea");
   return el ? (el.value.trim() || null) : null;
 }
 
 function hasValue(val) {
-  if (!val) return false;
+  if (val === null || val === undefined) return false;
   if (Array.isArray(val)) return val.length > 0;
   return val.length > 0;
 }
 
-function handleNext() {
+// ── NAVIGATION ─────────────────────────────────────────────────
+function handleSend() {
   const q   = getQ(currentQId);
-  const val = readResponse();
+  const val = readResponseFor(q);
 
   if (q.required && !hasValue(val)) {
     document.getElementById("field-error").classList.add("visible");
     return;
   }
 
-  responses[currentQId] = val !== null ? val : "";
+  alertNodes.forEach(n => n.remove());
+  alertNodes = [];
+
+  responses[currentQId] = (val !== null && val !== undefined) ? val : "";
 
   if (currentQId === "1.2") {
     const nonSeven = (val || []).filter(i => i !== "7");
     if (nonSeven.length < 2) delete responses["1.2a"];
   }
 
-  if (isLast()) { showEnd(); return; }
+  addABubble(q, responses[currentQId]);
+
+  if (isLast()) { setTimeout(showEnd, 350); return; }
 
   const vis = getVisible();
   const pos = posInVisible();
   history.push(currentQId);
-  currentQId = vis[pos + 1].id;
-  render(true);
+  currentQId = vis[pos+1].id;
+
+  document.getElementById("field-error").classList.remove("visible");
+  setTimeout(() => render(), 220);
 }
 
 function handleBack() {
   if (history.length === 0) return;
-  currentQId = history.pop();
-  render(true);
+
+  // Remove alert nodes, current q-bubble (and any dividers/transitions before it)
+  alertNodes.forEach(n => n.remove()); alertNodes = [];
+  const toRemove = Array.from(thread.children).filter(el => el.dataset.qId === currentQId);
+  toRemove.forEach(el => el.remove());
+
+  // Go back
+  const prevId = history.pop();
+  currentQId = prevId;
+
+  // Remove previous answer bubble
+  const prevA = Array.from(thread.children).filter(el => el.dataset.aId === prevId);
+  prevA.forEach(el => el.remove());
+
+  const q   = getQ(currentQId);
+  const vis = getVisible();
+  const pos = posInVisible();
+  const tot = vis.length;
+  document.getElementById("mod-tag").textContent  = q.module;
+  document.getElementById("mod-name").textContent = MODULE_LABELS[q.module] || "";
+  document.getElementById("q-count").textContent  = `${pos+1} of ${tot}`;
+  document.getElementById("progress-fill").style.width = ((pos+1)/tot*100) + "%";
+  document.getElementById("btn-back").disabled = isFirst();
+  document.getElementById("field-error").classList.remove("visible");
+
+  fillInputArea(q);
+  scrollToBottom();
 }
 
-// ── END SCREEN ───────────────────────────────────────────────────
+// ── END SCREEN ─────────────────────────────────────────────────
 function submitToWebhook() {
   const branch = getActiveBranch(responses);
   const payload = {
-    submitted_at:           new Date().toISOString(),
-    client_program:         responses["0.1"]  || "",
-    jupiter_id:             responses["0.2a"] || "",
-    experience_type:        responses["0.3"]  || "",
-    realness_level:         responses["0.5"]  || "",
-    target_date:            responses["0.6"]  || "",
-    challenge_summary:      responses["1.1"]  || "",
-    problem_maturity:       responses["1.1a"] || "",
-    signature_issues:       (responses["1.2"] || []).map(v => v === "7" ? "None" : (ISSUE_LABELS[v] || v)).join("; "),
-    primary_issue:          branch ? (ISSUE_LABELS[branch] || branch) : "",
-    use_case_identified:    responses["1.4"]  || "",
-    audience_technical_level: responses["4.5"] || "",
-    procurement_active:     responses["5.2"]  || "",
-    funding:                responses["9.2"]  || "",
-    full_responses:         generateText()
+    submitted_at:             new Date().toISOString(),
+    client_program:           responses["0.1"]  || "",
+    experience_type:          responses["0.3"]  || "",
+    realness_level:           responses["0.5"]  || "",
+    target_date:              responses["0.6"]  || "",
+    challenge_summary:        responses["1.1"]  || "",
+    problem_maturity:         responses["1.1a"] || "",
+    signature_issues:         (responses["1.2"] || []).map(v => v === "7" ? "None" : (ISSUE_LABELS[v] || v)).join("; "),
+    primary_issue:            branch ? (ISSUE_LABELS[branch] || branch) : "",
+    use_case_identified:      responses["1.4"]  || "",
+    audience_technical_level: responses["4.5"]  || "",
+    procurement_active:       responses["5.2"]  || "",
+    funding:                  responses["9.2"]  || "",
+    full_responses:           generateText()
   };
   fetch(WEBHOOK_URL, {
     method: "POST",
@@ -1544,7 +1205,7 @@ function submitToWebhook() {
 }
 
 function showEnd() {
-  document.getElementById("survey-screen").classList.remove("active");
+  document.getElementById("chat-screen").classList.remove("active");
   document.getElementById("end-screen").classList.add("active");
   submitToWebhook();
   buildSummary();
@@ -1554,7 +1215,6 @@ function buildSummary() {
   const vis  = getVisible();
   const body = document.getElementById("summary-body");
   body.innerHTML = "";
-
   const grouped = {};
   vis.forEach(q => {
     const r = responses[q.id];
@@ -1562,49 +1222,34 @@ function buildSummary() {
     if (!grouped[q.module]) grouped[q.module] = [];
     grouped[q.module].push(q);
   });
-
-  const modOrder = Object.keys(MODULE_LABELS);
-  modOrder.forEach(mod => {
+  Object.keys(MODULE_LABELS).forEach(mod => {
     if (!grouped[mod]) return;
     const section = document.createElement("div");
     section.className = "summary-section";
-
     const ml = document.createElement("div");
     ml.className = "sum-mod-label";
     ml.textContent = `${mod} · ${MODULE_LABELS[mod]}`;
     section.appendChild(ml);
-
     grouped[mod].forEach(q => {
       const val = responses[q.id];
       if (!val && !Array.isArray(val)) return;
-
-      const item = document.createElement("div");
-      item.className = "sum-item";
-
-      const qEl = document.createElement("div");
-      qEl.className = "sum-q";
-      qEl.textContent = `${q.id}  ·  ${q.text}`;
-      item.appendChild(qEl);
-
-      const aEl = document.createElement("div");
-      aEl.className = "sum-a";
+      const item = document.createElement("div"); item.className = "sum-item";
+      const qEl = document.createElement("div"); qEl.className = "sum-q";
+      qEl.textContent = `${q.id}  ·  ${q.text}`; item.appendChild(qEl);
+      const aEl = document.createElement("div"); aEl.className = "sum-a";
       if (Array.isArray(val)) {
         aEl.textContent = q.id === "1.2"
           ? val.map(v => v === "7" ? "None of these" : ISSUE_LABELS[v]).join("\n")
           : val.join(", ");
       } else if (q.type === "single" && q.options) {
-        const found = (q.dynamicOptions
+        const opts = q.dynamicOptions
           ? (responses["1.2"] || []).filter(i => i !== "7").map(v => ({ value: v, label: ISSUE_LABELS[v] }))
-          : q.options
-        ).find(o => o.value === val);
+          : q.options;
+        const found = opts.find(o => o.value === val);
         aEl.textContent = found ? found.label : val;
-      } else {
-        aEl.textContent = val;
-      }
-      item.appendChild(aEl);
-      section.appendChild(item);
+      } else { aEl.textContent = val; }
+      item.appendChild(aEl); section.appendChild(item);
     });
-
     body.appendChild(section);
   });
 }
@@ -1613,16 +1258,13 @@ function generateText() {
   const vis = getVisible();
   const lines = ["THE PROVING GROUND — Account Team Intake", "=".repeat(52), ""];
   let lastMod = null;
-
   vis.forEach(q => {
     const val = responses[q.id];
     if (!val && !Array.isArray(val)) return;
-
     if (q.module !== lastMod) {
       lines.push(`\n── ${q.module}: ${MODULE_LABELS[q.module]} ──`);
       lastMod = q.module;
     }
-
     lines.push(`\n[${q.id}] ${q.text}`);
     if (Array.isArray(val)) {
       lines.push(q.id === "1.2"
@@ -1634,30 +1276,25 @@ function generateText() {
         : q.options;
       const found = opts.find(o => o.value === val);
       lines.push(found ? found.label : val);
-    } else {
-      lines.push(val);
-    }
+    } else { lines.push(val); }
   });
-
   return lines.join("\n");
 }
 
-// ── EVENTS ───────────────────────────────────────────────────────
+// ── EVENTS ─────────────────────────────────────────────────────
 document.getElementById("btn-start").addEventListener("click", () => {
   document.getElementById("start-screen").style.display = "none";
-  document.getElementById("survey-screen").classList.add("active");
+  document.getElementById("chat-screen").classList.add("active");
   currentQId = QUESTIONS[0].id;
-  render(false);
+  render();
 });
 
-document.getElementById("btn-next").addEventListener("click", handleNext);
+document.getElementById("btn-send").addEventListener("click", handleSend);
 document.getElementById("btn-back").addEventListener("click", handleBack);
 
 document.addEventListener("keydown", e => {
-  if (!document.getElementById("survey-screen").classList.contains("active")) return;
-  const tag = document.activeElement.tagName;
-  if (e.key === "ArrowRight" && !["TEXTAREA","INPUT"].includes(tag)) handleNext();
-  if (e.key === "ArrowLeft"  && !["TEXTAREA","INPUT"].includes(tag)) handleBack();
+  if (!document.getElementById("chat-screen").classList.contains("active")) return;
+  if (e.key === "Enter" && e.metaKey) handleSend();
 });
 
 document.getElementById("btn-copy").addEventListener("click", () => {
@@ -1684,10 +1321,19 @@ document.getElementById("btn-download").addEventListener("click", () => {
   document.body.removeChild(a); URL.revokeObjectURL(url);
 });
 
+document.getElementById("btn-email").addEventListener("click", () => {
+  const body = encodeURIComponent(generateText());
+  const subj = encodeURIComponent("Proving Ground Intake — " + (responses["0.1"] || "Account Submission"));
+  window.location.href = `mailto:${EMAIL_RECIPIENTS}?subject=${subj}&body=${body}`;
+});
+
 document.getElementById("btn-restart").addEventListener("click", () => {
   responses = {}; history = []; currentQId = null;
+  thread.innerHTML = "";
+  alertNodes = [];
   document.getElementById("end-screen").classList.remove("active");
-  document.getElementById("start-screen").style.display = "block";
+  document.getElementById("chat-screen").classList.remove("active");
+  document.getElementById("start-screen").style.display = "";
 });
 </script>
 </body>
