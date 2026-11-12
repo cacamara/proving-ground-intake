@@ -237,7 +237,7 @@
       border-radius: 16px 16px 4px 16px;
       padding: .75rem 1rem;
       font-family: 'IBM Plex Sans', sans-serif;
-      font-size: .9375rem; line-height: 1.5;
+      font-size: .9375rem; line-height: 1.5; white-space: pre-wrap;
       word-break: break-word;
     }
 
@@ -326,6 +326,8 @@
     .opt-label strong { font-weight: 600; font-size: .9rem; color: var(--fg); display: block; }
     .opt-label span { font-size: .825rem; color: var(--fg-muted); line-height: 1.5; }
     .option-card input { display: none; }
+
+    .detail-label { font-size: .8125rem; color: var(--fg-muted); margin: .875rem 0 .375rem; }
 
     /* Text inputs */
     .chat-input-area input[type="text"],
@@ -657,9 +659,19 @@ const QUESTIONS = [
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "3" },
   { id:"3C.2", module:"M3", branchLabel:"Branch 3C · Data, analytics, and AI/ML",
-    text:"Which AI or analytics capability should the lab show, and where does a person review the result?",
-    hint:"Examples: extraction, image analysis, summarization, forecasting.",
-    type:"textarea", required:false,
+    text:"Which AI or analytics capabilities should the lab show?",
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"extraction", label:"Extraction from documents" },
+      { value:"image", label:"Image analysis" },
+      { value:"summarization", label:"Summarization" },
+      { value:"forecasting", label:"Forecasting or prediction" },
+      { value:"triage", label:"Classification or triage" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: where should a person review the result?",
     condition: r => getActiveBranch(r) === "3" },
   { id:"3D.1", module:"M3", branchLabel:"Branch 3D · Accelerate delivery of innovative solutions",
     text:"What does it take today to go from idea to a working capability?",
@@ -667,13 +679,33 @@ const QUESTIONS = [
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "4" },
   { id:"3D.2", module:"M3", branchLabel:"Branch 3D · Accelerate delivery of innovative solutions",
-    text:"Which new capability or technology does the client want to explore, and what stops them from adopting it today?",
-    type:"textarea", required:false,
+    text:"Which new capability or technology does the client want to explore?",
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"genai", label:"Generative AI" },
+      { value:"lowcode", label:"Low-code or no-code" },
+      { value:"automation", label:"Workflow automation" },
+      { value:"cloud", label:"Cloud-native or modernization" },
+      { value:"devsecops", label:"DevSecOps or delivery pipeline" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: what stops the client from adopting it today?",
     condition: r => getActiveBranch(r) === "4" },
   { id:"3E.1", module:"M3", branchLabel:"Branch 3E · Digital agency / citizen experience",
-    text:"Which citizen-facing interaction does this use case improve, and through which channels?",
-    hint:"Examples: applying, checking status, submitting documents. Channels: web, mobile, call center, in person.",
-    type:"textarea", required:false,
+    text:"Which citizen-facing interaction does this use case improve?",
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"apply", label:"Applying for a benefit or service" },
+      { value:"status", label:"Checking status" },
+      { value:"documents", label:"Submitting documents" },
+      { value:"support", label:"Getting help or support" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: through which channels (web, mobile, call center, in person)?",
     condition: r => getActiveBranch(r) === "5" },
   { id:"3E.2", module:"M3", branchLabel:"Branch 3E · Digital agency / citizen experience",
     text:"What does the \"before\" look like for the citizen, and what should the \"after\" feel like?",
@@ -681,14 +713,33 @@ const QUESTIONS = [
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "5" },
   { id:"3F.1", module:"M3", branchLabel:"Branch 3F · Cyber security posture and compliance",
-    text:"Which scenario should the lab center on, and should participants watch it or practice it?",
-    hint:"Examples: ransomware recovery, access control, audit readiness.",
-    type:"textarea", required:false,
+    text:"Which scenario should the lab center on?",
+    hint:"Choose the closest one.",
+    type:"single", required:false,
+    options:[
+      { value:"ransomware", label:"Ransomware recovery" },
+      { value:"access", label:"Access control" },
+      { value:"audit", label:"Audit readiness" },
+      { value:"incident", label:"Incident response" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: should participants watch it or practice it?",
     condition: r => getActiveBranch(r) === "6" },
   { id:"3F.2", module:"M3", branchLabel:"Branch 3F · Cyber security posture and compliance",
-    text:"Which security architecture elements should the environment represent, and which changes are planned?",
-    hint:"Examples: identity and access, zero trust, monitoring.",
-    type:"textarea", required:false,
+    text:"Which security architecture elements should the environment represent?",
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"iam", label:"Identity and access" },
+      { value:"zerotrust", label:"Zero trust" },
+      { value:"monitoring", label:"Monitoring and detection" },
+      { value:"data", label:"Data protection" },
+      { value:"cloudsec", label:"Cloud security" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: which changes are planned?",
     condition: r => getActiveBranch(r) === "6" },
 
   // M4
@@ -897,6 +948,7 @@ function addABubble(q, val) {
   } else {
     display = val || "(no answer)";
   }
+  if (q.detail && detailOf(q)) display = (display ? display + "\n" : "") + detailOf(q);
   bubble.textContent = display || "(skipped)";
   thread.appendChild(bubble);
   scrollToBottom();
@@ -1039,12 +1091,29 @@ function fillInputArea(q) {
         chip.textContent = opt.label;
         chip.addEventListener("click", () => {
           chip.classList.toggle("selected");
+          if (chip.classList.contains("selected")) {
+            chips.querySelectorAll(".chip").forEach(c => {
+              if (c !== chip && (opt.value === "unsure" || c.dataset.value === "unsure")) c.classList.remove("selected");
+            });
+          }
           updateAlerts(q);
         });
         chips.appendChild(chip);
       });
       area.appendChild(chips);
     }
+  }
+
+  if (q.detail && (q.type === "single" || q.type === "multi")) {
+    const lbl = document.createElement("div");
+    lbl.className = "detail-label"; lbl.textContent = q.detail;
+    const ta = document.createElement("textarea");
+    ta.id = "detail-box"; ta.placeholder = "Add detail...";
+    ta.value = detailOf(q);
+    ta.addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
+    });
+    area.appendChild(lbl); area.appendChild(ta);
   }
 
   updateAlerts(q);
@@ -1136,6 +1205,8 @@ function handleSend() {
   alertNodes = [];
 
   responses[currentQId] = (val !== null && val !== undefined) ? val : "";
+  const dbox = document.getElementById("detail-box");
+  if (q.detail && dbox) responses[currentQId + "+detail"] = dbox.value.trim();
 
   if (currentQId === "1.2") {
     const nonSeven = (val || []).filter(i => i !== "7");
@@ -1241,7 +1312,7 @@ function buildSummary() {
     section.appendChild(ml);
     grouped[mod].forEach(q => {
       const val = responses[q.id];
-      if (!val && !Array.isArray(val)) return;
+      if (!val && !Array.isArray(val) && !detailOf(q)) return;
       const item = document.createElement("div"); item.className = "sum-item";
       const qEl = document.createElement("div"); qEl.className = "sum-q";
       qEl.textContent = `${q.id}  ·  ${q.text}`; item.appendChild(qEl);
@@ -1249,7 +1320,7 @@ function buildSummary() {
       if (Array.isArray(val)) {
         aEl.textContent = q.id === "1.2"
           ? val.map(v => v === "7" ? "None of these" : ISSUE_LABELS[v]).join("\n")
-          : val.join(", ");
+          : labelsOf(q, val).join(", ");
       } else if (q.type === "single" && q.options) {
         const opts = q.dynamicOptions
           ? (responses["1.2"] || []).filter(i => i !== "7").map(v => ({ value: v, label: ISSUE_LABELS[v] }))
@@ -1257,14 +1328,20 @@ function buildSummary() {
         const found = opts.find(o => o.value === val);
         aEl.textContent = found ? found.label : val;
       } else { aEl.textContent = val; }
+      if (q.detail && detailOf(q)) aEl.textContent = (aEl.textContent ? aEl.textContent + "\n" : "") + detailOf(q);
       item.appendChild(aEl); section.appendChild(item);
     });
     body.appendChild(section);
   });
 }
 
+function isUnsure(v) { return v === "unsure" || (Array.isArray(v) && v.includes("unsure")); }
 function getOpenItems() {
-  return getVisible().filter(q => responses[q.id] === "unsure");
+  return getVisible().filter(q => isUnsure(responses[q.id]));
+}
+function detailOf(q) { return responses[q.id + "+detail"] || ""; }
+function labelsOf(q, val) {
+  return val.map(v => { const o = (q.options || []).find(x => x.value === v); return o ? o.label : v; });
 }
 
 function generateText() {
@@ -1273,7 +1350,7 @@ function generateText() {
   let lastMod = null;
   vis.forEach(q => {
     const val = responses[q.id];
-    if (!val && !Array.isArray(val)) return;
+    if (!val && !Array.isArray(val) && !detailOf(q)) return;
     if (q.module !== lastMod) {
       lines.push(`\n── ${q.module}: ${MODULE_LABELS[q.module]} ──`);
       lastMod = q.module;
@@ -1282,14 +1359,15 @@ function generateText() {
     if (Array.isArray(val)) {
       lines.push(q.id === "1.2"
         ? val.map(v => `  - ${v === "7" ? "None of these" : ISSUE_LABELS[v]}`).join("\n")
-        : val.map(v => `  - ${v}`).join("\n"));
+        : labelsOf(q, val).map(v => `  - ${v}`).join("\n"));
     } else if (q.type === "single" && q.options) {
       const opts = q.dynamicOptions
         ? (responses["1.2"] || []).filter(i => i !== "7").map(v => ({ value: v, label: ISSUE_LABELS[v] }))
         : q.options;
       const found = opts.find(o => o.value === val);
       lines.push(found ? found.label : val);
-    } else { lines.push(val); }
+    } else if (val) { lines.push(val); }
+    if (q.detail && detailOf(q)) lines.push(`  Detail: ${detailOf(q)}`);
   });
   const open = getOpenItems();
   if (open.length) {
