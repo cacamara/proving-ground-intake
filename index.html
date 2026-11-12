@@ -327,10 +327,22 @@
     .opt-label span { font-size: .825rem; color: var(--fg-muted); line-height: 1.5; }
     .option-card input { display: none; }
 
+    .field { margin-bottom: .125rem; }
+    .field label { display: block; font-size: .8125rem; color: var(--fg-muted); margin-bottom: .25rem; }
+    .field-row { border: 1px solid var(--border); border-radius: 10px; padding: .75rem .75rem .25rem; margin-bottom: .75rem; }
+    .field-btn {
+      padding: .4rem .9rem; border: 1.5px solid var(--border); border-radius: 9999px;
+      background: var(--input-bg); color: var(--fg-2); font-family: 'IBM Plex Sans', sans-serif;
+      font-size: .8125rem; cursor: pointer; margin: 0 .5rem .875rem 0;
+    }
+    .field-btn:hover { border-color: var(--accent); }
     .detail-label { font-size: .8125rem; color: var(--fg-muted); margin: .875rem 0 .375rem; }
 
     /* Text inputs */
     .chat-input-area input[type="text"],
+    .chat-input-area input[type="number"],
+    .chat-input-area input[type="date"],
+    .chat-input-area select,
     .chat-input-area textarea {
       width: 100%; border: 1.5px solid var(--border);
       background: var(--input-bg); color: var(--fg);
@@ -341,6 +353,9 @@
       margin-bottom: .875rem;
     }
     .chat-input-area input[type="text"]:focus,
+    .chat-input-area input[type="number"]:focus,
+    .chat-input-area input[type="date"]:focus,
+    .chat-input-area select:focus,
     .chat-input-area textarea:focus {
       outline: none; border-color: var(--accent);
     }
@@ -537,9 +552,15 @@ function getActiveBranch(r) {
 const QUESTIONS = [
   // M0
   { id:"0.1", module:"M0",
-    text:"Which client and program area is this for, and which sector?",
-    hint:"Include the agency or organization name, the specific program or initiative, and whether this is Federal or State and local.",
-    type:"textarea", required:true },
+    text:"Which client and program is this for?",
+    hint:"Use the agency or organization name and the specific program or initiative.",
+    type:"fields", required:true,
+    fields:[
+      { key:"client",  label:"Client or agency",       kind:"text", required:true },
+      { key:"program", label:"Program or initiative",  kind:"text", required:true },
+      { key:"sector",  label:"Sector",                 kind:"select", required:true, options:[
+        { value:"federal", label:"Federal" }, { value:"state-local", label:"State and local" }, { value:"other", label:"Other" } ] }
+    ] },
   { id:"0.2", module:"M0",
     text:"What sales opportunity or account objective is driving this request?",
     hint:"What role should the experience play in advancing it?",
@@ -564,8 +585,13 @@ const QUESTIONS = [
     ] },
   { id:"0.6", module:"M0",
     text:"Is a specific date driving this request?",
-    hint:"If so, include the date and how firm it is. Dates under 4 weeks away will flag a timing risk — a Deloitte-led demonstration is the faster option.",
-    type:"text", required:false },
+    hint:"Leave blank if there is no date. Dates under 4 weeks away will flag a timing risk — a Deloitte-led demonstration is the faster option.",
+    type:"fields", required:false, specialCheck:"dateSoon",
+    fields:[
+      { key:"date",   label:"Target date", kind:"date" },
+      { key:"firm",   label:"How firm is it?", kind:"select", options:[
+        { value:"fixed", label:"Fixed" }, { value:"flexible", label:"Flexible" }, { value:"unsure", label:"Not sure yet" } ] }
+    ] },
 
   // M1
   { id:"1.1", module:"M1",
@@ -638,8 +664,14 @@ const QUESTIONS = [
     condition: r => getActiveBranch(r) === "1" },
   { id:"3B.1", module:"M3", branchLabel:"Branch 3B · Cost-effective IT operational excellence",
     text:"What baseline numbers exist for this process?",
-    hint:"Examples: volume, cycle time, hours or cost per case. The lab will show a before-and-after efficiency demo.",
-    type:"textarea", required:false,
+    hint:"Leave blank any you don't know. The lab will show a before-and-after efficiency demo.",
+    type:"fields", required:false,
+    fields:[
+      { key:"volume", label:"Volume",                 kind:"number", unit:"cases per month" },
+      { key:"cycle",  label:"Cycle time",             kind:"number", unit:"hours per case" },
+      { key:"cost",   label:"Cost",                   kind:"number", unit:"dollars per case" },
+      { key:"source", label:"Where these numbers come from (optional)", kind:"text" }
+    ],
     condition: r => getActiveBranch(r) === "2" },
   { id:"3B.2", module:"M3", branchLabel:"Branch 3B · Cost-effective IT operational excellence",
     text:"Which cost driver should the lab visibly reduce?",
@@ -745,8 +777,14 @@ const QUESTIONS = [
   // M4
   { id:"4.4", module:"M4",
     text:"Who will attend the session?",
-    hint:"Names, roles, and count — both client and Deloitte.",
-    type:"textarea", required:false },
+    hint:"Add each attendee, client and Deloitte. Partial lists are fine.",
+    type:"fields", required:false, repeat:true, addLabel:"Add attendee",
+    fields:[
+      { key:"name", label:"Name",         kind:"text", required:true },
+      { key:"role", label:"Role",         kind:"text" },
+      { key:"side", label:"Organization", kind:"select", options:[
+        { value:"client", label:"Client" }, { value:"deloitte", label:"Deloitte" } ] }
+    ] },
   { id:"4.5", module:"M4",
     text:"What is the client participants' level of technical understanding?",
     type:"single", required:true,
@@ -836,7 +874,12 @@ const QUESTIONS = [
     ] },
   { id:"9.3", module:"M9",
     text:"How much, from which budget, and who approves it?",
-    type:"textarea", required:false,
+    type:"fields", required:false,
+    fields:[
+      { key:"amount",   label:"Amount (dollars)",        kind:"number" },
+      { key:"source",   label:"Budget or funding source", kind:"text" },
+      { key:"approver", label:"Approver (name and role)", kind:"text" }
+    ],
     condition: r => ["yes","partial"].includes(r["9.2"]) },
   { id:"9.4", module:"M9",
     text:"What is the funding gap, and what alternatives do you see?",
@@ -1000,7 +1043,10 @@ function fillInputArea(q) {
   const area = document.getElementById("answer-area");
   area.innerHTML = "";
 
-  if (q.type === "text") {
+  if (q.type === "fields") {
+    buildFields(q, area);
+  }
+  else if (q.type === "text") {
     const inp = document.createElement("input");
     inp.type = "text"; inp.placeholder = "Your answer...";
     inp.autocomplete = "off";
@@ -1119,6 +1165,109 @@ function fillInputArea(q) {
   updateAlerts(q);
 }
 
+function buildField(f, value) {
+  const wrap = document.createElement("div");
+  wrap.className = "field";
+  const lbl = document.createElement("label");
+  lbl.textContent = f.label + (f.unit ? " (" + f.unit + ")" : "");
+  let inp;
+  if (f.kind === "select") {
+    inp = document.createElement("select");
+    const blank = document.createElement("option");
+    blank.value = ""; blank.textContent = "Select...";
+    inp.appendChild(blank);
+    f.options.forEach(o => {
+      const op = document.createElement("option");
+      op.value = o.value; op.textContent = o.label;
+      inp.appendChild(op);
+    });
+  } else {
+    inp = document.createElement("input");
+    inp.type = f.kind === "number" ? "number" : f.kind === "date" ? "date" : "text";
+    if (f.kind === "number") { inp.min = "0"; inp.step = "any"; }
+    inp.autocomplete = "off";
+  }
+  inp.dataset.fkey = f.key;
+  if (value) inp.value = value;
+  wrap.appendChild(lbl); wrap.appendChild(inp);
+  return wrap;
+}
+
+function buildFields(q, area) {
+  const saved = responses[q.id + "+fields"];
+  const onKey = e => {
+    if (e.key !== "Enter" || e.target.tagName === "SELECT") return;
+    e.preventDefault();
+    const all = Array.from(area.querySelectorAll("[data-fkey]"));
+    const i = all.indexOf(e.target);
+    if (i < all.length - 1) all[i + 1].focus(); else handleSend();
+  };
+  const addRow = (row) => {
+    const box = document.createElement("div");
+    box.className = "field-row";
+    q.fields.forEach(f => box.appendChild(buildField(f, row ? row[f.key] : "")));
+    box.addEventListener("keydown", onKey);
+    box.addEventListener("change", () => updateAlerts(q));
+    const addBtn = area.querySelector(".field-add");
+    area.insertBefore(box, addBtn);
+    return box;
+  };
+  if (q.repeat) {
+    const add = document.createElement("button");
+    add.type = "button"; add.className = "field-btn field-add";
+    add.textContent = "+ " + q.addLabel;
+    area.appendChild(add);
+    const rem = document.createElement("button");
+    rem.type = "button"; rem.className = "field-btn";
+    rem.textContent = "Remove last";
+    area.appendChild(rem);
+    add.addEventListener("click", () => addRow(null).querySelector("[data-fkey]").focus());
+    rem.addEventListener("click", () => {
+      const rows = area.querySelectorAll(".field-row");
+      if (rows.length > 1) rows[rows.length - 1].remove();
+    });
+    const rows = Array.isArray(saved) && saved.length ? saved : [null, null];
+    rows.forEach(r => addRow(r));
+  } else {
+    const box = document.createElement("div");
+    q.fields.forEach(f => box.appendChild(buildField(f, saved ? saved[f.key] : "")));
+    box.addEventListener("keydown", onKey);
+    box.addEventListener("change", () => updateAlerts(q));
+    area.appendChild(box);
+  }
+  setTimeout(() => { const first = area.querySelector("[data-fkey]"); if (first) first.focus(); }, 40);
+}
+
+function readFields(q) {
+  const area = document.getElementById("answer-area");
+  const read = el => Object.fromEntries(Array.from(el.querySelectorAll("[data-fkey]")).map(i => [i.dataset.fkey, i.value.trim()]));
+  return q.repeat ? Array.from(area.querySelectorAll(".field-row")).map(read) : read(area);
+}
+
+function fieldRows(data) {
+  return (Array.isArray(data) ? data : [data]).filter(r => Object.values(r).some(v => v));
+}
+
+function fieldsMissing(q, data) {
+  const rows = fieldRows(data);
+  if (q.required && rows.length === 0) return true;
+  return rows.some(r => q.fields.some(f => f.required && !r[f.key]));
+}
+
+function fieldShown(f, v) {
+  if (f.kind === "select") { const o = f.options.find(x => x.value === v); return o ? o.label : v; }
+  return f.unit ? v + " " + f.unit : v;
+}
+
+function fieldsText(q, data) {
+  const rows = fieldRows(data);
+  if (q.repeat) {
+    return rows.map(r => "- " + q.fields.map(f => r[f.key] ? fieldShown(f, r[f.key]) : "").filter(Boolean).join(" · ")).join("\n");
+  }
+  const r = rows[0] || {};
+  return q.fields.filter(f => r[f.key]).map(f => `${f.label}: ${fieldShown(f, r[f.key])}`).join("\n");
+}
+
 function buildOptionCard(opt, inputType, checked) {
   const card = document.createElement("label");
   card.className = "option-card" + (checked ? " selected" : "");
@@ -1153,6 +1302,17 @@ function updateAlerts(q) {
       scrollToBottom();
     }
   }
+  if (q.specialCheck === "dateSoon") {
+    const d = readFields(q).date;
+    if (d && (new Date(d + "T00:00:00") - new Date()) / 864e5 < 28) {
+      const el = document.createElement("div");
+      el.className = "alert-warn";
+      el.innerHTML = "<strong>Timing risk.</strong> This date is under 4 weeks away. A Deloitte-led demonstration is the faster option.";
+      thread.appendChild(el);
+      alertNodes.push(el);
+      scrollToBottom();
+    }
+  }
   if (q.specialCheck === "noUseCase") {
     const val = readResponseFor(q);
     if (val === "no") {
@@ -1169,6 +1329,10 @@ function updateAlerts(q) {
 // ── READ RESPONSE ──────────────────────────────────────────────
 function readResponseFor(q) {
   const area = document.getElementById("answer-area");
+  if (q.type === "fields") {
+    const data = readFields(q);
+    return fieldRows(data).length ? fieldsText(q, data) : null;
+  }
   if (q.type === "single") {
     const sel = area.querySelector(".chip.selected");
     if (sel) return sel.dataset.value;
@@ -1196,8 +1360,16 @@ function handleSend() {
   const q   = getQ(currentQId);
   const val = readResponseFor(q);
 
+  if (q.type === "fields" && fieldsMissing(q, readFields(q))) {
+    const fe = document.getElementById("field-error");
+    fe.textContent = "Please complete the required fields before continuing.";
+    fe.classList.add("visible");
+    return;
+  }
   if (q.required && !hasValue(val)) {
-    document.getElementById("field-error").classList.add("visible");
+    const fe = document.getElementById("field-error");
+    fe.textContent = "This field is required before continuing.";
+    fe.classList.add("visible");
     return;
   }
 
@@ -1205,6 +1377,7 @@ function handleSend() {
   alertNodes = [];
 
   responses[currentQId] = (val !== null && val !== undefined) ? val : "";
+  if (q.type === "fields") responses[currentQId + "+fields"] = readFields(q);
   const dbox = document.getElementById("detail-box");
   if (q.detail && dbox) responses[currentQId + "+detail"] = dbox.value.trim();
 
@@ -1262,10 +1435,12 @@ function submitToWebhook() {
   const branch = getActiveBranch(responses);
   const payload = {
     submitted_at:             new Date().toISOString(),
-    client_program:           responses["0.1"]  || "",
+    client_program:           [getFields("0.1").client, getFields("0.1").program].filter(Boolean).join(" | "),
+    sector:                   getFields("0.1").sector || "",
     experience_type:          responses["0.3"]  || "",
     realness_level:           responses["0.5"]  || "",
-    target_date:              responses["0.6"]  || "",
+    target_date:              getFields("0.6").date || "",
+    target_date_firmness:     getFields("0.6").firm || "",
     challenge_summary:        responses["1.1"]  || "",
     problem_maturity:         responses["1.1a"] || "",
     signature_issues:         (responses["1.2"] || []).map(v => v === "7" ? "None" : (ISSUE_LABELS[v] || v)).join("; "),
@@ -1339,6 +1514,7 @@ function isUnsure(v) { return v === "unsure" || (Array.isArray(v) && v.includes(
 function getOpenItems() {
   return getVisible().filter(q => isUnsure(responses[q.id]));
 }
+function getFields(id) { return responses[id + "+fields"] || {}; }
 function detailOf(q) { return responses[q.id + "+detail"] || ""; }
 function labelsOf(q, val) {
   return val.map(v => { const o = (q.options || []).find(x => x.value === v); return o ? o.label : v; });
@@ -1420,7 +1596,7 @@ document.getElementById("btn-download").addEventListener("click", () => {
 
 document.getElementById("btn-email").addEventListener("click", () => {
   const body = encodeURIComponent(generateText());
-  const subj = encodeURIComponent("Proving Ground Intake — " + (responses["0.1"] || "Account Submission"));
+  const subj = encodeURIComponent("Proving Ground Intake — " + (getFields("0.1").client || "Account Submission"));
   window.location.href = `mailto:${EMAIL_RECIPIENTS}?subject=${subj}&body=${body}`;
 });
 
