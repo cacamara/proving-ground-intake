@@ -651,9 +651,14 @@ const QUESTIONS = [
     type:"textarea", required:true,
     condition: r => r["1.4"] === "yes" },
   { id:"2.2", module:"M2",
-    text:"Which artifacts or data flow through the use case, and can you obtain sanitized samples?",
+    text:"Which artifacts or data flow through the use case?",
     hint:"Examples: documents, images, data tables, messages. Sanitized only — no real client data or PII.",
-    type:"textarea", required:false,
+    type:"fields", required:false,
+    fields:[
+      { key:"artifacts", label:"Artifact or data types", kind:"text" },
+      { key:"samples",   label:"Can you obtain sanitized samples?", kind:"select", options:[
+        { value:"yes", label:"Yes" }, { value:"maybe", label:"Maybe, need to check" }, { value:"no", label:"No" }, { value:"unsure", label:"Not sure yet" } ] }
+    ],
     condition: r => r["1.4"] === "yes" },
 
   // M3 — Branches
@@ -869,13 +874,29 @@ const QUESTIONS = [
     ] },
   { id:"8.3", module:"M8",
     text:"What travel and visitor access do client attendees need?",
-    type:"textarea", required:false,
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"badge", label:"Visitor badge or escort" },
+      { value:"names", label:"Names submitted in advance" },
+      { value:"parking", label:"Parking" },
+      { value:"travel", label:"Travel for out-of-town attendees" },
+      { value:"access", label:"Accessibility accommodations" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: anything else we should plan for?",
     condition: r => ["mi-space","hybrid"].includes(r["8.2"]) },
 
   // M9
   { id:"9.1", module:"M9",
     text:"Who is the account-side point of contact for client communication and logistics?",
-    type:"text", required:false },
+    type:"fields", required:false,
+    fields:[
+      { key:"name",  label:"Name",  kind:"text", required:true },
+      { key:"role",  label:"Role",  kind:"text" },
+      { key:"email", label:"Email", kind:"text" }
+    ] },
   { id:"9.2", module:"M9",
     text:"Will the account contribute funding to this lab?",
     type:"single", required:false,
@@ -895,16 +916,35 @@ const QUESTIONS = [
     ],
     condition: r => ["yes","partial"].includes(r["9.2"]) },
   { id:"9.4", module:"M9",
-    text:"What is the funding gap, and what alternatives do you see?",
-    hint:"Examples: client contribution, sector or program support.",
-    type:"textarea", required:false,
+    text:"What alternatives do you see for closing the funding gap?",
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"client", label:"Client contribution" },
+      { value:"sector", label:"Sector or program support" },
+      { value:"deloitte", label:"Deloitte investment" },
+      { value:"scope", label:"Reduce the scope" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: how large is the gap?",
     condition: r => ["partial","no"].includes(r["9.2"]) },
 
   // M10
   { id:"10.1", module:"M10",
     text:"What is the intended way forward after the experience?",
-    hint:"Examples: follow-on session, deeper build, next pursuit step.",
-    type:"textarea", required:false },
+    hint:"Select all that apply.",
+    type:"multi", required:false,
+    options:[
+      { value:"followon", label:"Follow-on session" },
+      { value:"build", label:"Deeper build" },
+      { value:"pursuit", label:"Next pursuit step" },
+      { value:"pilot", label:"Pilot or proof of value" },
+      { value:"none", label:"No next step planned" },
+      { value:"other", label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
+    ],
+    detail:"Optional: add timing or specifics." },
   { id:"10.2", module:"M10",
     text:"What are the metrics for success for this experience?",
     hint:"Examples: follow-on conversion, client satisfaction, evaluator feedback.",
