@@ -547,7 +547,8 @@ const QUESTIONS = [
     type:"single", required:true,
     options:[
       { value:"demo",      label:"Deloitte builds and demonstrates", desc:"A working demonstration the account team shows the client" },
-      { value:"co-create", label:"Client co-creates with us",        desc:"An immersive session where the client builds alongside the Deloitte team" }
+      { value:"co-create", label:"Client co-creates with us",        desc:"An immersive session where the client builds alongside the Deloitte team" },
+      { value:"unsure", label:"Not sure yet", desc:"Recorded as an open item for the CIO Program team" }
     ] },
   { id:"0.5", module:"M0",
     text:"How real should it feel to the client?",
@@ -556,7 +557,8 @@ const QUESTIONS = [
     options:[
       { value:"screens",   label:"Screens only",                      desc:"UI mockup or static prototype, no live logic" },
       { value:"working",   label:"Working application on sample data", desc:"Real application logic, synthetic database" },
-      { value:"connected", label:"Connected to realistic systems",     desc:"Integrated back-end and realistic data flows" }
+      { value:"connected", label:"Connected to realistic systems",     desc:"Integrated back-end and realistic data flows" },
+      { value:"unsure", label:"Not sure yet", desc:"Recorded as an open item for the CIO Program team" }
     ] },
   { id:"0.6", module:"M0",
     text:"Is a specific date driving this request?",
@@ -645,7 +647,8 @@ const QUESTIONS = [
       { value:"duplicate-entry", label:"Duplicate entry" },
       { value:"rework",          label:"Rework" },
       { value:"waiting",         label:"Waiting / handoff delays" },
-      { value:"other",           label:"Other" }
+      { value:"other",           label:"Other" },
+      { value:"unsure", label:"Not sure yet" }
     ],
     condition: r => getActiveBranch(r) === "2" },
   { id:"3C.1", module:"M3", branchLabel:"Branch 3C · Data, analytics, and AI/ML",
@@ -701,7 +704,8 @@ const QUESTIONS = [
       { value:"technology-aware",       label:"Technology-aware",              desc:"Comfortable discussing technology concepts" },
       { value:"technical-practitioner", label:"Technical practitioner",        desc:"Can evaluate solution design and trade-offs" },
       { value:"technical-expert",       label:"Technical expert",              desc:"Deep expertise in architecture, engineering, or data" },
-      { value:"mixed",                  label:"Mixed audience",                desc:"Participants have varied levels of expertise" }
+      { value:"mixed",                  label:"Mixed audience",                desc:"Participants have varied levels of expertise" },
+      { value:"unsure", label:"Not sure yet", desc:"Recorded as an open item for the CIO Program team" }
     ] },
   { id:"4.8", module:"M4",
     text:"Are there sensitivities to plan around?",
@@ -714,7 +718,8 @@ const QUESTIONS = [
     type:"single", required:true,
     options:[
       { value:"yes", label:"Yes" },
-      { value:"no",  label:"No" }
+      { value:"no",  label:"No" },
+      { value:"unsure", label:"Not sure yet" }
     ] },
   { id:"5.3", module:"M5",
     text:"What procurement, ethics, or contact rules limit what we can do or say with the client before and during the session?",
@@ -738,7 +743,8 @@ const QUESTIONS = [
     type:"single", required:false,
     options:[
       { value:"yes", label:"Yes — environment details can be shared" },
-      { value:"no",  label:"No or limited sharing only" }
+      { value:"no",  label:"No or limited sharing only" },
+      { value:"unsure", label:"Not sure yet" }
     ] },
 
   // M8
@@ -756,7 +762,8 @@ const QUESTIONS = [
     options:[
       { value:"mi-space", label:"Mission Incubator space" },
       { value:"virtual",  label:"Virtual" },
-      { value:"hybrid",   label:"Hybrid" }
+      { value:"hybrid",   label:"Hybrid" },
+      { value:"unsure", label:"Not sure yet" }
     ] },
   { id:"8.3", module:"M8",
     text:"What travel and visitor access do client attendees need?",
@@ -773,7 +780,8 @@ const QUESTIONS = [
     options:[
       { value:"yes",     label:"Yes" },
       { value:"partial", label:"Partial" },
-      { value:"no",      label:"No" }
+      { value:"no",      label:"No" },
+      { value:"unsure", label:"Not sure yet" }
     ] },
   { id:"9.3", module:"M9",
     text:"How much, from which budget, and who approves it?",
@@ -1195,6 +1203,7 @@ function submitToWebhook() {
     audience_technical_level: responses["4.5"]  || "",
     procurement_active:       responses["5.2"]  || "",
     funding:                  responses["9.2"]  || "",
+    open_items:               getOpenItems().map(q => q.id).join(", "),
     full_responses:           generateText()
   };
   fetch(WEBHOOK_URL, {
@@ -1254,6 +1263,10 @@ function buildSummary() {
   });
 }
 
+function getOpenItems() {
+  return getVisible().filter(q => responses[q.id] === "unsure");
+}
+
 function generateText() {
   const vis = getVisible();
   const lines = ["THE PROVING GROUND — Account Team Intake", "=".repeat(52), ""];
@@ -1278,6 +1291,11 @@ function generateText() {
       lines.push(found ? found.label : val);
     } else { lines.push(val); }
   });
+  const open = getOpenItems();
+  if (open.length) {
+    lines.push("\n── Open items (answered \"Not sure yet\") ──");
+    open.forEach(q => lines.push(`  - [${q.id}] ${q.text}`));
+  }
   return lines.join("\n");
 }
 
