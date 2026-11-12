@@ -564,6 +564,7 @@ const QUESTIONS = [
   { id:"0.2", module:"M0",
     text:"What sales opportunity or account objective is driving this request?",
     hint:"What role should the experience play in advancing it?",
+    starter:"[Client] is considering [opportunity or objective]. The lab would help us by [role the experience plays] before [date or milestone].",
     type:"textarea", required:true },
   { id:"0.3", module:"M0",
     text:"What kind of experience are you looking for?",
@@ -597,6 +598,7 @@ const QUESTIONS = [
   { id:"1.1", module:"M1",
     text:"What challenge is the client facing, and what outcome do they want?",
     hint:"One or two sentences — start with the client's problem, not the technical solution.",
+    starter:"Today, [who] has to [what], and it takes [how long or how much]. The client wants [outcome] by [when].",
     type:"textarea", required:true },
   { id:"1.1a", module:"M1",
     text:"How well-defined is the core challenge coming into the lab?",
@@ -637,6 +639,7 @@ const QUESTIONS = [
   { id:"1.4b", module:"M1",
     text:"Describe the use case.",
     hint:"Who are the actors? What does the process look like start to finish?",
+    starter:"[Who] uses [system or process] to [task]. The use case starts when [trigger] and ends when [result].",
     type:"textarea", required:true,
     condition: r => r["1.4"] === "yes" },
 
@@ -644,6 +647,7 @@ const QUESTIONS = [
   { id:"2.1", module:"M2",
     text:"Walk through the use case from start to finish.",
     hint:"Who acts at each step? What are the inputs, decisions, outputs, and handoffs? Sanitized only — no real client data or PII.",
+    starter:"1. [Who] receives [input].\n2. They [action or decision].\n3. It goes to [who] for [next step].\n4. The result is [output].",
     type:"textarea", required:true,
     condition: r => r["1.4"] === "yes" },
   { id:"2.2", module:"M2",
@@ -656,10 +660,12 @@ const QUESTIONS = [
   { id:"3A.1", module:"M3", branchLabel:"Branch 3A · Align IT with mission value",
     text:"What measure or evidence does the client use today to judge progress on the mission outcome this use case supports?",
     hint:"The lab will show this use case traced end to end to a mission outcome, with the measure visible on screen.",
+    starter:"Leaders judge progress on [mission outcome] by looking at [measure, report, or evidence], reviewed [how often].",
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "1" },
   { id:"3A.2", module:"M3", branchLabel:"Branch 3A · Align IT with mission value",
     text:"What would client leaders need to see in the room to believe this use case moves that outcome?",
+    starter:"Leaders would believe it if they saw [what] change from [before] to [after].",
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "1" },
   { id:"3B.1", module:"M3", branchLabel:"Branch 3B · Cost-effective IT operational excellence",
@@ -688,6 +694,7 @@ const QUESTIONS = [
   { id:"3C.1", module:"M3", branchLabel:"Branch 3C · Data, analytics, and AI/ML",
     text:"Which decision or service in this use case depends on data that is hard to access, trust, or combine today?",
     hint:"The lab will show messy data becoming a trusted decision, with a human checkpoint.",
+    starter:"[Decision or service] depends on data from [sources], which is hard to [access, trust, or combine] because [reason].",
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "3" },
   { id:"3C.2", module:"M3", branchLabel:"Branch 3C · Data, analytics, and AI/ML",
@@ -708,6 +715,7 @@ const QUESTIONS = [
   { id:"3D.1", module:"M3", branchLabel:"Branch 3D · Accelerate delivery of innovative solutions",
     text:"What does it take today to go from idea to a working capability?",
     hint:"Describe the steps, approvals, and typical time. The lab will compress this live.",
+    starter:"Going from idea to a working capability takes [steps and approvals], about [how long]. The biggest delay is [where].",
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "4" },
   { id:"3D.2", module:"M3", branchLabel:"Branch 3D · Accelerate delivery of innovative solutions",
@@ -742,6 +750,7 @@ const QUESTIONS = [
   { id:"3E.2", module:"M3", branchLabel:"Branch 3E · Digital agency / citizen experience",
     text:"What does the \"before\" look like for the citizen, and what should the \"after\" feel like?",
     hint:"Describe the steps, waits, and forms before; describe the target experience after.",
+    starter:"Before: [citizen] has to [steps, waits, forms]. After: they should be able to [target experience] in [time].",
     type:"textarea", required:false,
     condition: r => getActiveBranch(r) === "5" },
   { id:"3F.1", module:"M3", branchLabel:"Branch 3F · Cyber security posture and compliance",
@@ -799,6 +808,7 @@ const QUESTIONS = [
   { id:"4.8", module:"M4",
     text:"Are there sensitivities to plan around?",
     hint:"Examples: skeptics in the room, incumbent vendor relationships, topics to avoid.",
+    starter:"We should avoid [topic, vendor, or term] because [reason]. [Person or group] is sensitive to [issue].",
     type:"textarea", required:false },
 
   // M5
@@ -812,10 +822,12 @@ const QUESTIONS = [
     ] },
   { id:"5.3", module:"M5",
     text:"What procurement, ethics, or contact rules limit what we can do or say with the client before and during the session?",
+    starter:"Before and during the session we cannot [restriction], per [rule or source]. Contact must go through [who].",
     type:"textarea", required:false,
     condition: r => r["5.2"] === "yes" },
   { id:"5.4", module:"M5",
     text:"Who are the competitors, and what have they shown this client?",
+    starter:"[Competitor] showed [what] on [when]. The client's reaction was [reaction].",
     type:"textarea", required:false,
     condition: r => r["5.2"] === "yes" },
 
@@ -823,6 +835,7 @@ const QUESTIONS = [
   { id:"6.x", module:"M6",
     text:"What constraints or governance rules apply to the environment being shown?",
     hint:"Examples: technology restrictions, Zero Trust requirements, AI tool limitations, authorization requirements, rules about what can be shared.",
+    starter:"The environment must follow [rule or policy]. [Tool, cloud, or AI model] is [allowed or not allowed] because [reason].",
     type:"textarea", required:false },
 
   // M7
@@ -895,6 +908,7 @@ const QUESTIONS = [
   { id:"10.2", module:"M10",
     text:"What are the metrics for success for this experience?",
     hint:"Examples: follow-on conversion, client satisfaction, evaluator feedback.",
+    starter:"We will call it a success if [metric] reaches [target] by [when], or if the client [commits to a next step].",
     type:"textarea", required:false }
 ];
 
@@ -1057,12 +1071,25 @@ function fillInputArea(q) {
   }
   else if (q.type === "textarea") {
     const ta = document.createElement("textarea");
-    ta.placeholder = "Your answer...";
+    ta.placeholder = q.starter ? "For example: " + q.starter : "Your answer...";
     if (responses[q.id]) ta.value = responses[q.id];
     ta.addEventListener("keydown", e => {
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
     });
     area.appendChild(ta);
+    if (q.starter) {
+      const use = document.createElement("button");
+      use.type = "button"; use.className = "field-btn";
+      use.textContent = "Start from a template";
+      use.addEventListener("click", () => {
+        ta.value = (ta.value ? ta.value + "\n" : "") + q.starter;
+        const from = ta.value.lastIndexOf(q.starter);
+        const open = q.starter.indexOf("[");
+        ta.focus();
+        if (open >= 0) ta.setSelectionRange(from + open, from + q.starter.indexOf("]", open) + 1);
+      });
+      area.appendChild(use);
+    }
     setTimeout(() => ta.focus(), 40);
   }
   else if (q.type === "single") {
